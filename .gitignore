@@ -1,0 +1,38 @@
+# Brainstorm/superpowers 工作目录
+.superpowers/
+
+# Node / Vite
+node_modules/
+dist/
+.vite/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Go
+apps/gateway/bin/
+apps/gateway/gateway
+
+# Generated proto
+apps/gateway/gen/
+apps/agents/marsagent/gen/
+
+# Env
+.env
+*.env.local
+infra/.env
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Docker volumes mounted locally
+infra/data/
