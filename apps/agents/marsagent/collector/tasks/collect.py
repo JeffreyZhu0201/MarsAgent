@@ -53,8 +53,8 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
         adapter_cls = ADAPTERS.get(src)
         if not adapter_cls:
             continue
-        adapter = adapter_cls()
         try:
+            adapter = adapter_cls()
             await sink.emit(make_event(
                 type_="agent.progress", task_id=task_id, agent="collector",
                 message=f"从 {src} 采集…",
