@@ -12,3 +12,22 @@ create table if not exists tasks (
   error text,
   created_at timestamptz not null default now()
 );
+
+-- M2: Wiki 知识库文档表
+create table if not exists wiki_docs (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid null,
+  slug text unique not null,
+  category text not null default 'general',
+  title text not null,
+  url text not null,
+  url_hash bytea not null,
+  content_hash bytea not null,
+  source text not null,
+  quality_score real,
+  language text,
+  fetched_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  storage_path text not null,
+  constraint unique_url_hash unique (url_hash)
+);

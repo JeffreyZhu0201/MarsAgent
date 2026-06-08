@@ -8,6 +8,12 @@ option go_package = "github.com/marsagent/gateway/gen/proto/wiki;wikipb";
 // M2 起补 HybridSearch / GetChunks（spec §5.2）。
 service WikiRetriever {
   rpc Ping (PingReq) returns (PingResp);
+
+  // M2: 混合检索
+  rpc HybridSearch (HybridSearchReq) returns (HybridSearchResp);
+
+  // M2: 批量取 chunk 内容
+  rpc GetChunks (GetChunksReq) returns (GetChunksResp);
 }
 
 message PingReq {
@@ -17,4 +23,42 @@ message PingReq {
 message PingResp {
   string echo = 1;
   string server_version = 2;
+}
+
+// M2: 混合检索
+message HybridSearchReq {
+  string query = 1;
+  int32 k = 2;
+  repeated string filters = 3;
+}
+
+message SearchHit {
+  string doc_id = 1;
+  string chunk_id = 2;
+  string text = 3;
+  float score = 4;
+  string url = 5;
+  string source = 6;
+  string title = 7;
+}
+
+message HybridSearchResp {
+  repeated SearchHit hits = 1;
+}
+
+message GetChunksReq {
+  repeated string chunk_ids = 1;
+}
+
+message GetChunksResp {
+  repeated Chunk chunks = 1;
+}
+
+message Chunk {
+  string id = 1;
+  string doc_id = 2;
+  int32 chunk_idx = 3;
+  string text = 4;
+  string url = 5;
+  string source = 6;
 }
