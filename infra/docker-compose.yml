@@ -1,0 +1,58 @@
+# 完整栈：基础设施 + gateway + agents + web
+# 使用方法: docker compose -f infra/docker-compose.yml --env-file infra/.env.example up --build
+services:
+  postgres:
+    extends:
+      file: docker-compose.dev.yml
+      service: postgres
+  redis:
+    extends:
+      file: docker-compose.dev.yml
+      service: redis
+  qdrant:
+    extends:
+      file: docker-compose.dev.yml
+      service: qdrant
+  minio:
+    extends:
+      file: docker-compose.dev.yml
+      service: minio
+
+  gateway:
+    build:
+      context: ../apps/gateway
+    depends_on:
+      redis:
+        condition: service_healthy
+      agents:
+        condition: service_started
+    environment:
+      GATEWAY_HTTP_PORT: 8080
+      REDIS_URL: redis://redis:6379/0
+      GATEWAY_GRPC_TARGET: agents:50051
+      SERVER_VERSION: m1-compose
+    ports:
+      - "${GATEWAY_HTTP_PORT}:8080"
+
+  agents:
+    build:
+      context: ../apps/agents
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      AGENTS_HTTP_PORT: 8001
+      AGENTS_GRPC_PORT: 50051
+    volumes:
+      - ../proto:/proto:ro
+    ports:
+      - "${AGENTS_HTTP_PORT}:8001"
+
+  web:
+    build:
+      context: ../apps/web
+    depends_on:
+      - gateway
+    ports:
+      - "5173:80"
