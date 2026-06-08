@@ -19,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WikiRetriever_Ping_FullMethodName = "/marsagent.wiki.v1.WikiRetriever/Ping"
+	WikiRetriever_Ping_FullMethodName         = "/marsagent.wiki.v1.WikiRetriever/Ping"
+	WikiRetriever_HybridSearch_FullMethodName = "/marsagent.wiki.v1.WikiRetriever/HybridSearch"
+	WikiRetriever_GetChunks_FullMethodName    = "/marsagent.wiki.v1.WikiRetriever/GetChunks"
 )
 
 // WikiRetrieverClient is the client API for WikiRetriever service.
@@ -30,6 +32,10 @@ const (
 // M2 起补 HybridSearch / GetChunks（spec §5.2）。
 type WikiRetrieverClient interface {
 	Ping(ctx context.Context, in *PingReq, opts ...grpc.CallOption) (*PingResp, error)
+	// M2: 混合检索
+	HybridSearch(ctx context.Context, in *HybridSearchReq, opts ...grpc.CallOption) (*HybridSearchResp, error)
+	// M2: 批量取 chunk 内容
+	GetChunks(ctx context.Context, in *GetChunksReq, opts ...grpc.CallOption) (*GetChunksResp, error)
 }
 
 type wikiRetrieverClient struct {
@@ -50,6 +56,26 @@ func (c *wikiRetrieverClient) Ping(ctx context.Context, in *PingReq, opts ...grp
 	return out, nil
 }
 
+func (c *wikiRetrieverClient) HybridSearch(ctx context.Context, in *HybridSearchReq, opts ...grpc.CallOption) (*HybridSearchResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HybridSearchResp)
+	err := c.cc.Invoke(ctx, WikiRetriever_HybridSearch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wikiRetrieverClient) GetChunks(ctx context.Context, in *GetChunksReq, opts ...grpc.CallOption) (*GetChunksResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetChunksResp)
+	err := c.cc.Invoke(ctx, WikiRetriever_GetChunks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WikiRetrieverServer is the server API for WikiRetriever service.
 // All implementations must embed UnimplementedWikiRetrieverServer
 // for forward compatibility.
@@ -58,6 +84,10 @@ func (c *wikiRetrieverClient) Ping(ctx context.Context, in *PingReq, opts ...grp
 // M2 起补 HybridSearch / GetChunks（spec §5.2）。
 type WikiRetrieverServer interface {
 	Ping(context.Context, *PingReq) (*PingResp, error)
+	// M2: 混合检索
+	HybridSearch(context.Context, *HybridSearchReq) (*HybridSearchResp, error)
+	// M2: 批量取 chunk 内容
+	GetChunks(context.Context, *GetChunksReq) (*GetChunksResp, error)
 	mustEmbedUnimplementedWikiRetrieverServer()
 }
 
@@ -70,6 +100,12 @@ type UnimplementedWikiRetrieverServer struct{}
 
 func (UnimplementedWikiRetrieverServer) Ping(context.Context, *PingReq) (*PingResp, error) {
 	return nil, status.Error(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedWikiRetrieverServer) HybridSearch(context.Context, *HybridSearchReq) (*HybridSearchResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method HybridSearch not implemented")
+}
+func (UnimplementedWikiRetrieverServer) GetChunks(context.Context, *GetChunksReq) (*GetChunksResp, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetChunks not implemented")
 }
 func (UnimplementedWikiRetrieverServer) mustEmbedUnimplementedWikiRetrieverServer() {}
 func (UnimplementedWikiRetrieverServer) testEmbeddedByValue()                       {}
@@ -110,6 +146,42 @@ func _WikiRetriever_Ping_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WikiRetriever_HybridSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HybridSearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WikiRetrieverServer).HybridSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WikiRetriever_HybridSearch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WikiRetrieverServer).HybridSearch(ctx, req.(*HybridSearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WikiRetriever_GetChunks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChunksReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WikiRetrieverServer).GetChunks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WikiRetriever_GetChunks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WikiRetrieverServer).GetChunks(ctx, req.(*GetChunksReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WikiRetriever_ServiceDesc is the grpc.ServiceDesc for WikiRetriever service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -120,6 +192,14 @@ var WikiRetriever_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _WikiRetriever_Ping_Handler,
+		},
+		{
+			MethodName: "HybridSearch",
+			Handler:    _WikiRetriever_HybridSearch_Handler,
+		},
+		{
+			MethodName: "GetChunks",
+			Handler:    _WikiRetriever_GetChunks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

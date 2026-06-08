@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -16,6 +17,7 @@ import (
 	"github.com/marsagent/gateway/internal/config"
 	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/stream"
+	_ "github.com/lib/pq"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -32,6 +34,18 @@ func main() {
 		os.Exit(1)
 	}
 
+	db, err := sql.Open("postgres",
+		os.Getenv("DATABASE_URL"))
+	if err != nil {
+		slog.Error("db open failed", "err", err)
+		os.Exit(1)
+	}
+	if err := db.Ping(); err != nil {
+		slog.Error("db ping failed", "err", err)
+		os.Exit(1)
+	}
+	defer db.Close()
+
 	wc, err := grpcc.Dial(cfg.GRPCTarget)
 	if err != nil {
 		slog.Error("grpc dial failed", "target", cfg.GRPCTarget, "err", err)
@@ -43,6 +57,7 @@ func main() {
 		Producer:   stream.NewRedisProducer(rdb),
 		Subscriber: stream.NewRedisSubscriber(rdb),
 		GRPC:       wc,
+		DB:         db,
 	}
 
 	srv := &http.Server{

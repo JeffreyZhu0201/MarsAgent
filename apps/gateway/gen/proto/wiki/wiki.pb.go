@@ -117,6 +117,375 @@ func (x *PingResp) GetServerVersion() string {
 	return ""
 }
 
+// M2: 混合检索
+type HybridSearchReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Query         string                 `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
+	K             int32                  `protobuf:"varint,2,opt,name=k,proto3" json:"k,omitempty"`
+	Filters       []string               `protobuf:"bytes,3,rep,name=filters,proto3" json:"filters,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HybridSearchReq) Reset() {
+	*x = HybridSearchReq{}
+	mi := &file_wiki_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HybridSearchReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HybridSearchReq) ProtoMessage() {}
+
+func (x *HybridSearchReq) ProtoReflect() protoreflect.Message {
+	mi := &file_wiki_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HybridSearchReq.ProtoReflect.Descriptor instead.
+func (*HybridSearchReq) Descriptor() ([]byte, []int) {
+	return file_wiki_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *HybridSearchReq) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
+}
+
+func (x *HybridSearchReq) GetK() int32 {
+	if x != nil {
+		return x.K
+	}
+	return 0
+}
+
+func (x *HybridSearchReq) GetFilters() []string {
+	if x != nil {
+		return x.Filters
+	}
+	return nil
+}
+
+type SearchHit struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DocId         string                 `protobuf:"bytes,1,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	ChunkId       string                 `protobuf:"bytes,2,opt,name=chunk_id,json=chunkId,proto3" json:"chunk_id,omitempty"`
+	Text          string                 `protobuf:"bytes,3,opt,name=text,proto3" json:"text,omitempty"`
+	Score         float32                `protobuf:"fixed32,4,opt,name=score,proto3" json:"score,omitempty"`
+	Url           string                 `protobuf:"bytes,5,opt,name=url,proto3" json:"url,omitempty"`
+	Source        string                 `protobuf:"bytes,6,opt,name=source,proto3" json:"source,omitempty"`
+	Title         string                 `protobuf:"bytes,7,opt,name=title,proto3" json:"title,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SearchHit) Reset() {
+	*x = SearchHit{}
+	mi := &file_wiki_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SearchHit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchHit) ProtoMessage() {}
+
+func (x *SearchHit) ProtoReflect() protoreflect.Message {
+	mi := &file_wiki_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchHit.ProtoReflect.Descriptor instead.
+func (*SearchHit) Descriptor() ([]byte, []int) {
+	return file_wiki_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *SearchHit) GetDocId() string {
+	if x != nil {
+		return x.DocId
+	}
+	return ""
+}
+
+func (x *SearchHit) GetChunkId() string {
+	if x != nil {
+		return x.ChunkId
+	}
+	return ""
+}
+
+func (x *SearchHit) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+func (x *SearchHit) GetScore() float32 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
+func (x *SearchHit) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *SearchHit) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *SearchHit) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+type HybridSearchResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Hits          []*SearchHit           `protobuf:"bytes,1,rep,name=hits,proto3" json:"hits,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HybridSearchResp) Reset() {
+	*x = HybridSearchResp{}
+	mi := &file_wiki_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HybridSearchResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HybridSearchResp) ProtoMessage() {}
+
+func (x *HybridSearchResp) ProtoReflect() protoreflect.Message {
+	mi := &file_wiki_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HybridSearchResp.ProtoReflect.Descriptor instead.
+func (*HybridSearchResp) Descriptor() ([]byte, []int) {
+	return file_wiki_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *HybridSearchResp) GetHits() []*SearchHit {
+	if x != nil {
+		return x.Hits
+	}
+	return nil
+}
+
+type GetChunksReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChunkIds      []string               `protobuf:"bytes,1,rep,name=chunk_ids,json=chunkIds,proto3" json:"chunk_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetChunksReq) Reset() {
+	*x = GetChunksReq{}
+	mi := &file_wiki_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetChunksReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChunksReq) ProtoMessage() {}
+
+func (x *GetChunksReq) ProtoReflect() protoreflect.Message {
+	mi := &file_wiki_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChunksReq.ProtoReflect.Descriptor instead.
+func (*GetChunksReq) Descriptor() ([]byte, []int) {
+	return file_wiki_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetChunksReq) GetChunkIds() []string {
+	if x != nil {
+		return x.ChunkIds
+	}
+	return nil
+}
+
+type GetChunksResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Chunks        []*Chunk               `protobuf:"bytes,1,rep,name=chunks,proto3" json:"chunks,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetChunksResp) Reset() {
+	*x = GetChunksResp{}
+	mi := &file_wiki_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetChunksResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChunksResp) ProtoMessage() {}
+
+func (x *GetChunksResp) ProtoReflect() protoreflect.Message {
+	mi := &file_wiki_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChunksResp.ProtoReflect.Descriptor instead.
+func (*GetChunksResp) Descriptor() ([]byte, []int) {
+	return file_wiki_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetChunksResp) GetChunks() []*Chunk {
+	if x != nil {
+		return x.Chunks
+	}
+	return nil
+}
+
+type Chunk struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	DocId         string                 `protobuf:"bytes,2,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	ChunkIdx      int32                  `protobuf:"varint,3,opt,name=chunk_idx,json=chunkIdx,proto3" json:"chunk_idx,omitempty"`
+	Text          string                 `protobuf:"bytes,4,opt,name=text,proto3" json:"text,omitempty"`
+	Url           string                 `protobuf:"bytes,5,opt,name=url,proto3" json:"url,omitempty"`
+	Source        string                 `protobuf:"bytes,6,opt,name=source,proto3" json:"source,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Chunk) Reset() {
+	*x = Chunk{}
+	mi := &file_wiki_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Chunk) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Chunk) ProtoMessage() {}
+
+func (x *Chunk) ProtoReflect() protoreflect.Message {
+	mi := &file_wiki_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Chunk.ProtoReflect.Descriptor instead.
+func (*Chunk) Descriptor() ([]byte, []int) {
+	return file_wiki_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *Chunk) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Chunk) GetDocId() string {
+	if x != nil {
+		return x.DocId
+	}
+	return ""
+}
+
+func (x *Chunk) GetChunkIdx() int32 {
+	if x != nil {
+		return x.ChunkIdx
+	}
+	return 0
+}
+
+func (x *Chunk) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+func (x *Chunk) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *Chunk) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
 var File_wiki_proto protoreflect.FileDescriptor
 
 const file_wiki_proto_rawDesc = "" +
@@ -127,9 +496,36 @@ const file_wiki_proto_rawDesc = "" +
 	"\x03msg\x18\x01 \x01(\tR\x03msg\"E\n" +
 	"\bPingResp\x12\x12\n" +
 	"\x04echo\x18\x01 \x01(\tR\x04echo\x12%\n" +
-	"\x0eserver_version\x18\x02 \x01(\tR\rserverVersion2P\n" +
+	"\x0eserver_version\x18\x02 \x01(\tR\rserverVersion\"O\n" +
+	"\x0fHybridSearchReq\x12\x14\n" +
+	"\x05query\x18\x01 \x01(\tR\x05query\x12\f\n" +
+	"\x01k\x18\x02 \x01(\x05R\x01k\x12\x18\n" +
+	"\afilters\x18\x03 \x03(\tR\afilters\"\xa7\x01\n" +
+	"\tSearchHit\x12\x15\n" +
+	"\x06doc_id\x18\x01 \x01(\tR\x05docId\x12\x19\n" +
+	"\bchunk_id\x18\x02 \x01(\tR\achunkId\x12\x12\n" +
+	"\x04text\x18\x03 \x01(\tR\x04text\x12\x14\n" +
+	"\x05score\x18\x04 \x01(\x02R\x05score\x12\x10\n" +
+	"\x03url\x18\x05 \x01(\tR\x03url\x12\x16\n" +
+	"\x06source\x18\x06 \x01(\tR\x06source\x12\x14\n" +
+	"\x05title\x18\a \x01(\tR\x05title\"D\n" +
+	"\x10HybridSearchResp\x120\n" +
+	"\x04hits\x18\x01 \x03(\v2\x1c.marsagent.wiki.v1.SearchHitR\x04hits\"+\n" +
+	"\fGetChunksReq\x12\x1b\n" +
+	"\tchunk_ids\x18\x01 \x03(\tR\bchunkIds\"A\n" +
+	"\rGetChunksResp\x120\n" +
+	"\x06chunks\x18\x01 \x03(\v2\x18.marsagent.wiki.v1.ChunkR\x06chunks\"\x89\x01\n" +
+	"\x05Chunk\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
+	"\x06doc_id\x18\x02 \x01(\tR\x05docId\x12\x1b\n" +
+	"\tchunk_idx\x18\x03 \x01(\x05R\bchunkIdx\x12\x12\n" +
+	"\x04text\x18\x04 \x01(\tR\x04text\x12\x10\n" +
+	"\x03url\x18\x05 \x01(\tR\x03url\x12\x16\n" +
+	"\x06source\x18\x06 \x01(\tR\x06source2\xf9\x01\n" +
 	"\rWikiRetriever\x12?\n" +
-	"\x04Ping\x12\x1a.marsagent.wiki.v1.PingReq\x1a\x1b.marsagent.wiki.v1.PingRespB4Z2github.com/marsagent/gateway/gen/proto/wiki;wikipbb\x06proto3"
+	"\x04Ping\x12\x1a.marsagent.wiki.v1.PingReq\x1a\x1b.marsagent.wiki.v1.PingResp\x12W\n" +
+	"\fHybridSearch\x12\".marsagent.wiki.v1.HybridSearchReq\x1a#.marsagent.wiki.v1.HybridSearchResp\x12N\n" +
+	"\tGetChunks\x12\x1f.marsagent.wiki.v1.GetChunksReq\x1a .marsagent.wiki.v1.GetChunksRespB4Z2github.com/marsagent/gateway/gen/proto/wiki;wikipbb\x06proto3"
 
 var (
 	file_wiki_proto_rawDescOnce sync.Once
@@ -143,19 +539,31 @@ func file_wiki_proto_rawDescGZIP() []byte {
 	return file_wiki_proto_rawDescData
 }
 
-var file_wiki_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_wiki_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_wiki_proto_goTypes = []any{
-	(*PingReq)(nil),  // 0: marsagent.wiki.v1.PingReq
-	(*PingResp)(nil), // 1: marsagent.wiki.v1.PingResp
+	(*PingReq)(nil),          // 0: marsagent.wiki.v1.PingReq
+	(*PingResp)(nil),         // 1: marsagent.wiki.v1.PingResp
+	(*HybridSearchReq)(nil),  // 2: marsagent.wiki.v1.HybridSearchReq
+	(*SearchHit)(nil),        // 3: marsagent.wiki.v1.SearchHit
+	(*HybridSearchResp)(nil), // 4: marsagent.wiki.v1.HybridSearchResp
+	(*GetChunksReq)(nil),     // 5: marsagent.wiki.v1.GetChunksReq
+	(*GetChunksResp)(nil),    // 6: marsagent.wiki.v1.GetChunksResp
+	(*Chunk)(nil),            // 7: marsagent.wiki.v1.Chunk
 }
 var file_wiki_proto_depIdxs = []int32{
-	0, // 0: marsagent.wiki.v1.WikiRetriever.Ping:input_type -> marsagent.wiki.v1.PingReq
-	1, // 1: marsagent.wiki.v1.WikiRetriever.Ping:output_type -> marsagent.wiki.v1.PingResp
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	3, // 0: marsagent.wiki.v1.HybridSearchResp.hits:type_name -> marsagent.wiki.v1.SearchHit
+	7, // 1: marsagent.wiki.v1.GetChunksResp.chunks:type_name -> marsagent.wiki.v1.Chunk
+	0, // 2: marsagent.wiki.v1.WikiRetriever.Ping:input_type -> marsagent.wiki.v1.PingReq
+	2, // 3: marsagent.wiki.v1.WikiRetriever.HybridSearch:input_type -> marsagent.wiki.v1.HybridSearchReq
+	5, // 4: marsagent.wiki.v1.WikiRetriever.GetChunks:input_type -> marsagent.wiki.v1.GetChunksReq
+	1, // 5: marsagent.wiki.v1.WikiRetriever.Ping:output_type -> marsagent.wiki.v1.PingResp
+	4, // 6: marsagent.wiki.v1.WikiRetriever.HybridSearch:output_type -> marsagent.wiki.v1.HybridSearchResp
+	6, // 7: marsagent.wiki.v1.WikiRetriever.GetChunks:output_type -> marsagent.wiki.v1.GetChunksResp
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_wiki_proto_init() }
@@ -169,7 +577,7 @@ func file_wiki_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_wiki_proto_rawDesc), len(file_wiki_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

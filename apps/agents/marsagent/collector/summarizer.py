@@ -41,7 +41,7 @@ async def summarize(text: str, url: str) -> SummaryResult:
             score_m = re.search(r"quality_score[\"s: ]+(\d+)", raw)
             data = {
                 "summary": raw[:300],
-                "quality_score": float(score_m.group(1) or 5),
+                "quality_score": float(score_m.group(1)) if score_m else 5.0,
                 "language": "en",
             }
         return SummaryResult(

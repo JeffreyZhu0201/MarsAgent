@@ -3,6 +3,8 @@
 package api
 
 import (
+	"database/sql"
+
 	"github.com/gin-gonic/gin"
 	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/stream"
@@ -13,6 +15,7 @@ type Deps struct {
 	Producer   stream.TaskProducer
 	Subscriber stream.ProgressSubscriber // Task 4 后半再用到
 	GRPC       *grpcc.WikiClient
+	DB         *sql.DB
 }
 
 func NewRouter(d Deps) *gin.Engine {
@@ -31,6 +34,13 @@ func NewRouter(d Deps) *gin.Engine {
 	}
 	if d.GRPC != nil {
 		api.GET("/grpc-ping", newGRPCPingHandler(d.GRPC))
+	}
+	if d.DB != nil {
+		api.GET("/wiki/tree", wikiTreeHandler(d.DB))
+		api.GET("/wiki/doc/:slug", wikiDocHandler(d.DB))
+	}
+	if d.GRPC != nil {
+		api.POST("/wiki/search", wikiSearchHandler(d.GRPC))
 	}
 	return r
 }
