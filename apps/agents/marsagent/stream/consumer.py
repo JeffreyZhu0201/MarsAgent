@@ -55,7 +55,7 @@ class StreamConsumer:
                     groupname=self.group, consumername=self.consumer,
                     streams={self.stream: "0"}, count=8, block=1,
                 )
-                if pending:
+                if self._has_messages(pending):
                     await self._dispatch_batch(pending)
                     continue
 
@@ -73,6 +73,9 @@ class StreamConsumer:
             if not resp:
                 continue
             await self._dispatch_batch(resp)
+
+    def _has_messages(self, resp) -> bool:
+        return any(messages for _stream_name, messages in (resp or []))
 
     async def _dispatch_batch(self, resp) -> None:
         for _stream_name, messages in resp:
