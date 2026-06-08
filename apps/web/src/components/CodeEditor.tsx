@@ -15,12 +15,20 @@ export function CodeEditor({ example }: { example: CodeExample }) {
   const [error, setError] = useState<string | null>(null)
 
   async function onRun() {
+    const lang = normalizeLang(example.lang)
+    console.debug('[MarsAgent:sandbox] run requested', {
+      title: example.title,
+      lang,
+      codeBytes: new Blob([code]).size,
+    })
     setRunning(true)
     setError(null)
     try {
-      const r = await runSandbox({ lang: normalizeLang(example.lang), code, timeout: 15 })
+      const r = await runSandbox({ lang, code, timeout: 15 })
+      console.debug('[MarsAgent:sandbox] run finished', { title: example.title, result: r })
       setResult(r)
     } catch (e) {
+      console.error('[MarsAgent:sandbox] run failed', { title: example.title, error: e })
       setError(e instanceof Error ? e.message : String(e))
     } finally {
       setRunning(false)

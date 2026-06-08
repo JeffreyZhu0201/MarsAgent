@@ -15,16 +15,28 @@ export function CourseReader() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    listCourses().then(setCourses).catch(console.error)
+    console.debug('[MarsAgent:reader] loading course list')
+    listCourses()
+      .then((items) => {
+        console.debug('[MarsAgent:reader] course list loaded', { count: items.length, items })
+        setCourses(items)
+      })
+      .catch((err) => console.error('[MarsAgent:reader] course list failed', err))
   }, [])
 
   useEffect(() => {
     if (!search.courseId) return
+    console.debug('[MarsAgent:reader] loading course', { courseId: search.courseId })
     getCourse(search.courseId).then((c) => {
+      const parsed = parseOutline(c)
+      console.debug('[MarsAgent:reader] course loaded', { course: c, outlineCount: parsed.length, outline: parsed })
       setCourse(c)
-      const first = parseOutline(c)[0]?.ch_id || ''
+      const first = parsed[0]?.ch_id || ''
       setActive(first)
-    }).catch((e) => setError(e instanceof Error ? e.message : String(e)))
+    }).catch((e) => {
+      console.error('[MarsAgent:reader] course load failed', { courseId: search.courseId, error: e })
+      setError(e instanceof Error ? e.message : String(e))
+    })
   }, [search.courseId])
 
   const outline = useMemo(() => course ? parseOutline(course) : [], [course])
@@ -32,9 +44,24 @@ export function CourseReader() {
 
   useEffect(() => {
     if (!course || !active) return
+    console.debug('[MarsAgent:reader] loading chapter markdown', { courseId: course.id, chId: active })
     getChapterMarkdown(course.id, active)
-      .then(setMd)
-      .catch(() => setMd(activeChapter?.content_md || ''))
+      .then((content) => {
+        console.debug('[MarsAgent:reader] chapter markdown loaded', {
+          courseId: course.id,
+          chId: active,
+          bytes: content.length,
+        })
+        setMd(content)
+      })
+      .catch((err) => {
+        console.warn('[MarsAgent:reader] chapter markdown load failed, using outline content fallback', {
+          courseId: course.id,
+          chId: active,
+          err,
+        })
+        setMd(activeChapter?.content_md || '')
+      })
   }, [course, active, activeChapter])
 
   if (!search.courseId) {

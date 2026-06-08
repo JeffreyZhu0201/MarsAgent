@@ -61,12 +61,38 @@ export interface SandboxResult {
 }
 
 async function json<T>(url: string, init?: RequestInit): Promise<T> {
+  const method = init?.method ?? 'GET'
+  const started = performance.now()
+  console.debug(`[MarsAgent:api] ${method} ${url} -> request`, {
+    body: init?.body ? safeJson(init.body) : undefined,
+  })
   const r = await fetch(url, init)
+  const durationMs = Math.round(performance.now() - started)
   if (!r.ok) {
     const text = await r.text()
-    throw new Error(`${init?.method ?? 'GET'} ${url} failed: ${r.status} ${text}`)
+    console.error(`[MarsAgent:api] ${method} ${url} -> error`, {
+      status: r.status,
+      durationMs,
+      body: text,
+    })
+    throw new Error(`${method} ${url} failed: ${r.status} ${text}`)
   }
-  return r.json()
+  const data = await r.json() as T
+  console.debug(`[MarsAgent:api] ${method} ${url} -> response`, {
+    status: r.status,
+    durationMs,
+    data,
+  })
+  return data
+}
+
+function safeJson(body: BodyInit): unknown {
+  if (typeof body !== 'string') return '[non-string body]'
+  try {
+    return JSON.parse(body)
+  } catch {
+    return body
+  }
 }
 
 export async function postEcho(msg: string): Promise<EchoResponse> {

@@ -31,28 +31,43 @@ export function useSse(taskId: string | null): UseSseState {
     setClosed(false)
     setError(undefined)
 
-    const es = new EventSource(`/api/stream/${encodeURIComponent(taskId)}`)
+    const streamUrl = `/api/stream/${encodeURIComponent(taskId)}`
+    console.debug('[MarsAgent:SSE] connecting', { taskId, streamUrl })
+    const es = new EventSource(streamUrl)
     esRef.current = es
 
-    es.onopen = () => setConnected(true)
+    es.onopen = () => {
+      console.debug('[MarsAgent:SSE] connected', { taskId })
+      setConnected(true)
+    }
     es.onmessage = (e) => {
       try {
         const ev = JSON.parse(e.data) as ProgressEvent
+        console.groupCollapsed(
+          `[MarsAgent:progress] ${ev.type} task=${ev.task_id} agent=${ev.agent ?? '-'}`,
+        )
+        console.debug('event', ev)
+        console.debug('message', ev.message ?? '')
+        if (ev.extra) console.debug('extra', ev.extra)
+        console.groupEnd()
         setEvents((prev) => [...prev, ev])
         if (ev.type === 'task.done' || ev.type === 'task.failed') {
+          console.debug('[MarsAgent:SSE] terminal event, closing', ev)
           es.close()
           setClosed(true)
         }
-      } catch {
-        // 跳过格式异常事件
+      } catch (err) {
+        console.warn('[MarsAgent:SSE] malformed event skipped', { raw: e.data, err })
       }
     }
     es.onerror = () => {
+      console.error('[MarsAgent:SSE] connection error', { taskId })
       setError('connection error')
       es.close()
       setClosed(true)
     }
     return () => {
+      console.debug('[MarsAgent:SSE] cleanup', { taskId })
       es.close()
       esRef.current = null
     }

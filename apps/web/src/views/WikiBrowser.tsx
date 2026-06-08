@@ -19,29 +19,42 @@ export function WikiBrowser() {
   const [content, setContent] = useState<string>('')
 
   useEffect(() => {
+    console.debug('[MarsAgent:wiki] loading tree')
     fetch('/api/wiki/tree')
       .then(r => r.json())
-      .then(d => setDocs(d.docs || []))
-      .catch(console.error)
+      .then(d => {
+        console.debug('[MarsAgent:wiki] tree loaded', { count: (d.docs || []).length, docs: d.docs || [] })
+        setDocs(d.docs || [])
+      })
+      .catch((err) => console.error('[MarsAgent:wiki] tree load failed', err))
   }, [])
 
   function handleSelect(doc: WikiDoc) {
+    console.debug('[MarsAgent:wiki] select doc', doc)
     setSelected(doc)
     fetch(`/api/wiki/doc/${encodeURIComponent(doc.slug)}`)
       .then(r => r.json())
       .then(d => {
+        console.debug('[MarsAgent:wiki] doc loaded', { slug: doc.slug, doc: d })
         const body = d.content || `**Source:** [${d.url}](${d.url})\n\n*(Content from MinIO loads in M3)*\n\n---\n\n## ${d.title}\n\n---\n\n`
         setContent(`# ${d.title}\n\n*Source:* [${d.url}](${d.url})\n\n${body}`)
       })
-      .catch(() => setContent(`# ${doc.title}\n\n*Failed to load content.*`))
+      .catch((err) => {
+        console.error('[MarsAgent:wiki] doc load failed', { doc, err })
+        setContent(`# ${doc.title}\n\n*Failed to load content.*`)
+      })
   }
 
   function handleSearch(q: string) {
+    console.debug('[MarsAgent:rag] search requested', { q, k: 20 })
     if (!q) {
       fetch('/api/wiki/tree')
         .then(r => r.json())
-        .then(d => setDocs(d.docs || []))
-        .catch(console.error)
+        .then(d => {
+          console.debug('[MarsAgent:rag] empty query, restored tree', { count: (d.docs || []).length })
+          setDocs(d.docs || [])
+        })
+        .catch((err) => console.error('[MarsAgent:rag] restore tree failed', err))
       return
     }
     fetch('/api/wiki/search', {
@@ -53,10 +66,12 @@ export function WikiBrowser() {
       .then(d => {
         const seen = new Set<string>()
         const hits: any[] = d.hits || []
+        console.debug('[MarsAgent:rag] raw search hits', { q, count: hits.length, hits })
         const unique = hits.filter((h: any) => {
           if (seen.has(h.doc_id)) return false
           seen.add(h.doc_id); return true
         })
+        console.debug('[MarsAgent:rag] deduped search hits', { q, count: unique.length, hits: unique })
         setDocs(unique.map((h: any) => ({
           slug: h.doc_id,
           title: h.payload?.text?.slice(0, 60) || h.url || '',
@@ -66,7 +81,7 @@ export function WikiBrowser() {
           updated_at: '',
         })))
       })
-      .catch(console.error)
+      .catch((err) => console.error('[MarsAgent:rag] search failed', { q, err }))
   }
 
   return (

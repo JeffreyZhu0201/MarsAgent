@@ -15,15 +15,27 @@ export function CourseBuilder() {
   const { events, connected, closed, error } = useSse(taskId)
 
   useEffect(() => {
-    listCourses().then(setCourses).catch(console.error)
+    console.debug('[MarsAgent:builder] refresh course list', { closed })
+    listCourses()
+      .then((items) => {
+        console.debug('[MarsAgent:builder] course list loaded', { count: items.length, items })
+        setCourses(items)
+      })
+      .catch((err) => console.error('[MarsAgent:builder] course list failed', err))
   }, [closed])
 
   async function onBuild() {
+    const payload = { topic, audience, depth }
+    console.debug('[MarsAgent:builder] create course requested', payload)
     setSubmitting(true)
     try {
-      const r = await createCourse({ topic, audience, depth })
+      const r = await createCourse(payload)
+      console.debug('[MarsAgent:builder] course accepted', r)
       setTaskId(r.task_id)
       setCourseId(r.id)
+    } catch (err) {
+      console.error('[MarsAgent:builder] create course failed', err)
+      throw err
     } finally {
       setSubmitting(false)
     }
