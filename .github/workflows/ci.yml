@@ -1,0 +1,53 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  gateway:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: '1.22' }
+      - name: protoc
+        run: |
+          sudo apt-get update && sudo apt-get install -y protobuf-compiler
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+      - name: gen proto (go only)
+        run: |
+          mkdir -p apps/gateway/gen/proto
+          protoc --proto_path=proto \
+            --go_out=apps/gateway/gen/proto --go_opt=paths=source_relative \
+            --go-grpc_out=apps/gateway/gen/proto --go-grpc_opt=paths=source_relative \
+            proto/wiki.proto
+      - name: test
+        run: cd apps/gateway && go test ./...
+
+  agents:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: install
+        run: |
+          cd apps/agents
+          pip install -e ".[dev]"
+      - name: gen proto
+        run: bash scripts/gen-proto.sh
+      - name: pytest
+        run: cd apps/agents && pytest -q
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm', cache-dependency-path: apps/web/package.json }
+      - name: install
+        run: cd apps/web && npm install
+      - name: build
+        run: cd apps/web && npm run build

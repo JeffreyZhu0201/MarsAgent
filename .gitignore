@@ -36,3 +36,7 @@ infra/.env
 
 # Docker volumes mounted locally
 infra/data/
+
+# Go run artifact
+gateway
+server
