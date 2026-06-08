@@ -41,9 +41,3 @@ async def test_retry_or_dlq_writes_dlq_after_max_attempts(monkeypatch):
     assert rdb.acked == [("course:build:tasks", "g", "1-0")]
 
 
-def test_has_messages_distinguishes_empty_redis_stream_response():
-    c = StreamConsumer(rdb=FakeRedis(), stream="course:build:tasks", group="g", consumer="c")
-
-    assert not c._has_messages([])
-    assert not c._has_messages([[b"course:build:tasks", []]])
-    assert c._has_messages([[b"course:build:tasks", [(b"1-0", {b"data": b"{}"})]]])

@@ -49,16 +49,6 @@ class StreamConsumer:
         log.info("consumer started", extra={"stream": self.stream, "group": self.group})
         while True:
             try:
-                # First drain messages already pending for this consumer. This recovers work
-                # delivered before a worker restart but not acked before process exit.
-                pending = await self.rdb.xreadgroup(
-                    groupname=self.group, consumername=self.consumer,
-                    streams={self.stream: "0"}, count=8, block=1,
-                )
-                if self._has_messages(pending):
-                    await self._dispatch_batch(pending)
-                    continue
-
                 resp = await self.rdb.xreadgroup(
                     groupname=self.group, consumername=self.consumer,
                     streams={self.stream: ">"}, count=8, block=self.block_ms,
@@ -73,9 +63,6 @@ class StreamConsumer:
             if not resp:
                 continue
             await self._dispatch_batch(resp)
-
-    def _has_messages(self, resp) -> bool:
-        return any(messages for _stream_name, messages in (resp or []))
 
     async def _dispatch_batch(self, resp) -> None:
         for _stream_name, messages in resp:
