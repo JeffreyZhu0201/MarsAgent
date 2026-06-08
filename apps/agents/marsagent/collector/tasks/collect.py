@@ -90,13 +90,13 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
         try:
             url_hash_bytes = hashlib.sha256(doc.url.encode()).digest()
             if check_url_seen(url_hash_bytes):
+                await _emit_skip(sink, task_id, doc, "url_seen")
                 continue
-            mark_url_seen(url_hash_bytes)
 
             _, content_simhash_int = compute_hashes(doc.content, doc.url)
             if is_content_duplicate(content_simhash_int):
+                await _emit_skip(sink, task_id, doc, "content_duplicate")
                 continue
-            mark_content_seen(content_simhash_int)
 
             summary_result = await summarize(doc.content, doc.url)
             clean_content = re.sub(r'<[^>]+>', '', doc.content)[:10000]
@@ -131,6 +131,9 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
                     },
                 )
 
+            mark_url_seen(url_hash_bytes)
+            mark_content_seen(content_simhash_int)
+
             written += 1
             await sink.emit(make_event(
                 type_="agent.progress", task_id=task_id, agent="collector",
@@ -141,12 +144,33 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
                     "doc": {"doc_id": doc_id, "title": doc.title, "url": doc.url, "source": doc.source},
                 },
             ))
-        except Exception:
+        except Exception as e:
+            await sink.emit(make_event(
+                type_="agent.error", task_id=task_id, agent="collector",
+                message=f"处理失败: {doc.title or doc.url}: {e}",
+                extra={
+                    "stage": "process_error",
+                    "doc": {"title": doc.title, "url": doc.url, "source": doc.source},
+                    "error": str(e),
+                },
+            ))
             continue
 
     await sink.emit(make_event(
         type_="task.done", task_id=task_id, agent="collector",
         message=f"采集完成，共写入 {written} 篇新文档",
+    ))
+
+
+async def _emit_skip(sink, task_id: str, doc, reason: str) -> None:
+    await sink.emit(make_event(
+        type_="agent.progress", task_id=task_id, agent="collector",
+        message=f"跳过: {doc.title or doc.url} ({reason})",
+        extra={
+            "stage": "skip",
+            "reason": reason,
+            "doc": {"title": doc.title, "url": doc.url, "source": doc.source},
+        },
     ))
 
 
