@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/marsagent/gateway/internal/grpcc"
+	"github.com/marsagent/gateway/internal/sandbox"
 	"github.com/marsagent/gateway/internal/stream"
 	"github.com/marsagent/gateway/internal/store"
 )
@@ -18,6 +19,7 @@ type Deps struct {
 	GRPC       *grpcc.WikiClient
 	DB         *sql.DB
 	CourseStore *store.CourseStore
+	Sandbox    *sandbox.Scheduler
 }
 
 func NewRouter(d Deps) *gin.Engine {
@@ -47,6 +49,9 @@ func NewRouter(d Deps) *gin.Engine {
 	if d.CourseStore != nil && d.Producer != nil {
 		api.POST("/courses", createCourseHandler(d.CourseStore, d.Producer))
 		api.GET("/courses/:id", getCourseHandler(d.CourseStore))
+	}
+	if d.Sandbox != nil {
+		api.POST("/sandbox/run", sandboxRunHandler(d.Sandbox))
 	}
 	return r
 }

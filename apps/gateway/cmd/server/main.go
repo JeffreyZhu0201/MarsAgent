@@ -16,6 +16,7 @@ import (
 	"github.com/marsagent/gateway/internal/api"
 	"github.com/marsagent/gateway/internal/config"
 	"github.com/marsagent/gateway/internal/grpcc"
+	"github.com/marsagent/gateway/internal/sandbox"
 	"github.com/marsagent/gateway/internal/stream"
 	"github.com/marsagent/gateway/internal/store"
 	_ "github.com/lib/pq"
@@ -54,12 +55,19 @@ func main() {
 	}
 	defer wc.Close()
 
+	sch, err := sandbox.NewScheduler()
+	if err != nil {
+		slog.Warn("sandbox scheduler init failed (docker may not be available)", "err", err)
+		sch = nil
+	}
+
 	deps := api.Deps{
 		Producer:    stream.NewRedisProducer(rdb),
 		Subscriber:  stream.NewRedisSubscriber(rdb),
 		GRPC:        wc,
 		DB:          db,
 		CourseStore: store.NewCourseStore(db),
+		Sandbox:     sch,
 	}
 
 	srv := &http.Server{
