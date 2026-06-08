@@ -32,6 +32,7 @@ func NewRouter(d Deps) *gin.Engine {
 	api := r.Group("/api")
 	if d.Producer != nil {
 		api.POST("/echo", newEchoHandler(d.Producer))
+		api.POST("/wiki/collect", wikiCollectHandler(d.Producer))
 	}
 	if d.Subscriber != nil {
 		api.GET("/stream/:task_id", newSSEHandler(d.Subscriber))

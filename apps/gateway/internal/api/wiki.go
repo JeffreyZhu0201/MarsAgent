@@ -2,11 +2,47 @@ package api
 
 import (
 	"database/sql"
+	"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/marsagent/gateway/internal/grpcc"
+	"github.com/marsagent/gateway/internal/stream"
 )
+
+// POST /api/wiki/collect — 触发信息收集 Agent。
+func wikiCollectHandler(prod stream.TaskProducer) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var req struct {
+			Topic        string   `json:"topic" binding:"required"`
+			Sources      []string `json:"sources"`
+			MaxPerSource int      `json:"max_per_source"`
+		}
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		if req.MaxPerSource == 0 {
+			req.MaxPerSource = 5
+		}
+		args, _ := json.Marshal(map[string]any{
+			"topic":          req.Topic,
+			"sources":        req.Sources,
+			"max_per_source": req.MaxPerSource,
+		})
+		taskID := uuid.NewString()
+		if err := prod.Enqueue(c.Request.Context(), stream.TaskEnvelope{
+			TaskID: taskID,
+			Kind:   "wiki.collect",
+			Args:   args,
+		}); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusAccepted, gin.H{"task_id": taskID})
+	}
+}
 
 // GET /api/wiki/tree
 func wikiTreeHandler(db *sql.DB) gin.HandlerFunc {
