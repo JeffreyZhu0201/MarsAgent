@@ -14,7 +14,8 @@ help:
 	@echo "  fmt           格式化全部代码"
 
 infra-up:
-	docker compose -f infra/docker-compose.dev.yml --env-file infra/.env.example up -d
+	test -f infra/.env || cp infra/.env.example infra/.env
+	docker compose -f infra/docker-compose.dev.yml --env-file infra/.env up -d
 
 infra-down:
 	docker compose -f infra/docker-compose.dev.yml down

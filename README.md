@@ -28,9 +28,9 @@ Notes:
 ## Smoke checks
 
 ```bash
-cd apps/gateway && go test ./...
-cd apps/web && npm run build && npm run test:e2e -- --project=chromium tests/course.spec.ts
-cd apps/agents && PYTHONPATH=. pytest tests/test_stream_retry.py -q
+(cd apps/gateway && go test ./...)
+(cd apps/web && npm run build && npm run test:e2e -- --project=chromium tests/course.spec.ts)
+(cd apps/agents && PYTHONPATH=. pytest tests/test_stream_retry.py -q)
 ```
 
 ## 目录

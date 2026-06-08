@@ -106,9 +106,15 @@ func (s *Scheduler) Run(req RunRequest) (*RunResult, error) {
 		Tty:          false,
 		AttachStdout: true,
 		AttachStderr: true,
-		OpenStdin:    req.Stdin != "",
-		StdinOnce:    req.Stdin != "",
 		User:         "65534:65534",
+		Env: []string{
+			"HOME=/tmp",
+			"GOCACHE=/tmp/go-cache",
+			"GOMODCACHE=/tmp/go/pkg/mod",
+			"TMPDIR=/tmp",
+			"USER_CODE=" + req.Code,
+			"USER_STDIN=" + req.Stdin,
+		},
 	}, hostConfig, nil, nil, "")
 	if err != nil {
 		return nil, fmt.Errorf("container create: %w", err)
@@ -137,38 +143,66 @@ func (s *Scheduler) Run(req RunRequest) (*RunResult, error) {
 	}
 	defer logs.Close()
 
-	var stdout, stderr bytes.Buffer
-	if _, err := stdcopy.StdCopy(&stdout, &stderr, logs); err != nil {
-		buf, _ := io.ReadAll(logs)
-		stdout.Write(buf)
+	stdout := newLimitedBuffer(MaxOutputBytes)
+	stderr := newLimitedBuffer(MaxOutputBytes)
+	if _, err := stdcopy.StdCopy(stdout, stderr, logs); err != nil {
+		_, _ = io.Copy(stdout, logs)
 	}
-
-	stdoutText, stdoutTruncated := truncate(stdout.String())
-	stderrText, stderrTruncated := truncate(stderr.String())
 
 	return &RunResult{
 		ExitCode:  exitCode,
-		Stdout:    stdoutText,
-		Stderr:    stderrText,
+		Stdout:    stdout.String(),
+		Stderr:    stderr.String(),
 		Duration:  time.Since(start).Milliseconds(),
-		Truncated: stdoutTruncated || stderrTruncated,
+		Truncated: stdout.Truncated() || stderr.Truncated(),
 	}, nil
 }
 
 func commandFor(req RunRequest) []string {
+	pipe := ""
+	if req.Stdin != "" {
+		pipe = "printf '%s' \"$USER_STDIN\" | "
+	}
 	switch req.Lang {
 	case "node":
-		return []string{"node", "-e", req.Code}
+		return []string{"sh", "-c", pipe + "node -e \"$USER_CODE\""}
 	case "go":
-		return []string{"sh", "-c", "cat > /tmp/main.go <<'EOF'\n" + req.Code + "\nEOF\ncd /tmp && go run main.go"}
+		return []string{"sh", "-c", "mkdir -p /tmp/go-cache /tmp/go/pkg/mod && printf '%s' \"$USER_CODE\" > /tmp/main.go && cd /tmp && " + pipe + "go run main.go"}
 	default:
-		return []string{"python3", "-c", req.Code}
+		return []string{"sh", "-c", pipe + "python3 -c \"$USER_CODE\""}
 	}
 }
 
-func truncate(s string) (string, bool) {
-	if len(s) <= MaxOutputBytes {
-		return s, false
+type limitedBuffer struct {
+	buf       bytes.Buffer
+	max       int
+	truncated bool
+}
+
+func newLimitedBuffer(max int) *limitedBuffer {
+	return &limitedBuffer{max: max}
+}
+
+func (b *limitedBuffer) Write(p []byte) (int, error) {
+	written := len(p)
+	remaining := b.max - b.buf.Len()
+	if remaining <= 0 {
+		b.truncated = true
+		return written, nil
 	}
-	return strings.TrimRight(s[:MaxOutputBytes], "\x00"), true
+	if len(p) > remaining {
+		_, _ = b.buf.Write(p[:remaining])
+		b.truncated = true
+		return written, nil
+	}
+	_, _ = b.buf.Write(p)
+	return written, nil
+}
+
+func (b *limitedBuffer) String() string {
+	return strings.TrimRight(b.buf.String(), "\x00")
+}
+
+func (b *limitedBuffer) Truncated() bool {
+	return b.truncated
 }

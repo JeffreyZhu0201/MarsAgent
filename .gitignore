@@ -5,6 +5,8 @@
 node_modules/
 dist/
 .vite/
+test-results/
+apps/web/test-results/
 *.log
 
 # TypeScript build artifacts
