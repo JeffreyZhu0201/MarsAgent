@@ -19,7 +19,7 @@ dependencies = [
   "playwright==1.48.0",
   "simhash==2.1.2",
   "sentence-transformers==3.0.1",
-  "minio==4.0.17",
+  "minio==7.2.12",
   "qdrant-client==1.12.1",
   "httpx-sse==0.4.0",
   "anthropic==0.40.0",

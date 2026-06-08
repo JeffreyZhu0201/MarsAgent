@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib as _hl
+import io
 import os
 import uuid
 from datetime import datetime, timezone
@@ -76,7 +77,7 @@ async def write_wiki_doc(
     await loop.run_in_executor(
         None,
         lambda: mc.put_object(
-            bucket, storage_path, data_bytes, len(data_bytes),
+            bucket, storage_path, io.BytesIO(data_bytes), len(data_bytes),
             content_type="text/markdown",
         ),
     )
