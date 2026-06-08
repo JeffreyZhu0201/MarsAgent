@@ -43,7 +43,7 @@ func (s *CourseStore) ListCourses(ctx context.Context, limit int) ([]Course, err
 	rows, err := s.db.QueryContext(ctx,
 		`SELECT id,topic,coalesce(audience,''),coalesce(depth,''),status,
 		        coalesce(outline_json,'null'),coalesce(storage_prefix,''),
-		        created_at,updated_at
+		        created_at::text,updated_at::text
 		 FROM courses ORDER BY created_at DESC LIMIT $1`, limit)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func (s *CourseStore) GetCourse(ctx context.Context, id string) (*Course, error)
 	row := s.db.QueryRowContext(ctx,
 		`SELECT id,topic,coalesce(audience,''),coalesce(depth,''),status,
 		        coalesce(outline_json,'null'),coalesce(storage_prefix,''),
-		        created_at,updated_at
+		        created_at::text,updated_at::text
 		 FROM courses WHERE id=$1`, id)
 	var c Course
 	var outlineJSON sql.NullString
