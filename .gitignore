@@ -7,6 +7,12 @@ dist/
 .vite/
 *.log
 
+# TypeScript build artifacts
+*.tsbuildinfo
+apps/web/src/**/*.js
+apps/web/vite.config.js
+apps/web/vite.config.d.ts
+
 # Python
 __pycache__/
 *.py[cod]
@@ -37,6 +43,7 @@ infra/.env
 # Docker volumes mounted locally
 infra/data/
 
-# Go run artifact
-gateway
-server
+# Go run artifacts
+/gateway
+/server
+apps/gateway/server
