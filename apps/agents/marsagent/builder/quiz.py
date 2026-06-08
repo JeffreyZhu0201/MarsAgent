@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 
+from marsagent.llm import model_for
+
 from .state import Chapter, CourseState
 from .prompts import QUIZ_SYSTEM, QUIZ_USER
 
@@ -15,7 +17,7 @@ async def quiz_node(state: CourseState, ch: Chapter, *, client) -> Chapter:
         summary=ch.content_md[:300] if ch.content_md else "(空)",
     )
     resp = client.messages.create(
-        model="claude-haiku-4-5-20251001",
+        model=model_for("haiku"),
         max_tokens=1024,
         system=QUIZ_SYSTEM,
         messages=[{"role": "user", "content": user_prompt}],

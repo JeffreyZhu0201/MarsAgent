@@ -1,0 +1,31 @@
+"""Anthropic-compatible LLM client and model routing."""
+from __future__ import annotations
+
+import os
+from typing import Literal
+
+import anthropic
+
+from marsagent.config import get_settings
+
+ModelTier = Literal["haiku", "sonnet", "opus"]
+
+
+def make_client() -> anthropic.Anthropic:
+    """Create an Anthropic-compatible client from env/settings."""
+    settings = get_settings()
+    api_key = settings.llm_api_key or os.getenv("ANTHROPIC_API_KEY", "")
+    base_url = settings.llm_base_url or os.getenv("ANTHROPIC_BASE_URL", "")
+    kwargs: dict[str, str] = {"api_key": api_key}
+    if base_url:
+        kwargs["base_url"] = base_url
+    return anthropic.Anthropic(**kwargs)
+
+
+def model_for(tier: ModelTier) -> str:
+    settings = get_settings()
+    return {
+        "haiku": settings.model_haiku,
+        "sonnet": settings.model_sonnet,
+        "opus": settings.model_opus,
+    }[tier]

@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 
+from marsagent.llm import model_for
+
 from .state import Chapter, CourseState
 from .prompts import CODEENG_SYSTEM, CODEENG_USER
 
@@ -15,7 +17,7 @@ async def codeeng_node(state: CourseState, ch: Chapter, *, client) -> Chapter:
         summary=ch.content_md[:300] if ch.content_md else "(空)",
     )
     resp = client.messages.create(
-        model="claude-sonnet-4-6",
+        model=model_for("sonnet"),
         max_tokens=2048,
         system=CODEENG_SYSTEM,
         messages=[{"role": "user", "content": user_prompt}],

@@ -2,11 +2,10 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 from dataclasses import dataclass
 
-import anthropic
+from marsagent.llm import make_client, model_for
 
 
 SYSTEM_PROMPT = (
@@ -24,10 +23,10 @@ class SummaryResult:
 
 
 async def summarize(text: str, url: str) -> SummaryResult:
-    client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
+    client = make_client()
     try:
         resp = client.messages.create(
-            model="claude-haiku-4-5-20251001",
+            model=model_for("haiku"),
             max_tokens=512,
             system=SYSTEM_PROMPT,
             messages=[

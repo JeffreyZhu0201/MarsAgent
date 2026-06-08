@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 
+from marsagent.llm import model_for
+
 from .state import Chapter, CourseState
 from .prompts import VALIDATOR_SYSTEM, VALIDATOR_USER
 
@@ -15,7 +17,7 @@ async def validator_node(state: CourseState, ch: Chapter, *, client) -> Chapter:
         content_md=ch.content_md or "(空)",
     )
     resp = client.messages.create(
-        model="claude-sonnet-4-6",
+        model=model_for("sonnet"),
         max_tokens=1024,
         system=VALIDATOR_SYSTEM,
         messages=[{"role": "user", "content": user_prompt}],

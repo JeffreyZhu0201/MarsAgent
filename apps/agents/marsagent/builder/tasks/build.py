@@ -3,14 +3,13 @@ from __future__ import annotations
 
 import io
 import json
-import os
 from dataclasses import asdict
 
-import anthropic
 from sqlalchemy import text
 
 from marsagent.builder.graph import build_course_graph
 from marsagent.builder.state import CourseState
+from marsagent.llm import make_client
 from marsagent.stream.progress import make_event
 
 
@@ -39,8 +38,7 @@ async def handle_build_course(*, task_id: str, args: bytes, sink) -> None:
         current_agent="planner",
     )
 
-    api_key = os.getenv("ANTHROPIC_API_KEY", "")
-    client = anthropic.Anthropic(api_key=api_key)
+    client = make_client()
 
     try:
         # Run DAG

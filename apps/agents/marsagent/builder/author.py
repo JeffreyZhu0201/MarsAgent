@@ -1,6 +1,8 @@
 """Author 节点 — Sonnet 生成章节正文。"""
 from __future__ import annotations
 
+from marsagent.llm import model_for
+
 from .state import Chapter, CourseState
 from .prompts import AUTHOR_SYSTEM, AUTHOR_USER
 
@@ -16,7 +18,7 @@ async def author_node(state: CourseState, ch: Chapter, *, client) -> Chapter:
         k=5,
     )
     resp = client.messages.create(
-        model="claude-sonnet-4-6",
+        model=model_for("sonnet"),
         max_tokens=4096,
         system=AUTHOR_SYSTEM,
         messages=[{"role": "user", "content": user_prompt}],

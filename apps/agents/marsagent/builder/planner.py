@@ -4,13 +4,15 @@ from __future__ import annotations
 import json
 import anthropic
 
+from marsagent.llm import model_for
+
 from .state import Chapter, CourseState
 from .prompts import PLANNER_SYSTEM, PLANNER_USER
 
 
 async def llm_json(client: anthropic.Anthropic, system: str, user: str) -> dict:
     resp = client.messages.create(
-        model="claude-opus-4-8",
+        model=model_for("opus"),
         max_tokens=4096,
         system=system,
         messages=[{"role": "user", "content": user}],

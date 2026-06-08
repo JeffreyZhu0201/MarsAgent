@@ -20,6 +20,12 @@ class Settings(BaseSettings):
     stream_retry_delay_ms: int = 1000
     stream_dlq_suffix: str = ":dlq"
     server_version: str = "m1-dev"
+    # Anthropic-compatible LLM endpoint/model routing.
+    llm_api_key: str = ""
+    llm_base_url: str = ""
+    model_haiku: str = "claude-haiku-4-5-20251001"
+    model_sonnet: str = "claude-sonnet-4-6"
+    model_opus: str = "claude-opus-4-8"
 
 
 _settings: Settings | None = None
