@@ -61,7 +61,7 @@ func wikiTreeHandler(db *sql.DB) gin.HandlerFunc {
 			Source   string `json:"source"`
 			Updated  string `json:"updated_at"`
 		}
-		var docs []Doc
+		docs := make([]Doc, 0)
 		for rows.Next() {
 			var d Doc
 			if err := rows.Scan(&d.Slug, &d.Title, &d.Category, &d.Source, &d.Updated); err == nil {

@@ -27,13 +27,17 @@ class WikiRetrieverServicer(wiki_pb2_grpc.WikiRetrieverServicer):
         from marsagent.collector.chunker import _get_model
         from marsagent.rag.qdrant import qdrant_search, COLLECTION_NAME
 
-        model = _get_model()
-        loop = asyncio.get_event_loop()
-        query_vec = await loop.run_in_executor(
-            None,
-            lambda: model.encode([request.query], normalize_embeddings=True)[0].tolist(),
-        )
-        hits = await qdrant_search(query_vector=query_vec, k=request.k or 10)
+        try:
+            model = _get_model()
+            loop = asyncio.get_event_loop()
+            query_vec = await loop.run_in_executor(
+                None,
+                lambda: model.encode([request.query], normalize_embeddings=True)[0].tolist(),
+            )
+            hits = await qdrant_search(query_vector=query_vec, k=request.k or 10)
+        except Exception:
+            return wiki_pb2.HybridSearchResp(hits=[])
+
         pb_hits = []
         for hit in hits:
             payload = hit["payload"]
