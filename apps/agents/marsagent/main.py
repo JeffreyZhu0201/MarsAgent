@@ -33,30 +33,43 @@ async def lifespan(app: FastAPI):
     await grpc_server.start()
     log.info("grpc listening on :%d", bound_port)
 
-    # 2) Stream consumer
-    consumer = StreamConsumer(
+    # 2) Stream consumers
+    wiki_consumer = StreamConsumer(
         rdb=rdb,
         stream="wiki:collect:tasks",
         group=settings.stream_group,
         consumer=settings.stream_consumer,
     )
-    consumer.register("echo", handle_echo)
-    consumer.register("wiki.collect", handle_collect)
-    consumer.register("course.build", handle_build_course)
-    consumer_task = asyncio.create_task(consumer.run(), name="stream-consumer")
+    wiki_consumer.register("echo", handle_echo)
+    wiki_consumer.register("wiki.collect", handle_collect)
+
+    course_consumer = StreamConsumer(
+        rdb=rdb,
+        stream="course:build:tasks",
+        group=settings.stream_group,
+        consumer=f"{settings.stream_consumer}-course",
+    )
+    course_consumer.register("course.build", handle_build_course)
+
+    consumer_tasks = [
+        asyncio.create_task(wiki_consumer.run(), name="wiki-collect-consumer"),
+        asyncio.create_task(course_consumer.run(), name="course-build-consumer"),
+    ]
 
     app.state.rdb = rdb
     app.state.grpc = grpc_server
-    app.state.consumer_task = consumer_task
+    app.state.consumer_tasks = consumer_tasks
     try:
         yield
     finally:
         log.info("shutting down...")
-        consumer_task.cancel()
-        try:
-            await consumer_task
-        except asyncio.CancelledError:
-            pass
+        for task in consumer_tasks:
+            task.cancel()
+        for task in consumer_tasks:
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
         await grpc_server.stop(grace=2)
         await rdb.aclose()
         log.info("shutdown complete")

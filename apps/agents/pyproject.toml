@@ -15,7 +15,7 @@ dependencies = [
   "structlog==24.4.0",
   "tavily-python==0.3.4",
   "arxiv==2.1.2",
-  "PyGithub==2.4.1",
+  "PyGithub==2.4.0",
   "playwright==1.48.0",
   "simhash==2.1.2",
   "sentence-transformers==3.0.1",

@@ -1,9 +1,7 @@
 """LangGraph DAG — 5-Agent 课程构建工作流。"""
 from __future__ import annotations
 
-import asyncio
-
-from langgraph.graph import StateGraph
+from langgraph.graph import END, StateGraph
 
 from .author import author_node
 from .codeeng import codeeng_node
@@ -17,15 +15,16 @@ def build_course_graph(client) -> StateGraph:
     g = StateGraph(CourseState)
 
     # Planner: generates course outline
-    g.add_node("planner", lambda s: asyncio.run(planner_node(s, client=client)))
+    async def planner_wrapper(state: CourseState) -> CourseState:
+        return await planner_node(state, client=client)
+
+    g.add_node("planner", planner_wrapper)
 
     # Per-chapter fan-out wrappers
     def chapter_fanout(node_fn):
-        def wrapper(state: CourseState) -> CourseState:
+        async def wrapper(state: CourseState) -> CourseState:
             chapters = state.outline or []
-            async def run(ch: Chapter):
-                return await node_fn(state, ch, client=client)
-            results = asyncio.run(asyncio.gather(*[run(c) for c in chapters]))
+            results = [await node_fn(state, ch, client=client) for ch in chapters]
             state.outline = list(results)
             return state
         return wrapper
@@ -49,6 +48,6 @@ def build_course_graph(client) -> StateGraph:
                 return "author"
         return "__end__"
 
-    g.add_conditional_edges("validator", retry_or_done, {"author": "author", "__end__": "validator"})
+    g.add_conditional_edges("validator", retry_or_done, {"author": "author", "__end__": END})
 
     return g.compile()
