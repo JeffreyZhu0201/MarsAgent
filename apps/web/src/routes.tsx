@@ -32,6 +32,9 @@ const builderRoute = createRoute({
 const readerRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/reader',
+  validateSearch: (search: Record<string, unknown>) => ({
+    courseId: typeof search.courseId === 'string' ? search.courseId : undefined,
+  }),
   component: CourseReader,
 })
 
