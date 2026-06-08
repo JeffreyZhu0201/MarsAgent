@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package marsagent.wiki.v1;
+
+option go_package = "github.com/marsagent/gateway/gen/proto/wiki;wikipb";
+
+// M1: 只暴露 Ping，验证双端连通。
+// M2 起补 HybridSearch / GetChunks（spec §5.2）。
+service WikiRetriever {
+  rpc Ping (PingReq) returns (PingResp);
+}
+
+message PingReq {
+  string msg = 1;
+}
+
+message PingResp {
+  string echo = 1;
+  string server_version = 2;
+}
