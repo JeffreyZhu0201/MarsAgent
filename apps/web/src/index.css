@@ -24,4 +24,19 @@
   .glass-button {
     @apply rounded-2xl bg-slate-950/90 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50;
   }
+
+  .agent-pulse {
+    animation: agent-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes agent-pulse {
+  0%, 100% { opacity: 0.75; transform: scaleX(0.82); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-pulse {
+    animation: none;
+  }
 }

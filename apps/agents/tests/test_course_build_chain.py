@@ -16,8 +16,9 @@ class FakeResponse:
 
 
 class FakeMessages:
-    def __init__(self):
+    def __init__(self, outline_count: int = 1):
         self.calls = []
+        self.outline_count = outline_count
 
     def create(self, *, model, max_tokens, system, messages):
         self.calls.append({
@@ -30,14 +31,15 @@ class FakeMessages:
             return FakeResponse(json.dumps({
                 "outline": [
                     {
-                        "ch_id": "ch_01",
-                        "title": "Python 异步基础",
+                        "ch_id": f"ch_{idx:02d}",
+                        "title": "Python 异步基础" if idx == 1 else f"进阶章节 {idx}",
                         "objectives": ["理解事件循环", "会使用 async/await"],
                         "prereqs": ["Python 函数"],
                         "est_min": 30,
                         "bloom_level": "apply",
                         "key_concepts": ["event loop", "coroutine"],
                     }
+                    for idx in range(1, self.outline_count + 1)
                 ]
             }, ensure_ascii=False))
         if "计算机课程讲师" in system:
@@ -67,8 +69,8 @@ class FakeMessages:
 
 
 class FakeClient:
-    def __init__(self):
-        self.messages = FakeMessages()
+    def __init__(self, outline_count: int = 1):
+        self.messages = FakeMessages(outline_count=outline_count)
 
 
 class FakeMinio:
@@ -182,3 +184,40 @@ async def test_handle_build_course_generates_course_artifacts_and_marks_ready(mo
         "claude-haiku-4-5-20251001",
         "claude-sonnet-4-6",
     ]
+
+
+@pytest.mark.asyncio
+async def test_handle_build_course_generates_multiple_chapters(monkeypatch):
+    client = FakeClient(outline_count=3)
+    minio = FakeMinio()
+    engine = FakeEngine()
+    sink = FakeSink()
+
+    monkeypatch.setattr("marsagent.builder.tasks.build.make_client", lambda: client)
+    monkeypatch.setattr("marsagent.collector.storage._get_minio", lambda: minio)
+    monkeypatch.setattr("marsagent.collector.storage._get_engine", lambda: engine)
+    monkeypatch.setenv("BUILDER_MAX_CHAPTERS", "3")
+
+    await handle_build_course(
+        task_id="task-multi",
+        args=json.dumps({
+            "course_id": "course-multi",
+            "topic": "Python 多章节课程",
+            "audience": "Python 开发者",
+            "depth": "advanced",
+        }).encode("utf-8"),
+        sink=sink,
+    )
+
+    assert [obj["path"] for obj in minio.objects] == [
+        "courses/course-multi/ch_01.md",
+        "courses/course-multi/ch_02.md",
+        "courses/course-multi/ch_03.md",
+    ]
+    update = engine.conn.executed[0]
+    outline = json.loads(update["params"]["outline_json"])
+    assert [ch["ch_id"] for ch in outline] == ["ch_01", "ch_02", "ch_03"]
+    assert all(ch["code_examples"] for ch in outline)
+    assert all(ch["quiz"] for ch in outline)
+    assert sink.events[-1]["type"] == "task.done"
+    assert "共 3 章" in sink.events[-1]["message"]
