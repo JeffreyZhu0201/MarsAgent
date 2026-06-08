@@ -72,9 +72,8 @@ class StreamConsumer:
             env = json.loads(raw)
             kind = env["kind"]
             task_id = env["task_id"]
-            args = json.dumps(env.get("args", {})).encode() if isinstance(env.get("args"), dict) \
-                else (env.get("args") or "{}").encode() if isinstance(env.get("args"), str) \
-                else b"{}"
+            raw_args = env.get("args") or {}
+            args = json.dumps(raw_args).encode() if isinstance(raw_args, dict) else b"{}"
         except Exception:
             log.exception("malformed envelope; acking and dropping", extra={"msg_id": msg_id})
             await self.rdb.xack(self.stream, self.group, msg_id)
