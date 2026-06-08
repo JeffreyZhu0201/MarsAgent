@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import dataclass
 
@@ -23,6 +24,9 @@ class SummaryResult:
 
 
 async def summarize(text: str, url: str) -> SummaryResult:
+    if os.getenv("COLLECTOR_USE_LLM_SUMMARY", "false").lower() != "true":
+        return SummaryResult(summary=text[:500], quality_score=5.0, language="en")
+
     client = make_client()
     try:
         resp = client.messages.create(
