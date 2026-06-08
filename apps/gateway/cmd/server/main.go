@@ -17,6 +17,7 @@ import (
 	"github.com/marsagent/gateway/internal/config"
 	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/stream"
+	"github.com/marsagent/gateway/internal/store"
 	_ "github.com/lib/pq"
 	"github.com/redis/go-redis/v9"
 )
@@ -54,10 +55,11 @@ func main() {
 	defer wc.Close()
 
 	deps := api.Deps{
-		Producer:   stream.NewRedisProducer(rdb),
-		Subscriber: stream.NewRedisSubscriber(rdb),
-		GRPC:       wc,
-		DB:         db,
+		Producer:    stream.NewRedisProducer(rdb),
+		Subscriber:  stream.NewRedisSubscriber(rdb),
+		GRPC:        wc,
+		DB:          db,
+		CourseStore: store.NewCourseStore(db),
 	}
 
 	srv := &http.Server{

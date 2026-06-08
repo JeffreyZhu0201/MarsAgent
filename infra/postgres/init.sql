@@ -31,3 +31,17 @@ create table if not exists wiki_docs (
   storage_path text not null,
   constraint unique_url_hash unique (url_hash)
 );
+
+-- M3: 课程表
+create table if not exists courses (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid null,
+  topic text not null,
+  audience text,
+  depth text,
+  status text not null default 'pending',
+  outline_json jsonb,
+  storage_prefix text not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);

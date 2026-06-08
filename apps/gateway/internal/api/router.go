@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/stream"
+	"github.com/marsagent/gateway/internal/store"
 )
 
 // Deps 聚合 handler 间共享的依赖。
@@ -16,6 +17,7 @@ type Deps struct {
 	Subscriber stream.ProgressSubscriber // Task 4 后半再用到
 	GRPC       *grpcc.WikiClient
 	DB         *sql.DB
+	CourseStore *store.CourseStore
 }
 
 func NewRouter(d Deps) *gin.Engine {
@@ -41,6 +43,10 @@ func NewRouter(d Deps) *gin.Engine {
 	}
 	if d.GRPC != nil {
 		api.POST("/wiki/search", wikiSearchHandler(d.GRPC))
+	}
+	if d.CourseStore != nil && d.Producer != nil {
+		api.POST("/courses", createCourseHandler(d.CourseStore, d.Producer))
+		api.GET("/courses/:id", getCourseHandler(d.CourseStore))
 	}
 	return r
 }
