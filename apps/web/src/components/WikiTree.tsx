@@ -1,4 +1,4 @@
-interface WikiDoc { slug: string; title: string; category: string; source: string; updated_at: string }
+interface WikiDoc { slug: string; title: string; category: string; source: string; url: string; updated_at: string }
 
 export function WikiTree({
   docs,
