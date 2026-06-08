@@ -1,5 +1,26 @@
 export interface EchoResponse { task_id: string }
 
+export interface WikiCollectRequest {
+  topic: string
+  sources?: string[]
+  max_per_source?: number
+}
+
+export interface WikiCollectResponse {
+  task_id: string
+}
+
+export interface RagHit {
+  doc_id: string
+  chunk_id: string
+  text: string
+  score: number
+  url: string
+  source: string
+  title?: string
+  payload?: Record<string, unknown>
+}
+
 export interface CourseCreateRequest {
   topic: string
   audience?: string
@@ -101,6 +122,23 @@ export async function postEcho(msg: string): Promise<EchoResponse> {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ msg }),
   })
+}
+
+export async function collectWiki(req: WikiCollectRequest): Promise<WikiCollectResponse> {
+  return json('/api/wiki/collect', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(req),
+  })
+}
+
+export async function searchWiki(q: string, k = 20): Promise<RagHit[]> {
+  const r = await json<{ hits: RagHit[] }>('/api/wiki/search', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ q, k }),
+  })
+  return r.hits || []
 }
 
 export async function createCourse(req: CourseCreateRequest): Promise<CourseCreateResponse> {

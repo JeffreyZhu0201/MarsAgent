@@ -10,17 +10,17 @@ const items = [
 export function NavBar() {
   const { location } = useRouterState()
   return (
-    <header className="border-b bg-white">
-      <nav className="max-w-6xl mx-auto px-6 h-14 flex items-center gap-6">
-        <div className="font-semibold text-lg">MarsAgent</div>
+    <header className="sticky top-0 z-50 border-b border-white/50 bg-white/45 backdrop-blur-2xl">
+      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center gap-6">
+        <div className="font-semibold text-lg tracking-tight">MarsAgent</div>
         <div className="flex gap-4 text-sm">
           {items.map((i) => (
             <Link
               key={i.to}
               to={i.to}
               className={clsx(
-                'px-2 py-1 rounded hover:bg-slate-100',
-                location.pathname.startsWith(i.to) && 'bg-slate-100 font-medium',
+                'rounded-full px-3 py-1.5 transition hover:bg-white/70',
+                location.pathname.startsWith(i.to) && 'bg-white/80 font-medium shadow-sm',
               )}
             >
               {i.label}

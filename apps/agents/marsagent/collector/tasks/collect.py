@@ -62,6 +62,18 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
             async for doc in adapter.search(topic, max_results=max_per_source):
                 docs.append(doc)
             all_docs.extend(docs)
+            await sink.emit(make_event(
+                type_="agent.progress", task_id=task_id, agent="collector",
+                message=f"{src} 新发现 {len(docs)} 条",
+                extra={
+                    "stage": "discover",
+                    "source": src,
+                    "docs": [
+                        {"title": d.title, "url": d.url, "source": d.source}
+                        for d in docs[:20]
+                    ],
+                },
+            ))
         except Exception as e:
             await sink.emit(make_event(
                 type_="agent.error", task_id=task_id, agent="collector",
@@ -124,6 +136,10 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
                 type_="agent.progress", task_id=task_id, agent="collector",
                 pct=int(written / max(len(all_docs), 1) * 100),
                 message=f"已处理 {written}/{len(all_docs)} 篇",
+                extra={
+                    "stage": "write_wiki",
+                    "doc": {"doc_id": doc_id, "title": doc.title, "url": doc.url, "source": doc.source},
+                },
             ))
         except Exception:
             continue
