@@ -3,6 +3,7 @@ M1 只实现 Ping；M2 起补 HybridSearch / GetChunks。
 """
 from __future__ import annotations
 
+import asyncio
 import grpc
 
 from marsagent.config import get_settings
@@ -19,6 +20,52 @@ class WikiRetrieverServicer(wiki_pb2_grpc.WikiRetrieverServicer):
         context: grpc.aio.ServicerContext,
     ) -> wiki_pb2.PingResp:
         return wiki_pb2.PingResp(echo=request.msg, server_version=self._version)
+
+    async def HybridSearch(
+        self, request, context
+    ):
+        from marsagent.collector.chunker import _get_model
+        from marsagent.rag.qdrant import qdrant_search, COLLECTION_NAME
+
+        model = _get_model()
+        loop = asyncio.get_event_loop()
+        query_vec = await loop.run_in_executor(
+            None,
+            lambda: model.encode([request.query], normalize_embeddings=True)[0].tolist(),
+        )
+        hits = await qdrant_search(query_vector=query_vec, k=request.k or 10)
+        pb_hits = []
+        for hit in hits:
+            payload = hit["payload"]
+            pb_hits.append(wiki_pb2.SearchHit(
+                doc_id=payload.get("doc_id", ""),
+                chunk_id=hit["id"],
+                text=payload.get("text", ""),
+                score=hit["score"],
+                url=payload.get("url", ""),
+                source=payload.get("source", ""),
+                title="",
+            ))
+        return wiki_pb2.HybridSearchResp(hits=pb_hits)
+
+    async def GetChunks(
+        self, request, context
+    ):
+        from marsagent.rag.qdrant import _get_client, COLLECTION_NAME
+
+        client = _get_client()
+        points = client.retrieve(collection_name=COLLECTION_NAME, ids=request.chunk_ids)
+        chunks = []
+        for p in points:
+            chunks.append(wiki_pb2.Chunk(
+                id=p.id,
+                doc_id=p.payload.get("doc_id", ""),
+                chunk_idx=p.payload.get("chunk_idx", 0),
+                text=p.payload.get("text", ""),
+                url=p.payload.get("url", ""),
+                source=p.payload.get("source", ""),
+            ))
+        return wiki_pb2.GetChunksResp(chunks=chunks)
 
 
 async def build_grpc_server(port: int | None = None) -> tuple[grpc.aio.Server, int]:
