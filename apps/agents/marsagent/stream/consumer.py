@@ -72,6 +72,7 @@ class StreamConsumer:
             env = json.loads(raw)
             kind = env["kind"]
             task_id = env["task_id"]
+            attempts = int(env.get("attempts") or 0)
             raw_args = env.get("args") or {}
             args = json.dumps(raw_args).encode() if isinstance(raw_args, dict) else b"{}"
         except Exception:
@@ -92,7 +93,45 @@ class StreamConsumer:
             log.exception("handler failed", extra={"kind": kind, "task_id": task_id})
             await sink.emit(make_event(
                 type_="agent.error", task_id=task_id, agent=kind,
-                message=str(e),
+                message=str(e), extra={"attempts": attempts},
             ))
-        finally:
-            await self.rdb.xack(self.stream, self.group, msg_id)
+            await self._retry_or_dlq(msg_id=msg_id, env=env, reason=str(e))
+            return
+
+        await self.rdb.xack(self.stream, self.group, msg_id)
+
+    async def _retry_or_dlq(self, *, msg_id: str, env: dict, reason: str) -> None:
+        from marsagent.config import get_settings
+
+        settings = get_settings()
+        attempts = int(env.get("attempts") or 0) + 1
+        task_id = env.get("task_id", "")
+        kind = env.get("kind", "unknown")
+        env["attempts"] = attempts
+        env["last_error"] = reason
+
+        if attempts >= settings.stream_max_attempts:
+            dlq = f"{self.stream}{settings.stream_dlq_suffix}"
+            await self.rdb.xadd(dlq, {"data": json.dumps(env)})
+            sink: ProgressSink = RedisProgressSink(rdb=self.rdb, task_id=task_id)
+            await sink.emit(make_event(
+                type_="task.failed",
+                task_id=task_id,
+                agent=kind,
+                message=f"任务失败，已进入 DLQ: {reason}",
+                extra={"attempts": attempts, "dlq": dlq},
+            ))
+        else:
+            if settings.stream_retry_delay_ms > 0:
+                await asyncio.sleep(settings.stream_retry_delay_ms / 1000)
+            await self.rdb.xadd(self.stream, {"data": json.dumps(env)})
+            sink: ProgressSink = RedisProgressSink(rdb=self.rdb, task_id=task_id)
+            await sink.emit(make_event(
+                type_="agent.retry",
+                task_id=task_id,
+                agent=kind,
+                message=f"任务失败，准备重试 {attempts}/{settings.stream_max_attempts}: {reason}",
+                extra={"attempts": attempts},
+            ))
+
+        await self.rdb.xack(self.stream, self.group, msg_id)

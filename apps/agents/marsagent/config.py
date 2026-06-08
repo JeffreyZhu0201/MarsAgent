@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     # 任务消费配置
     stream_group: str = "agents-workers"
     stream_consumer: str = "worker-1"
+    stream_max_attempts: int = 3
+    stream_retry_delay_ms: int = 1000
+    stream_dlq_suffix: str = ":dlq"
     server_version: str = "m1-dev"
 
 
