@@ -24,7 +24,12 @@ python -m grpc_tools.protoc \
   --grpc_python_out="$PY_OUT" \
   "$PROTO_DIR/wiki.proto"
 
-# Python 生成的 import 是 `import wiki_pb2`（同目录），无需修补
+# Python 生成的 import 是 `import wiki_pb2`，包内导入需要修补为相对导入。
+python - <<PY
+from pathlib import Path
+p = Path(r"$PY_OUT") / "wiki_pb2_grpc.py"
+p.write_text(p.read_text().replace("import wiki_pb2 as wiki__pb2", "from . import wiki_pb2 as wiki__pb2"))
+PY
 touch "$PY_OUT/__init__.py"
 
 echo "==> Done"
