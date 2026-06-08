@@ -16,6 +16,9 @@ class FakeRedis:
     async def xack(self, stream, group, msg_id):
         self.acked.append((stream, group, msg_id))
 
+    async def expire(self, key, seconds):
+        self.expired = (key, seconds)
+
 
 @pytest.mark.asyncio
 async def test_retry_or_dlq_writes_dlq_after_max_attempts(monkeypatch):
