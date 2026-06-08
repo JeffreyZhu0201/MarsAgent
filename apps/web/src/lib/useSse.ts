@@ -39,7 +39,7 @@ export function useSse(taskId: string | null): UseSseState {
       try {
         const ev = JSON.parse(e.data) as ProgressEvent
         setEvents((prev) => [...prev, ev])
-        if (ev.type === 'task.done') {
+        if (ev.type === 'task.done' || ev.type === 'task.failed') {
           es.close()
           setClosed(true)
         }

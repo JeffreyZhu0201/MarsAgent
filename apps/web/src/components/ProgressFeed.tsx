@@ -5,8 +5,10 @@ const badge: Record<string, string> = {
   'agent.start': 'bg-blue-100 text-blue-700',
   'agent.progress': 'bg-amber-100 text-amber-700',
   'agent.error': 'bg-red-100 text-red-700',
+  'agent.retry': 'bg-purple-100 text-purple-700',
   'agent.done': 'bg-emerald-100 text-emerald-700',
   'task.done': 'bg-emerald-200 text-emerald-800 font-medium',
+  'task.failed': 'bg-red-200 text-red-800 font-medium',
 }
 
 export function ProgressFeed({ events }: { events: ProgressEvent[] }) {

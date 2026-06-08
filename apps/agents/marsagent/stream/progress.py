@@ -48,7 +48,9 @@ class RedisProgressSink:
     rdb: aioredis.Redis
     task_id: str
     stream_prefix: str = "progress:"
+    ttl_seconds: int = 24 * 60 * 60
 
     async def emit(self, event: dict[str, Any]) -> None:
         key = f"{self.stream_prefix}{self.task_id}"
         await self.rdb.xadd(key, {"data": json.dumps(event)})
+        await self.rdb.expire(key, self.ttl_seconds)

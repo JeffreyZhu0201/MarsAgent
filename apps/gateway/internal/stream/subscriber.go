@@ -82,8 +82,8 @@ func (s *RedisSubscriber) Subscribe(ctx context.Context, taskID string) (<-chan 
 						return
 					case out <- ev:
 					}
-					// 收到 task.done 后主动结束
-					if ev.Type == "task.done" {
+					// 收到终态事件后主动结束
+					if ev.Type == "task.done" || ev.Type == "task.failed" {
 						return
 					}
 				}
