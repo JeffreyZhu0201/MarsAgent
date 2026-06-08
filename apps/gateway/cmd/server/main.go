@@ -14,6 +14,8 @@ import (
 
 	"github.com/marsagent/gateway/internal/api"
 	"github.com/marsagent/gateway/internal/config"
+	"github.com/marsagent/gateway/internal/stream"
+	"github.com/redis/go-redis/v9"
 )
 
 func main() {
@@ -23,9 +25,19 @@ func main() {
 		os.Exit(1)
 	}
 
+	rdb := redis.NewClient(mustParseRedis(cfg.RedisURL))
+	if err := rdb.Ping(context.Background()).Err(); err != nil {
+		slog.Error("redis ping failed", "err", err)
+		os.Exit(1)
+	}
+	deps := api.Deps{
+		Producer:   stream.NewRedisProducer(rdb),
+		Subscriber: stream.NewRedisSubscriber(rdb),
+	}
+
 	srv := &http.Server{
 		Addr:              fmt.Sprintf(":%d", cfg.HTTPPort),
-		Handler:           api.NewRouter(api.Deps{}),
+		Handler:           api.NewRouter(deps),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 
@@ -51,4 +63,13 @@ func main() {
 		os.Exit(1)
 	}
 	slog.Info("gateway stopped")
+}
+
+func mustParseRedis(url string) *redis.Options {
+	opts, err := redis.ParseURL(url)
+	if err != nil {
+		slog.Error("redis url parse failed", "url", url, "err", err)
+		os.Exit(1)
+	}
+	return opts
 }
