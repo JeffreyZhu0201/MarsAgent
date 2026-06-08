@@ -32,7 +32,7 @@ gateway:
 	cd apps/gateway && go run ./cmd/server
 
 agents:
-	cd apps/agents && uvicorn marsagent.main:app --reload --port 8001
+	cd apps/agents && PYTHONPATH=. uvicorn marsagent.main:app --reload --port 8001
 
 web:
 	cd apps/web && npm run dev
@@ -42,8 +42,8 @@ proto:
 
 test:
 	cd apps/gateway && go test ./... && \
-	cd ../agents && pytest -q && \
-	cd ../web && npm test --silent
+	cd ../agents && PYTHONPATH=. pytest -q && \
+	cd ../web && npm run build && npm run test:e2e -- --project=chromium tests/course.spec.ts
 
 fmt:
 	cd apps/gateway && go fmt ./... && \
