@@ -15,6 +15,7 @@ from fastapi import FastAPI
 from marsagent.config import get_settings
 from marsagent.grpcs.server import build_grpc_server
 from marsagent.stream.consumer import StreamConsumer
+from marsagent.collector.tasks.collect import handle_collect
 from marsagent.tasks.echo import handle_echo
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -39,6 +40,7 @@ async def lifespan(app: FastAPI):
         consumer=settings.stream_consumer,
     )
     consumer.register("echo", handle_echo)
+    consumer.register("wiki.collect", handle_collect)
     consumer_task = asyncio.create_task(consumer.run(), name="stream-consumer")
 
     app.state.rdb = rdb
