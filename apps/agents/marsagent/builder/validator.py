@@ -28,7 +28,8 @@ async def validator_node(state: CourseState, ch: Chapter, *, client) -> Chapter:
         end = raw.rfind("}") + 1
         verdict = json.loads(raw[start:end])
         if not verdict.get("pass", True):
-            ch.status = "failed"
+            # MVP 不让 validator 阻塞整门课生成；问题记录到 state.error，
+            # 后续 M5+ 可在 UI 上展示并触发人工/自动修订。
             state.error = "; ".join(verdict.get("issues", []))
     except Exception:
         pass  # validator 解析失败不阻塞，视为通过
