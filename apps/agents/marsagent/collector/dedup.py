@@ -12,7 +12,7 @@ _known_simhashes: dict[int, bool] = {}
 
 def compute_hashes(text: str, url: str) -> tuple[bytes, int]:
     url_hash = hashlib.sha256(url.encode()).digest()
-    content_simhash_int = simhash.compute(text)
+    content_simhash_int = simhash.Simhash(text).value
     return url_hash, content_simhash_int
 
 
@@ -26,7 +26,7 @@ def mark_url_seen(url_hash: bytes):
 
 def is_content_duplicate(content_simhash_int: int) -> bool:
     for known, _ in _known_simhashes.items():
-        dist = simhash.get_num_bits_different(content_simhash_int, known)
+        dist = (content_simhash_int ^ known).bit_count()
         if dist <= 3:
             return True
     return False
