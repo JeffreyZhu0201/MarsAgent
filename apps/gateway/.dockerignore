@@ -1,0 +1,6 @@
+gen/
+bin/
+tests/
+*.md
+.dockerignore
+Dockerfile
