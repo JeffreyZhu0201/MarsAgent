@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import anthropic
 
+from marsagent.config import get_settings
 from marsagent.llm import model_for, response_text
 
 from .state import Chapter, CourseState
@@ -33,7 +34,8 @@ async def planner_node(state: CourseState, *, client: anthropic.Anthropic, rag_t
         wiki_context="（Wiki 搜索在 M4 补全；M3 用 LLM 自身知识）",
     )
     result = await llm_json(client, PLANNER_SYSTEM, user_prompt)
-    outline_data = result.get("outline", [])
+    max_chapters = max(1, get_settings().builder_max_chapters)
+    outline_data = result.get("outline", [])[:max_chapters]
     chapters = [
         Chapter(
             ch_id=ch["ch_id"],
