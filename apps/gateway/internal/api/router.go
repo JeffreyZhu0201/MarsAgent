@@ -8,18 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/sandbox"
-	"github.com/marsagent/gateway/internal/stream"
 	"github.com/marsagent/gateway/internal/store"
+	"github.com/marsagent/gateway/internal/stream"
 )
 
 // Deps 聚合 handler 间共享的依赖。
 type Deps struct {
-	Producer   stream.TaskProducer
-	Subscriber stream.ProgressSubscriber // Task 4 后半再用到
-	GRPC       *grpcc.WikiClient
-	DB         *sql.DB
+	Producer    stream.TaskProducer
+	Subscriber  stream.ProgressSubscriber // Task 4 后半再用到
+	GRPC        *grpcc.WikiClient
+	DB          *sql.DB
 	CourseStore *store.CourseStore
-	Sandbox    *sandbox.Scheduler
+	Sandbox     *sandbox.Scheduler
 }
 
 func NewRouter(d Deps) *gin.Engine {
@@ -46,9 +46,13 @@ func NewRouter(d Deps) *gin.Engine {
 	if d.GRPC != nil {
 		api.POST("/wiki/search", wikiSearchHandler(d.GRPC))
 	}
+	if d.CourseStore != nil {
+		api.GET("/courses", listCoursesHandler(d.CourseStore))
+		api.GET("/courses/:id", getCourseHandler(d.CourseStore))
+		api.GET("/courses/:id/chapter/:ch_id", getCourseChapterHandler(d.CourseStore))
+	}
 	if d.CourseStore != nil && d.Producer != nil {
 		api.POST("/courses", createCourseHandler(d.CourseStore, d.Producer))
-		api.GET("/courses/:id", getCourseHandler(d.CourseStore))
 	}
 	if d.Sandbox != nil {
 		api.POST("/sandbox/run", sandboxRunHandler(d.Sandbox))

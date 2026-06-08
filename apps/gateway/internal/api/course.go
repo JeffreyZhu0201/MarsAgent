@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/marsagent/gateway/internal/stream"
 	"github.com/marsagent/gateway/internal/store"
+	"github.com/marsagent/gateway/internal/stream"
 )
 
 // POST /api/courses — 创建课程并触发建课任务。
@@ -47,6 +47,18 @@ func createCourseHandler(cs *store.CourseStore, prod stream.TaskProducer) gin.Ha
 	}
 }
 
+// GET /api/courses — list recent courses.
+func listCoursesHandler(cs *store.CourseStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		courses, err := cs.ListCourses(c.Request.Context(), 20)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"courses": courses})
+	}
+}
+
 // GET /api/courses/:id — 获取课程信息。
 func getCourseHandler(cs *store.CourseStore) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -61,5 +73,21 @@ func getCourseHandler(cs *store.CourseStore) gin.HandlerFunc {
 			return
 		}
 		c.JSON(http.StatusOK, course)
+	}
+}
+
+// GET /api/courses/:id/chapter/:ch_id — fetch chapter markdown.
+func getCourseChapterHandler(cs *store.CourseStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		md, err := cs.GetChapterMarkdown(c.Request.Context(), c.Param("id"), c.Param("ch_id"))
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+			return
+		}
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"content": md})
 	}
 }
