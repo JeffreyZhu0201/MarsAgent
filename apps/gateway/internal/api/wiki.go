@@ -115,6 +115,10 @@ func wikiSearchHandler(wc *grpcc.WikiClient) gin.HandlerFunc {
 			c.JSON(http.StatusBadGateway, gin.H{"error": "search failed"})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"hits": resp.Hits})
+		var hits any = resp.Hits
+		if resp.Hits == nil {
+			hits = []any{}
+		}
+		c.JSON(http.StatusOK, gin.H{"hits": hits})
 	}
 }
