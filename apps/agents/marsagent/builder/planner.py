@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import anthropic
 
-from marsagent.llm import model_for
+from marsagent.llm import model_for, response_text
 
 from .state import Chapter, CourseState
 from .prompts import PLANNER_SYSTEM, PLANNER_USER
@@ -17,7 +17,7 @@ async def llm_json(client: anthropic.Anthropic, system: str, user: str) -> dict:
         system=system,
         messages=[{"role": "user", "content": user}],
     )
-    raw = resp.content[0].text
+    raw = response_text(resp)
     start = raw.find("{")
     end = raw.rfind("}") + 1
     return json.loads(raw[start:end])

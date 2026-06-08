@@ -29,3 +29,19 @@ def model_for(tier: ModelTier) -> str:
         "sonnet": settings.model_sonnet,
         "opus": settings.model_opus,
     }[tier]
+
+
+def response_text(resp) -> str:
+    """Extract visible text from Anthropic-compatible responses.
+
+    Some providers return reasoning/thinking blocks before the final text block. The
+    Anthropic SDK can deserialize those provider-specific blocks as content entries
+    whose `.text` is None, so callers must scan for actual text instead of assuming
+    `content[0].text` is the answer.
+    """
+    parts: list[str] = []
+    for block in getattr(resp, "content", []) or []:
+        text = getattr(block, "text", None)
+        if isinstance(text, str) and text:
+            parts.append(text)
+    return "\n".join(parts).strip()

@@ -20,6 +20,8 @@ dependencies = [
   "simhash==2.1.2",
   "sentence-transformers==3.0.1",
   "minio==7.2.12",
+  "SQLAlchemy==2.0.36",
+  "psycopg2-binary==2.9.11",
   "qdrant-client==1.12.1",
   "httpx-sse==0.4.0",
   "anthropic==0.40.0",

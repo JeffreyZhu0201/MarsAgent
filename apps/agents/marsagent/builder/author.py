@@ -1,7 +1,7 @@
 """Author 节点 — Sonnet 生成章节正文。"""
 from __future__ import annotations
 
-from marsagent.llm import model_for
+from marsagent.llm import model_for, response_text
 
 from .state import Chapter, CourseState
 from .prompts import AUTHOR_SYSTEM, AUTHOR_USER
@@ -23,6 +23,6 @@ async def author_node(state: CourseState, ch: Chapter, *, client) -> Chapter:
         system=AUTHOR_SYSTEM,
         messages=[{"role": "user", "content": user_prompt}],
     )
-    ch.content_md = resp.content[0].text
+    ch.content_md = response_text(resp)
     ch.status = "done"
     return ch

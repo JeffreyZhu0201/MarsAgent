@@ -5,7 +5,7 @@ import json
 import re
 from dataclasses import dataclass
 
-from marsagent.llm import make_client, model_for
+from marsagent.llm import make_client, model_for, response_text
 
 
 SYSTEM_PROMPT = (
@@ -33,7 +33,7 @@ async def summarize(text: str, url: str) -> SummaryResult:
                 {"role": "user", "content": f"Summarize this document from {url}:\n\n{text[:8000]}"}
             ],
         )
-        raw = resp.content[0].text
+        raw = response_text(resp)
         try:
             data = json.loads(raw)
         except Exception:

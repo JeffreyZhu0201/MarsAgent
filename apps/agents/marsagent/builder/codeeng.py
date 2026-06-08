@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 
-from marsagent.llm import model_for
+from marsagent.llm import model_for, response_text
 
 from .state import Chapter, CourseState
 from .prompts import CODEENG_SYSTEM, CODEENG_USER
@@ -22,7 +22,7 @@ async def codeeng_node(state: CourseState, ch: Chapter, *, client) -> Chapter:
         system=CODEENG_SYSTEM,
         messages=[{"role": "user", "content": user_prompt}],
     )
-    raw = resp.content[0].text
+    raw = response_text(resp)
     try:
         start = raw.find("[")
         end = raw.rfind("]") + 1
