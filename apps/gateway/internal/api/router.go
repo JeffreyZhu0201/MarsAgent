@@ -4,6 +4,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/stream"
 )
 
@@ -11,6 +12,7 @@ import (
 type Deps struct {
 	Producer   stream.TaskProducer
 	Subscriber stream.ProgressSubscriber // Task 4 后半再用到
+	GRPC       *grpcc.WikiClient
 }
 
 func NewRouter(d Deps) *gin.Engine {
@@ -26,6 +28,9 @@ func NewRouter(d Deps) *gin.Engine {
 	}
 	if d.Subscriber != nil {
 		api.GET("/stream/:task_id", newSSEHandler(d.Subscriber))
+	}
+	if d.GRPC != nil {
+		api.GET("/grpc-ping", newGRPCPingHandler(d.GRPC))
 	}
 	return r
 }

@@ -14,6 +14,7 @@ import (
 
 	"github.com/marsagent/gateway/internal/api"
 	"github.com/marsagent/gateway/internal/config"
+	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/stream"
 	"github.com/redis/go-redis/v9"
 )
@@ -30,9 +31,18 @@ func main() {
 		slog.Error("redis ping failed", "err", err)
 		os.Exit(1)
 	}
+
+	wc, err := grpcc.Dial(cfg.GRPCTarget)
+	if err != nil {
+		slog.Error("grpc dial failed", "target", cfg.GRPCTarget, "err", err)
+		os.Exit(1)
+	}
+	defer wc.Close()
+
 	deps := api.Deps{
 		Producer:   stream.NewRedisProducer(rdb),
 		Subscriber: stream.NewRedisSubscriber(rdb),
+		GRPC:       wc,
 	}
 
 	srv := &http.Server{
