@@ -40,7 +40,7 @@ func (c *WikiClient) Ping(ctx context.Context, msg string) (string, string, erro
 }
 
 func (c *WikiClient) HybridSearch(ctx context.Context, query string, k int, opts []grpc.CallOption) (*wikipb.HybridSearchResp, error) {
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 	return c.cli.HybridSearch(ctx, &wikipb.HybridSearchReq{Query: query, K: int32(k)}, opts...)
 }

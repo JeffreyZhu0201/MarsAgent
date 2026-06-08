@@ -25,9 +25,16 @@ class WikiRetrieverServicer(wiki_pb2_grpc.WikiRetrieverServicer):
         self, request, context
     ):
         from marsagent.collector.chunker import _get_model
-        from marsagent.rag.qdrant import qdrant_search, COLLECTION_NAME
+        from marsagent.rag.qdrant import COLLECTION_NAME, _get_client, qdrant_search
 
         try:
+            client = _get_client()
+            names = [c.name for c in client.get_collections().collections]
+            if COLLECTION_NAME not in names:
+                return wiki_pb2.HybridSearchResp(hits=[])
+            if client.count(collection_name=COLLECTION_NAME, exact=False).count == 0:
+                return wiki_pb2.HybridSearchResp(hits=[])
+
             model = _get_model()
             loop = asyncio.get_event_loop()
             query_vec = await loop.run_in_executor(
