@@ -23,7 +23,7 @@ func createCourseHandler(cs *store.CourseStore, prod stream.TaskProducer) gin.Ha
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		id, err := cs.CreateCourse(c.Request.Context(), req.Topic)
+		id, err := cs.CreateCourse(c.Request.Context(), req.Topic, req.Audience, req.Depth)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

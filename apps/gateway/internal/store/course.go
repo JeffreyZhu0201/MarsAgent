@@ -128,10 +128,11 @@ func (s *CourseStore) GetChapterMarkdown(ctx context.Context, courseID, chID str
 }
 
 // CreateCourse inserts a pending course and returns its id.
-func (s *CourseStore) CreateCourse(ctx context.Context, topic string) (id string, err error) {
+func (s *CourseStore) CreateCourse(ctx context.Context, topic, audience, depth string) (id string, err error) {
 	row := s.db.QueryRowContext(ctx,
-		`INSERT INTO courses (topic, status, storage_prefix) VALUES ($1, 'pending', '')
-		 RETURNING id`, topic)
+		`INSERT INTO courses (topic, audience, depth, status, storage_prefix)
+		 VALUES ($1, $2, $3, 'pending', '')
+		 RETURNING id`, topic, audience, depth)
 	err = row.Scan(&id)
 	return
 }
