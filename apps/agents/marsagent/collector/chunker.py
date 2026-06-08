@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
+import math
 import os
 import re
 from dataclasses import dataclass
@@ -44,6 +46,9 @@ def semantic_chunk(text: str) -> list[str]:
 
 
 async def embed_chunks(chunks: list[str]) -> list[list[float]]:
+    if os.getenv("EMBEDDING_MODE", "hash").lower() != "bge":
+        return [_hash_embedding(chunk) for chunk in chunks]
+
     model = _get_model()
     loop = asyncio.get_event_loop()
     vectors = await loop.run_in_executor(
@@ -51,3 +56,18 @@ async def embed_chunks(chunks: list[str]) -> list[list[float]]:
         lambda: model.encode(chunks, normalize_embeddings=True).tolist(),
     )
     return vectors
+
+
+def _hash_embedding(text: str) -> list[float]:
+    """Fast deterministic 1024-dim embedding for local smoke/RAG plumbing.
+
+    Set EMBEDDING_MODE=bge to use the real bge-m3 model.
+    """
+    vec = [0.0] * 1024
+    for token in text.lower().split():
+        digest = hashlib.sha256(token.encode()).digest()
+        idx = int.from_bytes(digest[:2], "big") % len(vec)
+        sign = 1.0 if digest[2] % 2 == 0 else -1.0
+        vec[idx] += sign
+    norm = math.sqrt(sum(v * v for v in vec)) or 1.0
+    return [v / norm for v in vec]

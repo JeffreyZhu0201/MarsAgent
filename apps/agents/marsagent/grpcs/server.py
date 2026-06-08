@@ -24,7 +24,7 @@ class WikiRetrieverServicer(wiki_pb2_grpc.WikiRetrieverServicer):
     async def HybridSearch(
         self, request, context
     ):
-        from marsagent.collector.chunker import _get_model
+        from marsagent.collector.chunker import embed_chunks
         from marsagent.rag.qdrant import COLLECTION_NAME, _get_client, qdrant_search
 
         try:
@@ -35,12 +35,7 @@ class WikiRetrieverServicer(wiki_pb2_grpc.WikiRetrieverServicer):
             if client.count(collection_name=COLLECTION_NAME, exact=False).count == 0:
                 return wiki_pb2.HybridSearchResp(hits=[])
 
-            model = _get_model()
-            loop = asyncio.get_event_loop()
-            query_vec = await loop.run_in_executor(
-                None,
-                lambda: model.encode([request.query], normalize_embeddings=True)[0].tolist(),
-            )
+            query_vec = (await embed_chunks([request.query]))[0]
             hits = await qdrant_search(query_vector=query_vec, k=request.k or 10)
         except Exception:
             return wiki_pb2.HybridSearchResp(hits=[])
