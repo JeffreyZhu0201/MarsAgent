@@ -65,10 +65,15 @@ export interface CodeExample {
   expected_output?: string
 }
 
+export interface QuizOption {
+  label?: string
+  text?: string
+}
+
 export interface QuizItem {
   type: string
   question: string
-  options?: string[]
+  options?: Array<string | QuizOption>
   answer?: string
   explanation?: string
 }
