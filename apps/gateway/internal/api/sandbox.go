@@ -15,8 +15,8 @@ func sandboxRunHandler(sch *sandbox.Scheduler) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		if req.Code == "" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "code is required"})
+		if err := sandbox.ValidateRequest(req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 		result, err := sch.Run(req)

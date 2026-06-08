@@ -30,10 +30,32 @@ type RunResult struct {
 	Truncated bool   `json:"truncated"`
 }
 
+const (
+	MaxCodeBytes   = 64 * 1024
+	MaxOutputBytes = 64 * 1024
+	MaxTimeoutSec  = 30
+)
+
 var imageMap = map[string]string{
 	"python": "python:3.11-slim",
 	"node":   "node:20-alpine",
 	"go":     "golang:1.22-alpine",
+}
+
+func ValidateRequest(req RunRequest) error {
+	if strings.TrimSpace(req.Code) == "" {
+		return fmt.Errorf("code is required")
+	}
+	if len(req.Code) > MaxCodeBytes {
+		return fmt.Errorf("code exceeds %d bytes", MaxCodeBytes)
+	}
+	if req.Timeout < 0 || req.Timeout > MaxTimeoutSec {
+		return fmt.Errorf("timeout must be between 0 and %d seconds", MaxTimeoutSec)
+	}
+	if req.Lang != "" && imageMap[req.Lang] == "" {
+		return fmt.Errorf("unsupported lang %q", req.Lang)
+	}
+	return nil
 }
 
 // Scheduler manages Docker containers for code execution.
@@ -68,8 +90,8 @@ func (s *Scheduler) Run(req RunRequest) (*RunResult, error) {
 	pidsLimit := int64(64)
 	hostConfig := &container.HostConfig{
 		Resources: container.Resources{
-			Memory:   256 * 1024 * 1024,
-			NanoCPUs: int64(500 * 1e6),
+			Memory:    256 * 1024 * 1024,
+			NanoCPUs:  int64(500 * 1e6),
 			PidsLimit: &pidsLimit,
 		},
 		NetworkMode:    "none",
@@ -86,6 +108,7 @@ func (s *Scheduler) Run(req RunRequest) (*RunResult, error) {
 		AttachStderr: true,
 		OpenStdin:    req.Stdin != "",
 		StdinOnce:    req.Stdin != "",
+		User:         "65534:65534",
 	}, hostConfig, nil, nil, "")
 	if err != nil {
 		return nil, fmt.Errorf("container create: %w", err)
@@ -120,11 +143,15 @@ func (s *Scheduler) Run(req RunRequest) (*RunResult, error) {
 		stdout.Write(buf)
 	}
 
+	stdoutText, stdoutTruncated := truncate(stdout.String())
+	stderrText, stderrTruncated := truncate(stderr.String())
+
 	return &RunResult{
-		ExitCode: exitCode,
-		Stdout:   truncate(stdout.String()),
-		Stderr:   truncate(stderr.String()),
-		Duration: time.Since(start).Milliseconds(),
+		ExitCode:  exitCode,
+		Stdout:    stdoutText,
+		Stderr:    stderrText,
+		Duration:  time.Since(start).Milliseconds(),
+		Truncated: stdoutTruncated || stderrTruncated,
 	}, nil
 }
 
@@ -139,10 +166,9 @@ func commandFor(req RunRequest) []string {
 	}
 }
 
-func truncate(s string) string {
-	const maxOutput = 64 * 1024
-	if len(s) <= maxOutput {
-		return s
+func truncate(s string) (string, bool) {
+	if len(s) <= MaxOutputBytes {
+		return s, false
 	}
-	return strings.TrimRight(s[:maxOutput], "\x00")
+	return strings.TrimRight(s[:MaxOutputBytes], "\x00"), true
 }
