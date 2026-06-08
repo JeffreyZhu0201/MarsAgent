@@ -5,6 +5,7 @@ import asyncio
 import hashlib
 import json
 import re
+import uuid
 
 from marsagent.collector.arxiv_adapter import ArxivAdapter
 from marsagent.collector.base import SourceAdapter
@@ -116,7 +117,7 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
             chunks = semantic_chunk(clean_content)
             vectors = await embed_chunks(chunks)
             for i, (chunk_text, vec) in enumerate(zip(chunks, vectors)):
-                chunk_id = f"{doc_id}_{i}"
+                chunk_id = str(uuid.uuid5(uuid.UUID(doc_id), str(i)))
                 await qdrant_upsert(
                     chunk_id=chunk_id,
                     vector=vec,
