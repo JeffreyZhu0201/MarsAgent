@@ -20,7 +20,7 @@ from marsagent.collector.dedup import (
 from marsagent.collector.doc_adapter import WikipediaAdapter
 from marsagent.collector.github_adapter import GitHubAdapter
 from marsagent.collector.playwright_adapter import PlaywrightAdapter
-from marsagent.collector.storage import write_wiki_doc
+from marsagent.collector.storage import write_wiki_doc, write_wiki_draft
 from marsagent.collector.summarizer import summarize
 from marsagent.collector.tavily_adapter import TavilyAdapter
 from marsagent.rag.qdrant import ensure_collection, qdrant_upsert
@@ -40,13 +40,15 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
     topic = payload.get("topic", "")
     sources = payload.get("sources", ["tavily", "arxiv", "github", "doc"])
     max_per_source = payload.get("max_per_source", 10)
+    draft_mode = payload.get("draft_mode", True)
 
     await sink.emit(make_event(
         type_="agent.start", task_id=task_id, agent="collector",
         message=f"开始采集: {topic}",
     ))
 
-    ensure_collection()
+    if not draft_mode:
+        ensure_collection()
 
     all_docs = []
     for src in sources:
@@ -101,6 +103,37 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
 
             summary_result = await summarize(doc.content, doc.url)
             clean_content = re.sub(r'<[^>]+>', '', doc.content)[:10000]
+            category = _infer_category(topic)
+
+            if draft_mode:
+                draft_id = await write_wiki_draft(
+                    task_id=task_id,
+                    title=doc.title,
+                    content_md=clean_content,
+                    url=doc.url,
+                    url_hash=url_hash_bytes,
+                    source=doc.source,
+                    category=category,
+                    summary=summary_result.summary,
+                    quality_score=summary_result.quality_score,
+                    language=summary_result.language,
+                )
+                mark_url_seen(url_hash_bytes)
+                mark_content_seen(content_simhash_int)
+                written += 1
+                await sink.emit(make_event(
+                    type_="agent.progress", task_id=task_id, agent="collector",
+                    pct=int(written / max(len(all_docs), 1) * 100),
+                    message=f"已创建草稿: {doc.title}",
+                    extra={
+                        "stage": "draft_created",
+                        "draft": {
+                            "id": draft_id, "title": doc.title,
+                            "url": doc.url, "source": doc.source,
+                        },
+                    },
+                ))
+                continue
 
             doc_id, _ = await write_wiki_doc(
                 title=doc.title,
@@ -109,7 +142,7 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
                 url_hash=url_hash_bytes,
                 content_hash=content_simhash_int.to_bytes(8, "big"),
                 source=doc.source,
-                category=_infer_category(topic),
+                category=category,
                 quality_score=summary_result.quality_score,
                 language=summary_result.language,
             )
@@ -127,7 +160,7 @@ async def handle_collect(*, task_id: str, args: bytes, sink) -> None:
                         "text": chunk_text,
                         "url": doc.url,
                         "source": doc.source,
-                        "category": _infer_category(topic),
+                        "category": category,
                         "fetched_at": doc.fetched_at,
                     },
                 )

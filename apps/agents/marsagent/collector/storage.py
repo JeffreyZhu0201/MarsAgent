@@ -109,3 +109,60 @@ async def write_wiki_doc(
         sess.commit()
 
     return doc_id, storage_path
+
+
+async def write_wiki_draft(
+    *,
+    task_id: str,
+    title: str,
+    content_md: str,
+    url: str,
+    url_hash: bytes,
+    source: str,
+    category: str,
+    summary: str,
+    quality_score: float,
+    language: str,
+) -> str:
+    """Upsert a generated wiki draft and return its draft id."""
+    engine = _get_engine()
+    draft_id = str(uuid.uuid4())
+    with Session(engine) as sess:
+        row = sess.execute(
+            text("""
+                INSERT INTO drafts
+                  (id, task_id, title, content_md, url, url_hash, source, category,
+                   summary, quality_score, language)
+                VALUES
+                  (:id, nullif(:task_id, '')::uuid, :title, :content_md, :url,
+                   :url_hash, :source, :category, :summary, :quality_score, :language)
+                ON CONFLICT (url_hash) DO UPDATE SET
+                  task_id = EXCLUDED.task_id,
+                  title = EXCLUDED.title,
+                  content_md = EXCLUDED.content_md,
+                  source = EXCLUDED.source,
+                  category = EXCLUDED.category,
+                  summary = EXCLUDED.summary,
+                  quality_score = EXCLUDED.quality_score,
+                  language = EXCLUDED.language,
+                  updated_at = now(),
+                  revision = drafts.revision + 1
+                RETURNING id
+            """),
+            {
+                "id": draft_id,
+                "task_id": task_id,
+                "title": title,
+                "content_md": content_md,
+                "url": url,
+                "url_hash": url_hash,
+                "source": source,
+                "category": category,
+                "summary": summary,
+                "quality_score": quality_score,
+                "language": language,
+            },
+        )
+        saved_id = str(row.scalar_one())
+        sess.commit()
+    return saved_id
