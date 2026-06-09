@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { createCourse, listCourses, type Course } from '@/lib/api'
 import { useSse, type ProgressEvent } from '@/lib/useSse'
 import { ProgressFeed } from '@/components/ProgressFeed'
+import { ThinkingPanel } from '@/components/ThinkingPanel'
 
 const AGENTS = [
   { key: 'planner', label: 'Planner', desc: '规划课程大纲', accent: 'from-blue-500 to-cyan-400' },
@@ -152,6 +153,7 @@ export function CourseBuilder() {
                 {error && <span className="text-red-600"> · {error}</span>}
               </div>
               <AgentTimeline events={events} activeAgent={activeAgent} />
+              <ThinkingPanel events={events} />
               <div className="max-h-64 overflow-auto rounded-2xl bg-white/45 p-3 ring-1 ring-white/60">
                 <ProgressFeed events={events} />
               </div>

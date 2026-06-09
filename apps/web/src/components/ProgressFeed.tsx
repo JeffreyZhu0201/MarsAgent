@@ -7,6 +7,7 @@ const badge: Record<string, string> = {
   'agent.error': 'bg-red-100 text-red-700',
   'agent.retry': 'bg-purple-100 text-purple-700',
   'agent.done': 'bg-emerald-100 text-emerald-700',
+  'agent.thinking': 'bg-gradient-to-r from-violet-100 to-fuchsia-100 text-violet-700 border border-violet-200',
   'task.done': 'bg-emerald-200 text-emerald-800 font-medium',
   'task.failed': 'bg-red-200 text-red-800 font-medium',
 }
@@ -26,9 +27,24 @@ export function ProgressFeed({ events }: { events: ProgressEvent[] }) {
             <span className="text-slate-500">{e.pct}%</span>
           )}
           {e.agent && <span className="text-slate-500">[{e.agent}]</span>}
-          {e.message && <span className="flex-1">{e.message}</span>}
+          {e.message && (
+            <span className="flex-1">
+              {e.type === 'agent.thinking'
+                ? truncateThinking(e.message)
+                : e.message}
+            </span>
+          )}
         </li>
       ))}
     </ul>
   )
+}
+
+function truncateThinking(msg: string): string {
+  // Strip "Agent 推理过程:\n" prefix
+  const stripped = msg.replace(/^(Planner|Author|CodeEng|Quiz|Validator)\s*推理过程:\s*/i, '')
+  if (stripped.length > 120) {
+    return stripped.slice(0, 120) + '… [完整推理见下方面板]'
+  }
+  return stripped
 }

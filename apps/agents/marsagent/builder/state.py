@@ -4,6 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal
 
+from marsagent.stream.progress import ProgressSink
+
 @dataclass
 class Chapter:
     ch_id: str
@@ -31,4 +33,5 @@ class CourseState:
     pct: int = 0
     current_agent: str = ""
     error: str = ""
+    sink: "ProgressSink | None" = field(default=None, repr=False)
     def to_dict(self) -> dict: return {"topic": self.topic, "status": self.outline is not None}

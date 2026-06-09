@@ -36,6 +36,7 @@ async def handle_build_course(*, task_id: str, args: bytes, sink) -> None:
         course_id=course_id,
         task_id=task_id,
         current_agent="planner",
+        sink=sink,
     )
 
     client = make_client()

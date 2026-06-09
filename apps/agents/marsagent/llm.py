@@ -45,3 +45,20 @@ def response_text(resp) -> str:
         if isinstance(text, str) and text:
             parts.append(text)
     return "\n".join(parts).strip()
+
+
+def extract_thinking(resp) -> str:
+    """Extract thinking/reasoning content from Anthropic responses.
+
+    Thinking blocks have type='thinking' and a .thinking attribute (not .text).
+    Concatenates all thinking blocks into a single string.
+    """
+    parts: list[str] = []
+    for block in getattr(resp, "content", []) or []:
+        # ThinkingBlock has type='thinking' and .thinking attribute
+        block_type = getattr(block, "type", None)
+        if block_type == "thinking":
+            thinking = getattr(block, "thinking", None)
+            if isinstance(thinking, str) and thinking:
+                parts.append(thinking)
+    return "\n".join(parts).strip()
