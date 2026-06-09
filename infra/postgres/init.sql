@@ -32,6 +32,30 @@ create table if not exists wiki_docs (
   constraint unique_url_hash unique (url_hash)
 );
 
+-- Knowledge review workflow: AI-generated drafts awaiting human approval
+create table if not exists drafts (
+  id uuid primary key default uuid_generate_v4(),
+  task_id uuid null,
+  user_id uuid null,
+  status text not null default 'draft', -- draft|approved|rejected|published
+  title text not null,
+  content_md text not null default '',
+  url text not null default '',
+  url_hash bytea unique,
+  source text not null default '',
+  category text not null default 'general',
+  revision int not null default 1,
+  summary text,
+  quality_score real,
+  language text default 'en',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  published_at timestamptz,
+  wiki_doc_id uuid null references wiki_docs(id) on delete set null
+);
+
+alter table wiki_docs add column if not exists drafts_count int not null default 0;
+
 -- M3: 课程表
 create table if not exists courses (
   id uuid primary key default uuid_generate_v4(),
