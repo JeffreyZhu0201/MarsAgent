@@ -26,16 +26,16 @@
 
 - **5 Agent 协作管道**：Planner → Author → CodeEng → Quiz → Validator
 - **实时推理可视化**：每个 Agent 的 LLM 思考过程（thinking block）实时展示在前端紫色推理面板
-- **真实 Wiki RAG**：课程大纲和章节正文均基于 Qdrant 向量数据库检索到的相关 Wiki 知识生成
+- **真实 Wiki RAG**：课程大纲和章节正文均基于 [Qdrant](https://qdrant.tech) 向量数据库检索到的相关 Wiki 知识生成
 - **流式 SSE 进度**：前端实时显示每个 Agent 的启动、推理、完成的各阶段事件
 - **自动重试与 DLQ**：LLM 调用失败自动重试 3 次，永久失败进入 Dead Letter Queue
 
 ### Wiki 知识库
 
-- **多源采集**：Tavily（网页搜索）、ArXiv（学术论文）、Wikipedia、GitHub README
-- **JS 渲染页面抓取**：Playwright 抓取需浏览器渲染的内容
+- **多源采集**：[Tavily](https://tavily.com)（网页搜索）、[ArXiv](https://arxiv.org)（学术论文）、Wikipedia、[GitHub](https://github.com) README
+- **JS 渲染页面抓取**：[Playwright](https://playwright.dev) 抓取需浏览器渲染的内容
 - **语义切片**：512 token 段落级语义分块
-- **向量存储**：BGE-M3 embedding → Qdrant ANN 向量检索
+- **向量存储**：[BGE-M3](https://huggingface.co/BAAI/bge-m3) embedding → [Qdrant](https://qdrant.tech) ANN 向量检索
 - **审稿工作流**：采集的 Wiki 草稿需人工审核发布（草稿 → 已发布）
 - **Wiki 搜索 API**：支持 gRPC 混合搜索（向量+关键词）
 
@@ -49,7 +49,7 @@
 
 ## 架构
 
-```
+```txt
 ┌─────────────────────────────────────────────────────────────┐
 │                        Frontend (React)                      │
 │   /wiki  ·  /builder  ·  /reader                           │
@@ -103,14 +103,14 @@
 
 | 层 | 技术 |
 |----|------|
-| 前端 | React + Vite + TypeScript + Tailwind CSS + TanStack Router |
-| 网关 | Go + Gin + Redis Streams + gRPC |
-| 智能体 | Python 3.11 + FastAPI + LangGraph + Anthropic SDK |
-| 向量库 | Qdrant v1.11 |
-| 关系库 | PostgreSQL 16 |
-| 缓存/队列 | Redis 7 |
-| 对象存储 | MinIO（兼容 S3） |
-| 沙箱 | Docker + sysbox/rootless |
+| 前端 | [React](https://react.dev) · [Vite](https://vitejs.dev) · [TypeScript](https://www.typescriptlang.org) · [Tailwind CSS](https://tailwindcss.com) · [TanStack Router](https://tanstack.com/router) |
+| 网关 | [Go](https://go.dev) · [Gin](https://gin-gonic.com) · [Redis Streams](https://redis.io/docs/data-streams/) · [gRPC](https://grpc.io) |
+| 智能体 | [Python 3.11](https://docs.python.org/3.11/) · [FastAPI](https://fastapi.tiangolo.com) · [LangGraph](https://langchain-ai.github.io/langgraph/) · [Anthropic SDK](https://anthropic.com/docs) |
+| 向量库 | [Qdrant](https://qdrant.tech) v1.11 |
+| 关系库 | [PostgreSQL](https://www.postgresql.org) 16 |
+| 缓存/队列 | [Redis](https://redis.io) 7 |
+| 对象存储 | [MinIO](https://min.io)（兼容 S3） |
+| 沙箱 | [Docker](https://www.docker.com) + sysbox/rootless |
 
 ---
 
@@ -118,10 +118,10 @@
 
 ### 前提
 
-- Docker + Docker Compose
-- Python 3.11（建议 conda/venv）
-- Node.js 18+
-- Go 1.21+
+- [Docker](https://docs.docker.com/get-docker/) · [Docker Compose](https://docs.docker.com/compose/install/)
+- [Python 3.11](https://docs.python.org/3.11/)（建议 conda/venv）
+- [Node.js](https://nodejs.org) 18+
+- [Go](https://go.dev/doc/install) 1.21+
 
 ### 步骤
 
@@ -138,7 +138,6 @@ make infra-up
 
 # 4. 终端 2 — 启动 Python Agent Worker
 cd apps/agents
-# 确保使用 venv: PYTHONPATH=. .venv/bin/python -m uvicorn marsagent.main:app --port 8001
 make agents
 
 # 5. 终端 3 — 启动 Go Gateway
@@ -150,21 +149,21 @@ cd apps/web
 make web
 ```
 
-访问：
+访问（浏览器打开）：
 
-- **http://localhost:5173/wiki** — Wiki 知识库浏览器
-- **http://localhost:5173/builder** — 建课工作台（5 Agent 实时推理可视化）
-- **http://localhost:5173/reader** — 课程阅读器
+- <http://localhost:5173/wiki> — Wiki 知识库浏览器
+- <http://localhost:5173/builder> — 建课工作台（5 Agent 实时推理可视化）
+- <http://localhost:5173/reader> — 课程阅读器
 
 ---
 
 ## 项目结构
 
-```
+```txt
 MarsAgent/
 ├── apps/
 │   ├── gateway/              # Go HTTP 网关 + gRPC client
-│   │   ├── cmd/server/       # 入口点
+│   │   ├── cmd/server/      # 入口点
 │   │   └── internal/
 │   │       ├── api/          # Gin 路由、处理器（SSE、REST、gRPC 代理）
 │   │       ├── config/       # 环境变量配置
@@ -236,7 +235,7 @@ MarsAgent/
 
 ## 配置
 
-### 必需的环境变量（`infra/.env` / `apps/agents/.env`）
+### 必需的环境变量（[`infra/.env`](infra/.env.example) / [`apps/agents/.env`](apps/agents/.env)）
 
 ```bash
 # LLM（Anthropic 兼容端点，火山引擎 Ark 为例）
@@ -266,10 +265,10 @@ BUILDER_MAX_CHAPTERS=3    # 最多生成章节数
 
 ### Embedding 模式
 
-```bash
-EMBEDDING_MODE=hash   # 快速确定性 hash（开发/测试用，无需 GPU）
-EMBEDDING_MODE=bge     # BAAI/bge-m3 模型（生产用，需 GPU）
-```
+| 模式 | 说明 |
+|------|------|
+| `hash` | 快速确定性 hash（开发/测试用，无需 GPU） |
+| `bge` | [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3) 模型（生产用，需 GPU） |
 
 ---
 
@@ -277,27 +276,24 @@ EMBEDDING_MODE=bge     # BAAI/bge-m3 模型（生产用，需 GPU）
 
 | 端口 | 服务 | 主要端点 |
 |------|------|---------|
-| `:5173` | Vite 前端 | `/` |
-| `:8080` | Go Gateway | 见下 |
-| `:8001` | FastAPI Agents | `/docs` |
-| `:6333` | Qdrant Dashboard | `http://localhost:6333/dashboard` |
+| `:5173` | [Vite](https://vitejs.dev) 前端 | `/` |
+| `:8080` | [Go Gateway](apps/gateway/) | 见下 |
+| `:8001` | [FastAPI Agents](apps/agents/) | `/docs` |
+| `:6333` | [Qdrant](https://qdrant.tech) Dashboard | `http://localhost:6333/dashboard` |
 
 ### Gateway REST API
 
-```
-POST /api/wiki/collect      触发 Wiki 采集任务
-GET  /api/wiki/tree         获取 Wiki 文档树
-POST /api/wiki/search        搜索 Wiki（RAG 向量检索）
-
-POST /api/courses            创建建课任务
-GET  /api/courses            列出所有课程
-GET  /api/courses/:id        获取课程详情
-GET  /api/courses/:id/chapter/:ch_id  获取章节 Markdown
-
-POST /api/sandbox/run        在 Docker 沙箱中执行代码
-
-GET  /api/stream/:task_id    SSE 流，实时推送 agent.* 事件
-```
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | `/api/wiki/collect` | 触发 Wiki 采集任务 |
+| GET | `/api/wiki/tree` | 获取 Wiki 文档树 |
+| POST | `/api/wiki/search` | 搜索 Wiki（RAG 向量检索） |
+| POST | `/api/courses` | 创建建课任务 |
+| GET | `/api/courses` | 列出所有课程 |
+| GET | `/api/courses/:id` | 获取课程详情 |
+| GET | `/api/courses/:id/chapter/:ch_id` | 获取章节 Markdown |
+| POST | `/api/sandbox/run` | 在 Docker 沙箱中执行代码 |
+| GET | `/api/stream/:task_id` | SSE 流，实时推送 `agent.*` 事件 |
 
 ### SSE 事件类型
 
@@ -350,6 +346,8 @@ POST /api/courses → task_id
 课程写入 PostgreSQL + MinIO，task.done 推送至前端
 ```
 
+相关源码：[`planner.py`](apps/agents/marsagent/builder/planner.py) · [`author.py`](apps/agents/marsagent/builder/author.py) · [`graph.py`](apps/agents/marsagent/builder/graph.py)
+
 ### Wiki 采集流程
 
 ```
@@ -380,6 +378,8 @@ Upsert to Qdrant（wiki_chunks collection）
   ▼
 WikiDraft 写入 PostgreSQL（待审核）
 ```
+
+相关源码：[`collector/`](apps/agents/marsagent/collector/) · [`chunker.py`](apps/agents/marsagent/collector/chunker.py) · [`qdrant.py`](apps/agents/marsagent/rag/qdrant.py)
 
 ### Wiki RAG 检索
 
@@ -450,7 +450,7 @@ from marsagent.builder.tasks.build import handle_build_course
 
 ## 模型配置说明
 
-系统使用 **Anthropic 兼容 SDK**，可对接任何 OpenAI-compatible 端点。
+系统使用 **[Anthropic 兼容 SDK](https://anthropic.com/docs)**，可对接任何 OpenAI-compatible 端点（[火山引擎 Ark](https://www.volcengine.com/docs/82379/1399009)、[OpenRouter](https://openrouter.ai)、[DeepSeek](https://platform.deepseek.com) 等）。
 
 ### 验证模型可用性
 
@@ -469,3 +469,16 @@ print(resp.content[0].text)
 | `haiku` | Quiz（快速生成习题） | `minimax-m2.7` |
 | `sonnet` | Author / CodeEng / Validator（中等推理） | `deepseek-v4-pro` |
 | `opus` | Planner（复杂规划，需要 4096+ tokens 输出） | `deepseek-v4-pro` |
+
+---
+
+## 相关链接
+
+| 资源 | 链接 |
+|------|------|
+| 火山引擎 Ark（LLM 平台） | <https://www.volcengine.com/docs/82379/1399009> |
+| Qdrant 文档 | <https://qdrant.tech/documentation/> |
+| LangGraph 文档 | <https://langchain-ai.github.io/langgraph/> |
+| Anthropic SDK | <https://anthropic.com/docs> |
+| BGE-M3 Embedding | <https://huggingface.co/BAAI/bge-m3> |
+| Playwright | <https://playwright.dev> |
