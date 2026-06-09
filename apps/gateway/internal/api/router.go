@@ -55,6 +55,7 @@ func NewRouter(d Deps) *gin.Engine {
 		api.PUT("/wiki/drafts/:id", updateWikiDraftHandler(d.WikiStore))
 		api.DELETE("/wiki/drafts/:id", deleteWikiDraftHandler(d.WikiStore))
 		api.POST("/wiki/drafts/:id/reject", rejectWikiDraftHandler(d.WikiStore))
+		api.POST("/wiki/drafts/:id/approve", approveWikiDraftHandler(d.WikiStore))
 	}
 	if d.CourseStore != nil {
 		api.GET("/courses", listCoursesHandler(d.CourseStore))

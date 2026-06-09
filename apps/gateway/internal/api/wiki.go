@@ -3,6 +3,7 @@ package api
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -258,6 +259,22 @@ func rejectWikiDraftHandler(ws *store.WikiStore) gin.HandlerFunc {
 			return
 		}
 		c.JSON(http.StatusOK, draft)
+	}
+}
+
+// POST /api/wiki/drafts/:id/approve
+func approveWikiDraftHandler(ws *store.WikiStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		slug, err := ws.ApproveDraft(c.Request.Context(), c.Param("id"))
+		if errors.Is(err, sql.ErrNoRows) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+			return
+		}
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"slug": slug})
 	}
 }
 
