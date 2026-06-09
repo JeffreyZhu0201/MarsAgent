@@ -109,7 +109,7 @@ func (s *WikiStore) ListDrafts(ctx context.Context, status string, limit int) ([
 	}
 	defer rows.Close()
 
-	var out []Draft
+	out := make([]Draft, 0)
 	for rows.Next() {
 		d, err := scanDraft(rows)
 		if err != nil {
