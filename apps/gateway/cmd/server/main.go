@@ -13,13 +13,13 @@ import (
 	"syscall"
 	"time"
 
+	_ "github.com/lib/pq"
 	"github.com/marsagent/gateway/internal/api"
 	"github.com/marsagent/gateway/internal/config"
 	"github.com/marsagent/gateway/internal/grpcc"
 	"github.com/marsagent/gateway/internal/sandbox"
-	"github.com/marsagent/gateway/internal/stream"
 	"github.com/marsagent/gateway/internal/store"
-	_ "github.com/lib/pq"
+	"github.com/marsagent/gateway/internal/stream"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -67,6 +67,7 @@ func main() {
 		GRPC:        wc,
 		DB:          db,
 		CourseStore: store.NewCourseStore(db),
+		WikiStore:   store.NewWikiStore(db),
 		Sandbox:     sch,
 	}
 

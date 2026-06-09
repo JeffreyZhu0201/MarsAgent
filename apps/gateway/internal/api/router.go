@@ -19,6 +19,7 @@ type Deps struct {
 	GRPC        *grpcc.WikiClient
 	DB          *sql.DB
 	CourseStore *store.CourseStore
+	WikiStore   *store.WikiStore
 	Sandbox     *sandbox.Scheduler
 }
 
@@ -46,6 +47,14 @@ func NewRouter(d Deps) *gin.Engine {
 	}
 	if d.GRPC != nil {
 		api.POST("/wiki/search", wikiSearchHandler(d.GRPC))
+	}
+	if d.WikiStore != nil {
+		api.GET("/wiki/drafts", listWikiDraftsHandler(d.WikiStore))
+		api.POST("/wiki/drafts", createWikiDraftHandler(d.WikiStore))
+		api.GET("/wiki/drafts/:id", getWikiDraftHandler(d.WikiStore))
+		api.PUT("/wiki/drafts/:id", updateWikiDraftHandler(d.WikiStore))
+		api.DELETE("/wiki/drafts/:id", deleteWikiDraftHandler(d.WikiStore))
+		api.POST("/wiki/drafts/:id/reject", rejectWikiDraftHandler(d.WikiStore))
 	}
 	if d.CourseStore != nil {
 		api.GET("/courses", listCoursesHandler(d.CourseStore))

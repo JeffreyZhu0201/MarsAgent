@@ -122,6 +122,12 @@ func (s *WikiStore) MarkDraftRejected(ctx context.Context, id string) error {
 	return err
 }
 
+// DeleteDraft removes a draft by id.
+func (s *WikiStore) DeleteDraft(ctx context.Context, id string) error {
+	_, err := s.db.ExecContext(ctx, `DELETE FROM drafts WHERE id = $1`, id)
+	return err
+}
+
 // scanDraft scans a single draft row from any sql.Scanner (Row or Rows).
 func scanDraft(sc interface{ Scan(...any) error }) (*Draft, error) {
 	var d Draft

@@ -4,10 +4,12 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/marsagent/gateway/internal/grpcc"
+	"github.com/marsagent/gateway/internal/store"
 	"github.com/marsagent/gateway/internal/stream"
 )
 
@@ -121,4 +123,147 @@ func wikiSearchHandler(wc *grpcc.WikiClient) gin.HandlerFunc {
 		}
 		c.JSON(http.StatusOK, gin.H{"hits": hits})
 	}
+}
+
+// GET /api/wiki/drafts
+func listWikiDraftsHandler(ws *store.WikiStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		limit, err := parseOptionalInt(c.Query("limit"))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid limit"})
+			return
+		}
+		drafts, err := ws.ListDrafts(c.Request.Context(), c.DefaultQuery("status", "draft"), limit)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"drafts": drafts})
+	}
+}
+
+// POST /api/wiki/drafts
+func createWikiDraftHandler(ws *store.WikiStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var req struct {
+			TaskID       string  `json:"task_id"`
+			Title        string  `json:"title" binding:"required"`
+			ContentMD    string  `json:"content_md"`
+			URL          string  `json:"url"`
+			Source       string  `json:"source"`
+			Category     string  `json:"category"`
+			Summary      string  `json:"summary"`
+			QualityScore float64 `json:"quality_score"`
+			Language     string  `json:"language"`
+		}
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		draft, err := ws.CreateDraft(c.Request.Context(), store.DraftInput{
+			TaskID:       req.TaskID,
+			Title:        req.Title,
+			ContentMD:    req.ContentMD,
+			URL:          req.URL,
+			Source:       req.Source,
+			Category:     req.Category,
+			Summary:      req.Summary,
+			QualityScore: req.QualityScore,
+			Language:     req.Language,
+		})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusCreated, draft)
+	}
+}
+
+// GET /api/wiki/drafts/:id
+func getWikiDraftHandler(ws *store.WikiStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		draft, err := ws.GetDraft(c.Request.Context(), c.Param("id"))
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+			return
+		}
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, draft)
+	}
+}
+
+// PUT /api/wiki/drafts/:id
+func updateWikiDraftHandler(ws *store.WikiStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var req struct {
+			Title     string `json:"title" binding:"required"`
+			ContentMD string `json:"content_md"`
+			Category  string `json:"category"`
+		}
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		id := c.Param("id")
+		if err := ws.UpdateDraft(c.Request.Context(), id, store.DraftInput{
+			Title:     req.Title,
+			ContentMD: req.ContentMD,
+			Category:  req.Category,
+		}); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		draft, err := ws.GetDraft(c.Request.Context(), id)
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+			return
+		}
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, draft)
+	}
+}
+
+// DELETE /api/wiki/drafts/:id
+func deleteWikiDraftHandler(ws *store.WikiStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if err := ws.DeleteDraft(c.Request.Context(), c.Param("id")); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.Status(http.StatusNoContent)
+	}
+}
+
+// POST /api/wiki/drafts/:id/reject
+func rejectWikiDraftHandler(ws *store.WikiStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+		if err := ws.MarkDraftRejected(c.Request.Context(), id); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		draft, err := ws.GetDraft(c.Request.Context(), id)
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+			return
+		}
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, draft)
+	}
+}
+
+func parseOptionalInt(value string) (int, error) {
+	if value == "" {
+		return 0, nil
+	}
+	return strconv.Atoi(value)
 }
