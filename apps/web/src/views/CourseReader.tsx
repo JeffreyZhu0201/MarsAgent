@@ -1,8 +1,7 @@
 import { useSearch } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 import { CodeEditor } from '@/components/CodeEditor'
+import { MarkdownView } from '@/components/MarkdownView'
 import { QuizPanel } from '@/components/QuizPanel'
 import { getChapterMarkdown, getCourse, listCourses, parseOutline, type Chapter, type Course } from '@/lib/api'
 
@@ -96,9 +95,7 @@ export function CourseReader() {
       <main className="min-w-0 space-y-6">
         {activeChapter ? (
           <>
-            <article className="prose prose-slate max-w-none bg-white border rounded p-6">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{md || activeChapter.content_md || ''}</ReactMarkdown>
-            </article>
+            <MarkdownView content={md || activeChapter.content_md || ''} />
 
             <section className="bg-white border rounded p-4">
               <h2 className="text-lg font-semibold mb-3">代码示例</h2>

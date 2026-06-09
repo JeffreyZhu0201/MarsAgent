@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import { MarkdownView } from '@/components/MarkdownView'
 import { ProgressFeed } from '@/components/ProgressFeed'
 import { WikiTree } from '@/components/WikiTree'
 import { WikiSearch } from '@/components/WikiSearch'
@@ -141,9 +140,7 @@ export function WikiBrowser() {
 
       <main className="glass-card overflow-y-auto p-8">
         {content ? (
-          <article className="prose prose-slate max-w-3xl mx-auto">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-          </article>
+          <MarkdownView content={content} />
         ) : (
           <p className="text-slate-400 text-center mt-20">选择左侧文档开始阅读，或在右侧启动网络搜索 Agent。</p>
         )}
