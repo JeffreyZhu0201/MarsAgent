@@ -1,13 +1,18 @@
 package store
 
 import (
+	"bytes"
 	"context"
 	"crypto/md5"
 	"crypto/sha256"
 	"database/sql"
 	"fmt"
+	"os"
 	"regexp"
 	"strings"
+
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
 var slugNonAlnum = regexp.MustCompile(`[^a-zA-Z0-9]`)
@@ -61,6 +66,7 @@ func (s *WikiStore) CreateDraft(ctx context.Context, in DraftInput) (*Draft, err
 		INSERT INTO drafts (task_id, title, content_md, url, url_hash, source, category, summary, quality_score, language)
 		VALUES (nullif($1,'')::uuid, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 		ON CONFLICT (url_hash) DO UPDATE SET
+			status     = 'draft',
 			title      = EXCLUDED.title,
 			content_md = EXCLUDED.content_md,
 			updated_at = now(),
@@ -188,6 +194,10 @@ func (s *WikiStore) ApproveDraft(ctx context.Context, draftID string) (slug stri
 	contentHash := sha256.Sum256([]byte(draft.ContentMD))
 	storagePath := fmt.Sprintf("wiki/%s/%s.md", draft.Category, slug)
 
+	if err := writeMarkdownToMinIO(ctx, storagePath, draft.ContentMD); err != nil {
+		return "", fmt.Errorf("write minio: %w", err)
+	}
+
 	var docID string
 	err = s.db.QueryRowContext(ctx, `
 		INSERT INTO wiki_docs
@@ -201,7 +211,7 @@ func (s *WikiStore) ApproveDraft(ctx context.Context, draftID string) (slug stri
 			quality_score = EXCLUDED.quality_score
 		RETURNING id`,
 		slug, draft.Category, draft.Title, draft.URL,
-		urlHash[:], contentHash[:8],
+		urlHash[:], contentHash[:],
 		draft.Source, draft.QualityScore, draft.Language, storagePath,
 	).Scan(&docID)
 	if err != nil {
@@ -218,4 +228,40 @@ func (s *WikiStore) ApproveDraft(ctx context.Context, draftID string) (slug stri
 	}
 
 	return slug, nil
+}
+
+// writeMarkdownToMinIO writes markdown content to the marsagent bucket.
+func writeMarkdownToMinIO(ctx context.Context, path, content string) error {
+	endpoint := os.Getenv("MINIO_ENDPOINT")
+	if endpoint == "" {
+		endpoint = "localhost:9000"
+	}
+	accessKey := os.Getenv("MINIO_ROOT_USER")
+	if accessKey == "" {
+		accessKey = "minio"
+	}
+	secretKey := os.Getenv("MINIO_ROOT_PASSWORD")
+	if secretKey == "" {
+		secretKey = "minio_dev_pw"
+	}
+	mc, err := minio.New(endpoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
+		Secure: false,
+	})
+	if err != nil {
+		return fmt.Errorf("minio client: %w", err)
+	}
+	exists, err := mc.BucketExists(ctx, "marsagent")
+	if err != nil {
+		return fmt.Errorf("bucket exists: %w", err)
+	}
+	if !exists {
+		if err := mc.MakeBucket(ctx, "marsagent", minio.MakeBucketOptions{}); err != nil {
+			return fmt.Errorf("make bucket: %w", err)
+		}
+	}
+	buf := bytes.NewReader([]byte(content))
+	_, err = mc.PutObject(ctx, "marsagent", path, buf, int64(len(content)),
+		minio.PutObjectOptions{ContentType: "text/markdown"})
+	return err
 }

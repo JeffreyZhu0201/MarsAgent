@@ -217,7 +217,7 @@ export async function createDraft(input: Partial<WikiDraft>): Promise<WikiDraft>
   })
 }
 
-export async function updateDraft(id: string, input: Partial<WikiDraft>): Promise<{ ok: boolean }> {
+export async function updateDraft(id: string, input: Partial<WikiDraft>): Promise<WikiDraft> {
   return json(`/api/wiki/drafts/${encodeURIComponent(id)}`, {
     method: 'PUT',
     headers: { 'content-type': 'application/json' },
