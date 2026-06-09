@@ -10,6 +10,25 @@ export interface WikiCollectResponse {
   task_id: string
 }
 
+export interface WikiDraft {
+  id: string
+  status: string
+  title: string
+  content_md: string
+  url: string
+  source: string
+  category: string
+  revision: number
+  updated_at: string
+  task_id?: string
+  summary?: string
+  quality_score?: number
+  language?: string
+  created_at?: string
+  published_at?: string
+  wiki_doc_id?: string
+}
+
 export interface RagHit {
   doc_id: string
   chunk_id: string
@@ -183,4 +202,33 @@ export function parseOutline(course: Course): Chapter[] {
   } catch {
     return []
   }
+}
+
+export async function listDrafts(status = 'draft'): Promise<WikiDraft[]> {
+  const r = await json<{ drafts: WikiDraft[] }>(`/api/wiki/drafts?status=${encodeURIComponent(status)}`)
+  return r.drafts || []
+}
+
+export async function createDraft(input: Partial<WikiDraft>): Promise<WikiDraft> {
+  return json('/api/wiki/drafts', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export async function updateDraft(id: string, input: Partial<WikiDraft>): Promise<{ ok: boolean }> {
+  return json(`/api/wiki/drafts/${encodeURIComponent(id)}`, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export async function approveDraft(id: string): Promise<{ slug: string }> {
+  return json(`/api/wiki/drafts/${encodeURIComponent(id)}/approve`, { method: 'POST' })
+}
+
+export async function rejectDraft(id: string): Promise<{ ok: boolean }> {
+  return json(`/api/wiki/drafts/${encodeURIComponent(id)}/reject`, { method: 'POST' })
 }

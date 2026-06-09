@@ -3,8 +3,9 @@ import { MarkdownView } from '@/components/MarkdownView'
 import { ProgressFeed } from '@/components/ProgressFeed'
 import { WikiTree } from '@/components/WikiTree'
 import { WikiSearch } from '@/components/WikiSearch'
-import { collectWiki, searchWiki, type RagHit } from '@/lib/api'
+import { collectWiki, listDrafts, searchWiki, type RagHit, type WikiDraft } from '@/lib/api'
 import { useSse, type ProgressEvent } from '@/lib/useSse'
+import { WikiDraftEditor } from './WikiDraftEditor'
 
 interface WikiDoc {
   slug: string
@@ -25,6 +26,8 @@ export function WikiBrowser() {
   const [ragQuery, setRagQuery] = useState('Python')
   const [ragHits, setRagHits] = useState<RagHit[]>([])
   const [ragChecking, setRagChecking] = useState(false)
+  const [drafts, setDrafts] = useState<WikiDraft[]>([])
+  const [selectedDraft, setSelectedDraft] = useState<WikiDraft | null>(null)
   const { events: collectEvents, connected: collectConnected, closed: collectClosed } = useSse(collectTaskId)
 
   const discovered = useMemo(() => extractDocs(collectEvents, 'discover'), [collectEvents])
@@ -42,15 +45,34 @@ export function WikiBrowser() {
   }, [])
 
   useEffect(() => {
-    if (!collectClosed) return
+    loadDrafts()
+  }, [])
+
+  async function loadDrafts() {
+    try {
+      const items = await listDrafts('draft')
+      setDrafts(items)
+    } catch (err) {
+      console.error('[MarsAgent:draft] load failed', err)
+    }
+  }
+
+  function reloadTree() {
     fetch('/api/wiki/tree')
       .then(r => r.json())
       .then(d => setDocs(d.docs || []))
-      .catch((err) => console.error('[MarsAgent:wiki] post-collect refresh failed', err))
+      .catch((err) => console.error('[MarsAgent:wiki] post-action refresh failed', err))
+  }
+
+  useEffect(() => {
+    if (!collectClosed) return
+    reloadTree()
+    loadDrafts()
   }, [collectClosed])
 
   function handleSelect(doc: WikiDoc) {
     console.debug('[MarsAgent:wiki] select doc', doc)
+    setSelectedDraft(null)
     setSelected(doc)
     fetch(`/api/wiki/doc/${encodeURIComponent(doc.slug)}`)
       .then(r => r.json())
@@ -135,14 +157,57 @@ export function WikiBrowser() {
           <h2 className="text-lg font-semibold">已有 Wiki</h2>
         </div>
         <WikiSearch onSearch={handleSearch} />
+        <section className="mb-4 rounded-3xl bg-white/45 p-3 shadow-sm ring-1 ring-white/60">
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <div>
+              <div className="text-xs uppercase tracking-[0.2em] text-amber-500">Draft Review</div>
+              <h3 className="font-semibold">待审核草稿</h3>
+            </div>
+            <span className="rounded-full bg-amber-100 px-2 py-1 text-xs text-amber-700">{drafts.length}</span>
+          </div>
+          {drafts.length ? (
+            <ul className="space-y-2">
+              {drafts.map((draft) => (
+                <li key={draft.id}>
+                  <button
+                    className={`w-full rounded-2xl p-3 text-left text-sm shadow-sm ring-1 transition min-h-[2.5rem] ${
+                      selectedDraft?.id === draft.id
+                        ? 'bg-amber-100 text-amber-950 ring-amber-200'
+                        : 'bg-white/55 text-slate-700 ring-white/60 hover:bg-white/75'
+                    }`}
+                    onClick={() => {
+                      setSelectedDraft(draft)
+                      setSelected(null)
+                      setContent('')
+                    }}
+                  >
+                    <div className="font-medium">{draft.title}</div>
+                    <div className="mt-1 text-xs text-slate-500">{draft.category || 'general'} · rev {draft.revision}</div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-slate-400">暂无待审核草稿。</p>
+          )}
+        </section>
         <WikiTree docs={docs} selected={selected} onSelect={handleSelect} />
       </aside>
 
       <main className="glass-card overflow-y-auto p-8">
-        {content ? (
+        {selectedDraft ? (
+          <WikiDraftEditor
+            draft={selectedDraft}
+            onDone={() => {
+              setSelectedDraft(null)
+              loadDrafts()
+              reloadTree()
+            }}
+          />
+        ) : content ? (
           <MarkdownView content={content} />
         ) : (
-          <p className="text-slate-400 text-center mt-20">选择左侧文档开始阅读，或在右侧启动网络搜索 Agent。</p>
+          <p className="text-slate-400 text-center mt-20">选择左侧文档开始阅读，编辑草稿，或在右侧启动网络搜索 Agent。</p>
         )}
       </main>
 
