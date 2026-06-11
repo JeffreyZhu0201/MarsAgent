@@ -1,0 +1,802 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Skip to content" [ref=e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner [ref=e6]:
+        - heading "Navigation Menu" [level=2] [ref=e7]
+        - generic [ref=e8]:
+          - link "Homepage" [ref=e10] [cursor=pointer]:
+            - /url: /
+            - img [ref=e11]
+          - generic [ref=e13]:
+            - navigation "Global" [ref=e16]:
+              - list [ref=e17]:
+                - listitem [ref=e18]:
+                  - button "Platform" [ref=e20] [cursor=pointer]:
+                    - text: Platform
+                    - img [ref=e21]
+                - listitem [ref=e23]:
+                  - button "Solutions" [ref=e25] [cursor=pointer]:
+                    - text: Solutions
+                    - img [ref=e26]
+                - listitem [ref=e28]:
+                  - button "Resources" [ref=e30] [cursor=pointer]:
+                    - text: Resources
+                    - img [ref=e31]
+                - listitem [ref=e33]:
+                  - button "Open Source" [ref=e35] [cursor=pointer]:
+                    - text: Open Source
+                    - img [ref=e36]
+                - listitem [ref=e38]:
+                  - button "Enterprise" [ref=e40] [cursor=pointer]:
+                    - text: Enterprise
+                    - img [ref=e41]
+                - listitem [ref=e43]:
+                  - link "Pricing" [ref=e44] [cursor=pointer]:
+                    - /url: https://github.com/pricing
+                    - generic [ref=e45]: Pricing
+            - generic [ref=e46]:
+              - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+                - img [ref=e51]
+              - link "Sign in" [ref=e54] [cursor=pointer]:
+                - /url: /login?return_to=https%3A%2F%2Fgithub.com%2FSamurAIGPT%2Fllm-wiki-agent%2Fblob%2Fmain%2FCLAUDE.md
+              - link "Sign up" [ref=e55] [cursor=pointer]:
+                - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&source=header-repo&source_repo=SamurAIGPT%2Fllm-wiki-agent
+              - button "Appearance settings" [ref=e58] [cursor=pointer]:
+                - img
+    - main [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e66]:
+            - img [ref=e67]
+            - link "SamurAIGPT" [ref=e70] [cursor=pointer]:
+              - /url: /SamurAIGPT
+            - generic [ref=e71]: /
+            - strong [ref=e72]:
+              - link "llm-wiki-agent" [ref=e73] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent
+            - generic [ref=e74]: Public
+          - generic [ref=e75]:
+            - list:
+              - listitem [ref=e76]:
+                - link "You must be signed in to change notification settings" [ref=e77] [cursor=pointer]:
+                  - /url: /login?return_to=%2FSamurAIGPT%2Fllm-wiki-agent
+                  - img [ref=e78]
+                  - text: Notifications
+              - listitem [ref=e80]:
+                - link "Fork 342" [ref=e81] [cursor=pointer]:
+                  - /url: /login?return_to=%2FSamurAIGPT%2Fllm-wiki-agent
+                  - img [ref=e82]
+                  - text: Fork
+                  - generic "342" [ref=e84]
+              - listitem [ref=e85]:
+                - link "You must be signed in to star a repository" [ref=e87] [cursor=pointer]:
+                  - /url: /login?return_to=%2FSamurAIGPT%2Fllm-wiki-agent
+                  - img [ref=e88]
+                  - text: Star
+                  - generic "2867 users starred this repository" [ref=e90]: 2.9k
+        - navigation "Repository" [ref=e91]:
+          - list [ref=e92]:
+            - listitem [ref=e93]:
+              - link "Code" [ref=e94] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent
+                - img [ref=e95]
+                - generic [ref=e97]: Code
+            - listitem [ref=e98]:
+              - link "Issues 2" [ref=e99] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/issues
+                - img [ref=e100]
+                - generic [ref=e103]: Issues
+                - generic "2" [ref=e104]
+            - listitem [ref=e105]:
+              - link "Pull requests" [ref=e106] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/pulls
+                - img [ref=e107]
+                - generic [ref=e109]: Pull requests
+            - listitem [ref=e110]:
+              - link "Actions" [ref=e111] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/actions
+                - img [ref=e112]
+                - generic [ref=e114]: Actions
+            - listitem [ref=e115]:
+              - link "Projects" [ref=e116] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/projects
+                - img [ref=e117]
+                - generic [ref=e119]: Projects
+            - listitem [ref=e120]:
+              - link "Security and quality" [ref=e121] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/security
+                - img [ref=e122]
+                - generic [ref=e124]: Security and quality
+            - listitem [ref=e125]:
+              - link "Insights" [ref=e126] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/pulse
+                - img [ref=e127]
+                - generic [ref=e129]: Insights
+      - generic [ref=e137]:
+        - generic [ref=e139]:
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - heading "Collapse file tree" [level=2] [ref=e145]:
+                  - button "Collapse file tree" [expanded] [ref=e146] [cursor=pointer]:
+                    - img [ref=e147]
+                - heading "Files" [level=2] [ref=e150]
+              - generic [ref=e151]:
+                - button "main branch" [ref=e153] [cursor=pointer]:
+                  - generic [ref=e154]:
+                    - generic [ref=e156]:
+                      - img [ref=e158]
+                      - generic [ref=e161]: main
+                    - generic:
+                      - img
+                - button "Search this repository (forward slash)" [ref=e163] [cursor=pointer]:
+                  - img [ref=e164]
+            - generic [ref=e167]:
+              - img [ref=e169]
+              - combobox "Go to file" [ref=e171]
+            - navigation "File Tree Navigation" [ref=e177]:
+              - tree "Files" [ref=e179]:
+                - treeitem ".claude" [level=1] [ref=e180]:
+                  - generic [ref=e181] [cursor=pointer]:
+                    - img [ref=e183]
+                    - generic [ref=e185]:
+                      - img [ref=e189]
+                      - generic [ref=e191]: .claude
+                - treeitem "docs" [level=1] [ref=e192]:
+                  - generic [ref=e193] [cursor=pointer]:
+                    - img [ref=e195]
+                    - generic [ref=e197]:
+                      - img [ref=e201]
+                      - generic [ref=e203]: docs
+                - treeitem "examples" [level=1] [ref=e204]:
+                  - generic [ref=e205] [cursor=pointer]:
+                    - img [ref=e207]
+                    - generic [ref=e209]:
+                      - img [ref=e213]
+                      - generic [ref=e215]: examples
+                - treeitem "graph" [level=1] [ref=e216]:
+                  - generic [ref=e217] [cursor=pointer]:
+                    - img [ref=e219]
+                    - generic [ref=e221]:
+                      - img [ref=e225]
+                      - generic [ref=e227]: graph
+                - treeitem "raw" [level=1] [ref=e228]:
+                  - generic [ref=e229] [cursor=pointer]:
+                    - img [ref=e231]
+                    - generic [ref=e233]:
+                      - img [ref=e237]
+                      - generic [ref=e239]: raw
+                - treeitem "tools" [level=1] [ref=e240]:
+                  - generic [ref=e241] [cursor=pointer]:
+                    - img [ref=e243]
+                    - generic [ref=e245]:
+                      - img [ref=e249]
+                      - generic [ref=e251]: tools
+                - treeitem "wiki" [level=1] [ref=e252]:
+                  - generic [ref=e253] [cursor=pointer]:
+                    - img [ref=e255]
+                    - generic [ref=e257]:
+                      - img [ref=e261]
+                      - generic [ref=e263]: wiki
+                - treeitem "AGENTS.md" [level=1] [ref=e264]:
+                  - generic [ref=e266] [cursor=pointer]:
+                    - img [ref=e269]
+                    - generic [ref=e271]: AGENTS.md
+                - treeitem "CLAUDE.md" [level=1] [ref=e272]:
+                  - generic [ref=e274] [cursor=pointer]:
+                    - img [ref=e277]
+                    - generic [ref=e279]: CLAUDE.md
+                - treeitem "GEMINI.md" [level=1] [ref=e280]:
+                  - generic [ref=e282] [cursor=pointer]:
+                    - img [ref=e285]
+                    - generic [ref=e287]: GEMINI.md
+                - treeitem "LICENSE" [level=1] [ref=e288]:
+                  - generic [ref=e290] [cursor=pointer]:
+                    - img [ref=e293]
+                    - generic [ref=e295]: LICENSE
+                - treeitem "README.md" [level=1] [ref=e296]:
+                  - generic [ref=e298] [cursor=pointer]:
+                    - img [ref=e301]
+                    - generic [ref=e303]: README.md
+                - treeitem "pyproject.toml" [level=1] [ref=e304]:
+                  - generic [ref=e306] [cursor=pointer]:
+                    - img [ref=e309]
+                    - generic [ref=e311]: pyproject.toml
+                - treeitem "requirements.txt" [level=1] [ref=e312]:
+                  - generic [ref=e314] [cursor=pointer]:
+                    - img [ref=e317]
+                    - generic [ref=e319]: requirements.txt
+          - slider "Draggable pane splitter" [ref=e321]
+        - generic [ref=e324]:
+          - generic [ref=e328]:
+            - generic [ref=e330]:
+              - navigation "Breadcrumbs" [ref=e331]:
+                - heading "Breadcrumbs" [level=2] [ref=e332]
+                - list [ref=e333]:
+                  - listitem [ref=e334]:
+                    - link "llm-wiki-agent" [ref=e335] [cursor=pointer]:
+                      - /url: /SamurAIGPT/llm-wiki-agent/tree/main
+              - generic [ref=e336]:
+                - text: /
+                - heading "CLAUDE.md" [level=1] [ref=e337]
+              - button "Copy path" [ref=e338] [cursor=pointer]:
+                - img [ref=e339]
+            - button "More file actions" [ref=e345] [cursor=pointer]:
+              - img [ref=e346]
+          - generic [ref=e348]:
+            - generic [ref=e350]:
+              - heading "Latest commit" [level=2] [ref=e351]
+              - generic [ref=e354]:
+                - heading "History" [level=2] [ref=e355]
+                - link "History" [ref=e356] [cursor=pointer]:
+                  - /url: /SamurAIGPT/llm-wiki-agent/commits/main/CLAUDE.md
+                  - generic [ref=e357]:
+                    - generic:
+                      - img
+                    - generic [ref=e358]: History
+            - generic [ref=e360]:
+              - generic [ref=e362]:
+                - heading "File metadata and controls" [level=2] [ref=e363]
+                - list "File view" [ref=e365]:
+                  - listitem [ref=e366]:
+                    - button "Preview" [ref=e367] [cursor=pointer]:
+                      - generic [ref=e369]: Preview
+                  - listitem [ref=e370]:
+                    - button "Code" [ref=e371] [cursor=pointer]:
+                      - generic [ref=e373]: Code
+                  - listitem [ref=e374]:
+                    - button "Blame" [ref=e375] [cursor=pointer]:
+                      - generic [ref=e377]: Blame
+                - generic [ref=e378]:
+                  - generic [ref=e379]:
+                    - generic [ref=e380]:
+                      - link "Raw" [ref=e382] [cursor=pointer]:
+                        - /url: https://github.com/SamurAIGPT/llm-wiki-agent/raw/refs/heads/main/CLAUDE.md
+                        - generic [ref=e384]: Raw
+                      - button "Copy raw file" [ref=e386] [cursor=pointer]:
+                        - img [ref=e387]
+                      - button "Download raw file" [ref=e391] [cursor=pointer]:
+                        - img [ref=e392]
+                    - generic [ref=e395]:
+                      - button "You must be signed in to make or propose changes" [disabled] [ref=e397]:
+                        - img [ref=e398]
+                      - button "More edit options" [ref=e401] [cursor=pointer]:
+                        - img [ref=e402]
+                  - button "Outline" [ref=e404] [cursor=pointer]:
+                    - img [ref=e405]
+              - region "CLAUDE.md" [ref=e408]:
+                - article [ref=e410]:
+                  - generic [ref=e411]:
+                    - heading "LLM Wiki Agent — Schema & Workflow Instructions" [level=1] [ref=e412]
+                    - 'link "Permalink: LLM Wiki Agent — Schema & Workflow Instructions" [ref=e413] [cursor=pointer]':
+                      - /url: "#llm-wiki-agent--schema--workflow-instructions"
+                      - img [ref=e414]
+                  - paragraph [ref=e416]: This wiki is maintained entirely by Claude Code. No API key or Python scripts needed — just open this repo in Claude Code and talk to it.
+                  - generic [ref=e417]:
+                    - heading "Slash Commands (Claude Code)" [level=2] [ref=e418]
+                    - 'link "Permalink: Slash Commands (Claude Code)" [ref=e419] [cursor=pointer]':
+                      - /url: "#slash-commands-claude-code"
+                      - img [ref=e420]
+                  - table [ref=e423]:
+                    - rowgroup [ref=e424]:
+                      - row "Command What to say" [ref=e425]:
+                        - columnheader "Command" [ref=e426]
+                        - columnheader "What to say" [ref=e427]
+                    - rowgroup [ref=e428]:
+                      - row "/wiki-ingest ingest raw/my-article.md" [ref=e429]:
+                        - cell "/wiki-ingest" [ref=e430]:
+                          - code [ref=e431]: /wiki-ingest
+                        - cell "ingest raw/my-article.md" [ref=e432]:
+                          - code [ref=e433]: ingest raw/my-article.md
+                      - 'row "/wiki-query query: what are the main themes?" [ref=e434]':
+                        - cell "/wiki-query" [ref=e435]:
+                          - code [ref=e436]: /wiki-query
+                        - 'cell "query: what are the main themes?" [ref=e437]':
+                          - code [ref=e438]: "query: what are the main themes?"
+                      - row "/wiki-health health (fast, every session)" [ref=e439]:
+                        - cell "/wiki-health" [ref=e440]:
+                          - code [ref=e441]: /wiki-health
+                        - cell "health (fast, every session)" [ref=e442]:
+                          - code [ref=e443]: health
+                          - text: (fast, every session)
+                      - row "/wiki-lint lint the wiki (expensive, periodic)" [ref=e444]:
+                        - cell "/wiki-lint" [ref=e445]:
+                          - code [ref=e446]: /wiki-lint
+                        - cell "lint the wiki (expensive, periodic)" [ref=e447]:
+                          - code [ref=e448]: lint the wiki
+                          - text: (expensive, periodic)
+                      - row "/wiki-graph build the knowledge graph" [ref=e449]:
+                        - cell "/wiki-graph" [ref=e450]:
+                          - code [ref=e451]: /wiki-graph
+                        - cell "build the knowledge graph" [ref=e452]:
+                          - code [ref=e453]: build the knowledge graph
+                  - paragraph [ref=e454]: "Or just describe what you want in plain English:"
+                  - list [ref=e455]:
+                    - listitem [ref=e456]:
+                      - emphasis [ref=e457]: "\"Ingest this file: raw/papers/attention-is-all-you-need.md\""
+                    - listitem [ref=e458]:
+                      - emphasis [ref=e459]: "\"What does the wiki say about transformer models?\""
+                    - listitem [ref=e460]:
+                      - emphasis [ref=e461]: "\"Check the wiki for orphan pages and contradictions\""
+                    - listitem [ref=e462]:
+                      - emphasis [ref=e463]: "\"Build the graph and show me what's connected to RAG\""
+                  - paragraph [ref=e464]: Claude Code reads this file automatically and follows the workflows below.
+                  - separator [ref=e465]
+                  - generic [ref=e466]:
+                    - heading "Directory Layout" [level=2] [ref=e467]
+                    - 'link "Permalink: Directory Layout" [ref=e468] [cursor=pointer]':
+                      - /url: "#directory-layout"
+                      - img [ref=e469]
+                  - generic [ref=e471]:
+                    - code [ref=e473]: "raw/ # Immutable source documents — never modify these wiki/ # Claude owns this layer entirely index.md # Catalog of all pages — update on every ingest log.md # Append-only chronological record overview.md # Living synthesis across all sources sources/ # One summary page per source document entities/ # People, companies, projects, products concepts/ # Ideas, frameworks, methods, theories syntheses/ # Saved query answers graph/ # Auto-generated graph data tools/ # Standalone Python scripts health.py # Structural checks (deterministic, no LLM calls) lint.py # Content quality checks (uses LLM for semantic analysis) build_graph.py # Knowledge graph generation"
+                    - button "Copy code to clipboard" [ref=e475] [cursor=pointer]:
+                      - img [ref=e476]
+                  - separator [ref=e479]
+                  - generic [ref=e480]:
+                    - heading "Page Format" [level=2] [ref=e481]
+                    - 'link "Permalink: Page Format" [ref=e482] [cursor=pointer]':
+                      - /url: "#page-format"
+                      - img [ref=e483]
+                  - paragraph [ref=e485]: "Every wiki page uses this frontmatter:"
+                  - generic [ref=e486]:
+                    - generic [ref=e487]:
+                      - text: "--- title:"
+                      - generic [ref=e488]: "\"Page Title\""
+                      - text: "type: source | entity | concept | synthesis tags: [] sources: []"
+                      - generic [ref=e489]: "# list of source slugs that inform this page"
+                      - text: "last_updated: YYYY-MM-DD ---"
+                    - button "Copy code to clipboard" [ref=e491] [cursor=pointer]:
+                      - img [ref=e492]
+                  - paragraph [ref=e495]:
+                    - text: Use
+                    - code [ref=e496]: "[[PageName]]"
+                    - text: wikilinks to link to other wiki pages.
+                  - separator [ref=e497]
+                  - generic [ref=e498]:
+                    - heading "Ingest Workflow" [level=2] [ref=e499]
+                    - 'link "Permalink: Ingest Workflow" [ref=e500] [cursor=pointer]':
+                      - /url: "#ingest-workflow"
+                      - img [ref=e501]
+                  - paragraph [ref=e503]:
+                    - text: "Triggered by:"
+                    - emphasis [ref=e504]: "\"ingest \""
+                    - text: or
+                    - code [ref=e505]: /wiki-ingest
+                  - paragraph [ref=e506]:
+                    - strong [ref=e507]: "Supported formats:"
+                    - text: Markdown (
+                    - code [ref=e508]: .md
+                    - text: ) ingested directly. Non-markdown files (
+                    - code [ref=e509]: .pdf
+                    - text: ","
+                    - code [ref=e510]: .docx
+                    - text: ","
+                    - code [ref=e511]: .pptx
+                    - text: ","
+                    - code [ref=e512]: .xlsx
+                    - text: ","
+                    - code [ref=e513]: .html
+                    - text: ","
+                    - code [ref=e514]: .txt
+                    - text: ","
+                    - code [ref=e515]: .csv
+                    - text: ","
+                    - code [ref=e516]: .json
+                    - text: ","
+                    - code [ref=e517]: .xml
+                    - text: ","
+                    - code [ref=e518]: .rst
+                    - text: ","
+                    - code [ref=e519]: .rtf
+                    - text: ","
+                    - code [ref=e520]: .epub
+                    - text: ","
+                    - code [ref=e521]: .ipynb
+                    - text: ","
+                    - code [ref=e522]: .yaml
+                    - text: ","
+                    - code [ref=e523]: .yml
+                    - text: ","
+                    - code [ref=e524]: .tsv
+                    - text: ","
+                    - code [ref=e525]: .wav
+                    - text: ","
+                    - code [ref=e526]: .mp3
+                    - text: ) auto-converted to markdown via
+                    - link "markitdown" [ref=e527] [cursor=pointer]:
+                      - /url: https://github.com/microsoft/markitdown
+                    - text: before ingestion. Use
+                    - code [ref=e528]: "--no-convert"
+                    - text: to skip auto-conversion.
+                  - paragraph [ref=e529]: "Steps (in order):"
+                  - list [ref=e530]:
+                    - listitem [ref=e531]: Read the source document fully using the Read tool (auto-convert if non-markdown)
+                    - listitem [ref=e532]:
+                      - text: Read
+                      - code [ref=e533]: wiki/index.md
+                      - text: and
+                      - code [ref=e534]: wiki/overview.md
+                      - text: for current wiki context
+                    - listitem [ref=e535]:
+                      - text: Write
+                      - code [ref=e536]: wiki/sources/<slug>.md
+                      - text: — use the source page format below
+                    - listitem [ref=e537]:
+                      - text: Update
+                      - code [ref=e538]: wiki/index.md
+                      - text: — add entry under Sources section
+                    - listitem [ref=e539]:
+                      - text: Update
+                      - code [ref=e540]: wiki/overview.md
+                      - text: — revise synthesis if warranted
+                    - listitem [ref=e541]: Update/create entity pages for key people, companies, projects mentioned
+                    - listitem [ref=e542]: Update/create concept pages for key ideas and frameworks discussed
+                    - listitem [ref=e543]: Flag any contradictions with existing wiki content
+                    - listitem [ref=e544]:
+                      - text: Append to
+                      - code [ref=e545]: wiki/log.md
+                      - text: ":"
+                      - code [ref=e546]: "## [YYYY-MM-DD] ingest | <Title>"
+                    - listitem [ref=e547]:
+                      - strong [ref=e548]: Post-ingest validation
+                      - text: — check for broken
+                      - code [ref=e549]: "[[wikilinks]]"
+                      - text: ", verify all new pages are in"
+                      - code [ref=e550]: index.md
+                      - text: ", print a change summary"
+                  - generic [ref=e551]:
+                    - heading "Source Page Format" [level=3] [ref=e552]
+                    - 'link "Permalink: Source Page Format" [ref=e553] [cursor=pointer]':
+                      - /url: "#source-page-format"
+                      - img [ref=e554]
+                  - generic [ref=e556]:
+                    - generic [ref=e557]:
+                      - text: "--- title:"
+                      - generic [ref=e558]: "\"Source Title\""
+                      - text: "type: source tags: [] date: YYYY-MM-DD source_file: raw/... ---"
+                      - generic [ref=e559]: "## Summary"
+                      - text: 2–4 sentence summary.
+                      - generic [ref=e560]: "## Key Claims"
+                      - text: "- Claim 1 - Claim 2"
+                      - generic [ref=e561]: "## Key Quotes"
+                      - generic [ref=e562]: "> \"Quote here\" — context"
+                      - generic [ref=e563]: "## Connections"
+                      - text: "- [[EntityName]] — how they relate - [[ConceptName]] — how it connects"
+                      - generic [ref=e564]: "## Contradictions"
+                      - text: "- Contradicts [[OtherPage]] on: ..."
+                    - button "Copy code to clipboard" [ref=e566] [cursor=pointer]:
+                      - img [ref=e567]
+                  - generic [ref=e570]:
+                    - heading "Domain-Specific Templates" [level=3] [ref=e571]
+                    - 'link "Permalink: Domain-Specific Templates" [ref=e572] [cursor=pointer]':
+                      - /url: "#domain-specific-templates"
+                      - img [ref=e573]
+                  - paragraph [ref=e575]: "If the source falls into a specific domain (e.g., personal diary, meeting notes), the agent should use a specialized template instead of the default generic one above:"
+                  - generic [ref=e576]:
+                    - heading "Diary / Journal Template" [level=4] [ref=e577]
+                    - 'link "Permalink: Diary / Journal Template" [ref=e578] [cursor=pointer]':
+                      - /url: "#diary--journal-template"
+                      - img [ref=e579]
+                  - generic [ref=e581]:
+                    - generic [ref=e582]:
+                      - text: "--- title:"
+                      - generic [ref=e583]: "\"YYYY-MM-DD Diary\""
+                      - text: "type: source tags: [diary] date: YYYY-MM-DD ---"
+                      - generic [ref=e584]: "## Event Summary"
+                      - text: ...
+                      - generic [ref=e585]: "## Key Decisions"
+                      - text: ...
+                      - generic [ref=e586]: "## Energy & Mood"
+                      - text: ...
+                      - generic [ref=e587]: "## Connections"
+                      - text: ...
+                      - generic [ref=e588]: "## Shifts & Contradictions"
+                      - text: ...
+                    - button "Copy code to clipboard" [ref=e590] [cursor=pointer]:
+                      - img [ref=e591]
+                  - generic [ref=e594]:
+                    - heading "Meeting Notes Template" [level=4] [ref=e595]
+                    - 'link "Permalink: Meeting Notes Template" [ref=e596] [cursor=pointer]':
+                      - /url: "#meeting-notes-template"
+                      - img [ref=e597]
+                  - generic [ref=e599]:
+                    - generic [ref=e600]:
+                      - text: "--- title:"
+                      - generic [ref=e601]: "\"Meeting Title\""
+                      - text: "type: source tags: [meeting] date: YYYY-MM-DD ---"
+                      - generic [ref=e602]: "## Goal"
+                      - text: ...
+                      - generic [ref=e603]: "## Key Discussions"
+                      - text: ...
+                      - generic [ref=e604]: "## Decisions Made"
+                      - text: ...
+                      - generic [ref=e605]: "## Action Items"
+                      - text: ...
+                    - button "Copy code to clipboard" [ref=e607] [cursor=pointer]:
+                      - img [ref=e608]
+                  - separator [ref=e611]
+                  - generic [ref=e612]:
+                    - heading "Query Workflow" [level=2] [ref=e613]
+                    - 'link "Permalink: Query Workflow" [ref=e614] [cursor=pointer]':
+                      - /url: "#query-workflow"
+                      - img [ref=e615]
+                  - paragraph [ref=e617]:
+                    - text: "Triggered by:"
+                    - emphasis [ref=e618]: "\"query: \""
+                    - text: or
+                    - code [ref=e619]: /wiki-query
+                  - paragraph [ref=e620]: "Steps:"
+                  - list [ref=e621]:
+                    - listitem [ref=e622]:
+                      - text: Read
+                      - code [ref=e623]: wiki/index.md
+                      - text: to identify relevant pages
+                    - listitem [ref=e624]: Read those pages with the Read tool
+                    - listitem [ref=e625]:
+                      - text: Synthesize an answer with inline citations as
+                      - code [ref=e626]: "[[PageName]]"
+                      - text: wikilinks
+                    - listitem [ref=e627]:
+                      - text: Ask the user if they want the answer filed as
+                      - code [ref=e628]: wiki/syntheses/<slug>.md
+                  - separator [ref=e629]
+                  - generic [ref=e630]:
+                    - heading "Lint Workflow" [level=2] [ref=e631]
+                    - 'link "Permalink: Lint Workflow" [ref=e632] [cursor=pointer]':
+                      - /url: "#lint-workflow"
+                      - img [ref=e633]
+                  - paragraph [ref=e635]:
+                    - text: "Triggered by:"
+                    - emphasis [ref=e636]: "\"lint the wiki\""
+                    - text: or
+                    - code [ref=e637]: /wiki-lint
+                  - paragraph [ref=e638]: "Use Grep and Read tools to check for:"
+                  - list [ref=e639]:
+                    - listitem [ref=e640]:
+                      - strong [ref=e641]: Orphan pages
+                      - text: — wiki pages with no inbound
+                      - code [ref=e642]: "[[links]]"
+                      - text: from other pages
+                    - listitem [ref=e643]:
+                      - strong [ref=e644]: Broken links
+                      - text: —
+                      - code [ref=e645]: "[[WikiLinks]]"
+                      - text: pointing to pages that don't exist
+                    - listitem [ref=e646]:
+                      - strong [ref=e647]: Contradictions
+                      - text: — claims that conflict across pages
+                    - listitem [ref=e648]:
+                      - strong [ref=e649]: Stale summaries
+                      - text: — pages not updated after newer sources
+                    - listitem [ref=e650]:
+                      - strong [ref=e651]: Missing entity pages
+                      - text: — entities mentioned in 3+ pages but lacking their own page
+                    - listitem [ref=e652]:
+                      - strong [ref=e653]: Data gaps
+                      - text: — questions the wiki can't answer; suggest new sources
+                  - paragraph [ref=e654]:
+                    - text: Output a lint report and ask if the user wants it saved to
+                    - code [ref=e655]: wiki/lint-report.md
+                    - text: .
+                  - separator [ref=e656]
+                  - generic [ref=e657]:
+                    - heading "Health Workflow" [level=2] [ref=e658]
+                    - 'link "Permalink: Health Workflow" [ref=e659] [cursor=pointer]':
+                      - /url: "#health-workflow"
+                      - img [ref=e660]
+                  - paragraph [ref=e662]:
+                    - text: "Triggered by:"
+                    - emphasis [ref=e663]: "\"health\""
+                    - text: or
+                    - code [ref=e664]: /wiki-health
+                  - paragraph [ref=e665]:
+                    - text: "Run:"
+                    - code [ref=e666]: python tools/health.py
+                    - text: (or
+                    - code [ref=e667]: python tools/health.py --json
+                    - text: for machine-readable output)
+                  - paragraph [ref=e668]:
+                    - text: Fast structural integrity checks —
+                    - strong [ref=e669]: zero LLM calls
+                    - text: ", safe to run every session:"
+                  - list [ref=e670]:
+                    - listitem [ref=e671]:
+                      - strong [ref=e672]: Empty / stub files
+                      - text: — pages with no content beyond frontmatter (rate-limit damage)
+                    - listitem [ref=e673]:
+                      - strong [ref=e674]: Index sync
+                      - text: —
+                      - code [ref=e675]: wiki/index.md
+                      - text: entries vs actual files on disk
+                    - listitem [ref=e676]:
+                      - strong [ref=e677]: Log coverage
+                      - text: — source pages missing a corresponding
+                      - code [ref=e678]: ingest
+                      - text: entry in
+                      - code [ref=e679]: wiki/log.md
+                  - paragraph [ref=e680]:
+                    - text: Output a health report. Use
+                    - code [ref=e681]: "--save"
+                    - text: to write to
+                    - code [ref=e682]: wiki/health-report.md
+                    - text: .
+                  - generic [ref=e683]:
+                    - heading "Health vs Lint Boundary" [level=3] [ref=e684]
+                    - 'link "Permalink: Health vs Lint Boundary" [ref=e685] [cursor=pointer]':
+                      - /url: "#health-vs-lint-boundary"
+                      - img [ref=e686]
+                  - table [ref=e689]:
+                    - rowgroup [ref=e690]:
+                      - row "Dimension health lint" [ref=e691]:
+                        - columnheader "Dimension" [ref=e692]
+                        - columnheader "health" [ref=e693]:
+                          - code [ref=e694]: health
+                        - columnheader "lint" [ref=e695]:
+                          - code [ref=e696]: lint
+                    - rowgroup [ref=e697]:
+                      - row "Scope Structural integrity Content quality" [ref=e698]:
+                        - cell "Scope" [ref=e699]:
+                          - strong [ref=e700]: Scope
+                        - cell "Structural integrity" [ref=e701]
+                        - cell "Content quality" [ref=e702]
+                      - row "LLM calls Zero Yes (semantic analysis)" [ref=e703]:
+                        - cell "LLM calls" [ref=e704]:
+                          - strong [ref=e705]: LLM calls
+                        - cell "Zero" [ref=e706]
+                        - cell "Yes (semantic analysis)" [ref=e707]
+                      - row "Cost Free Tokens" [ref=e708]:
+                        - cell "Cost" [ref=e709]:
+                          - strong [ref=e710]: Cost
+                        - cell "Free" [ref=e711]
+                        - cell "Tokens" [ref=e712]
+                      - row "Frequency Every session, before other work Every 10-15 ingests" [ref=e713]:
+                        - cell "Frequency" [ref=e714]:
+                          - strong [ref=e715]: Frequency
+                        - cell "Every session, before other work" [ref=e716]
+                        - cell "Every 10-15 ingests" [ref=e717]
+                      - row "Checks Empty files, index sync, log sync Orphans, broken links, contradictions, gaps" [ref=e718]:
+                        - cell "Checks" [ref=e719]:
+                          - strong [ref=e720]: Checks
+                        - cell "Empty files, index sync, log sync" [ref=e721]
+                        - cell "Orphans, broken links, contradictions, gaps" [ref=e722]
+                      - row "Tool tools/health.py tools/lint.py" [ref=e723]:
+                        - cell "Tool" [ref=e724]:
+                          - strong [ref=e725]: Tool
+                        - cell "tools/health.py" [ref=e726]:
+                          - code [ref=e727]: tools/health.py
+                        - cell "tools/lint.py" [ref=e728]:
+                          - code [ref=e729]: tools/lint.py
+                      - row "Run order First (pre-flight) After health passes" [ref=e730]:
+                        - cell "Run order" [ref=e731]:
+                          - strong [ref=e732]: Run order
+                        - cell "First (pre-flight)" [ref=e733]
+                        - cell "After health passes" [ref=e734]
+                  - blockquote [ref=e735]:
+                    - paragraph [ref=e736]:
+                      - text: Run
+                      - code [ref=e737]: health
+                      - text: first — linting an empty file wastes tokens.
+                  - separator [ref=e738]
+                  - generic [ref=e739]:
+                    - heading "Graph Workflow" [level=2] [ref=e740]
+                    - 'link "Permalink: Graph Workflow" [ref=e741] [cursor=pointer]':
+                      - /url: "#graph-workflow"
+                      - img [ref=e742]
+                  - paragraph [ref=e744]:
+                    - text: "Triggered by:"
+                    - emphasis [ref=e745]: "\"build the knowledge graph\""
+                    - text: or
+                    - code [ref=e746]: /wiki-graph
+                  - paragraph [ref=e747]:
+                    - text: When the user asks to build the graph, run
+                    - code [ref=e748]: tools/build_graph.py
+                    - text: "which:"
+                  - list [ref=e749]:
+                    - listitem [ref=e750]:
+                      - text: "Pass 1: Parses all"
+                      - code [ref=e751]: "[[wikilinks]]"
+                      - text: → deterministic
+                      - code [ref=e752]: EXTRACTED
+                      - text: edges
+                    - listitem [ref=e753]:
+                      - text: "Pass 2: Infers implicit relationships →"
+                      - code [ref=e754]: INFERRED
+                      - text: edges with confidence scores
+                    - listitem [ref=e755]: Runs Louvain community detection
+                    - listitem [ref=e756]:
+                      - text: Outputs
+                      - code [ref=e757]: graph/graph.json
+                      - text: +
+                      - code [ref=e758]: graph/graph.html
+                  - paragraph [ref=e759]: "If the user doesn't have Python/dependencies set up, instead generate the graph data manually:"
+                  - list [ref=e760]:
+                    - listitem [ref=e761]:
+                      - text: Use Grep to find all
+                      - code [ref=e762]: "[[wikilinks]]"
+                      - text: across wiki pages
+                    - listitem [ref=e763]: Build a node/edge list
+                    - listitem [ref=e764]:
+                      - text: Write
+                      - code [ref=e765]: graph/graph.json
+                      - text: directly
+                    - listitem [ref=e766]:
+                      - text: Write
+                      - code [ref=e767]: graph/graph.html
+                      - text: using the vis.js template
+                  - separator [ref=e768]
+                  - generic [ref=e769]:
+                    - heading "Naming Conventions" [level=2] [ref=e770]
+                    - 'link "Permalink: Naming Conventions" [ref=e771] [cursor=pointer]':
+                      - /url: "#naming-conventions"
+                      - img [ref=e772]
+                  - list [ref=e774]:
+                    - listitem [ref=e775]:
+                      - text: "Source slugs:"
+                      - code [ref=e776]: kebab-case
+                      - text: matching source filename
+                    - listitem [ref=e777]:
+                      - text: "Entity pages:"
+                      - code [ref=e778]: TitleCase.md
+                      - text: (e.g.
+                      - code [ref=e779]: OpenAI.md
+                      - text: ","
+                      - code [ref=e780]: SamAltman.md
+                      - text: )
+                    - listitem [ref=e781]:
+                      - text: "Concept pages:"
+                      - code [ref=e782]: TitleCase.md
+                      - text: (e.g.
+                      - code [ref=e783]: ReinforcementLearning.md
+                      - text: ","
+                      - code [ref=e784]: RAG.md
+                      - text: )
+                    - listitem [ref=e785]:
+                      - text: "Source pages:"
+                      - code [ref=e786]: kebab-case.md
+                  - generic [ref=e787]:
+                    - heading "Index Format" [level=2] [ref=e788]
+                    - 'link "Permalink: Index Format" [ref=e789] [cursor=pointer]':
+                      - /url: "#index-format"
+                      - img [ref=e790]
+                  - generic [ref=e792]:
+                    - generic [ref=e793]:
+                      - generic [ref=e794]: "# Wiki Index"
+                      - generic [ref=e795]: "## Overview"
+                      - text: "- [Overview](overview.md) — living synthesis"
+                      - generic [ref=e796]: "## Sources"
+                      - text: "- [Source Title](sources/slug.md) — one-line summary"
+                      - generic [ref=e797]: "## Entities"
+                      - text: "- [Entity Name](entities/EntityName.md) — one-line description"
+                      - generic [ref=e798]: "## Concepts"
+                      - text: "- [Concept Name](concepts/ConceptName.md) — one-line description"
+                      - generic [ref=e799]: "## Syntheses"
+                      - text: "- [Analysis Title](syntheses/slug.md) — what question it answers"
+                    - button "Copy code to clipboard" [ref=e801] [cursor=pointer]:
+                      - img [ref=e802]
+                  - generic [ref=e805]:
+                    - heading "Log Format" [level=2] [ref=e806]
+                    - 'link "Permalink: Log Format" [ref=e807] [cursor=pointer]':
+                      - /url: "#log-format"
+                      - img [ref=e808]
+                  - paragraph [ref=e810]:
+                    - text: Each entry starts with
+                    - code [ref=e811]: "## [YYYY-MM-DD] <operation> | <title>"
+                    - text: "so it's grep-parseable:"
+                  - generic [ref=e812]:
+                    - code [ref=e814]: grep "^## \[" wiki/log.md | tail -10
+                    - button "Copy code to clipboard" [ref=e816] [cursor=pointer]:
+                      - img [ref=e817]
+                  - paragraph [ref=e820]:
+                    - text: "Operations:"
+                    - code [ref=e821]: ingest
+                    - text: ","
+                    - code [ref=e822]: query
+                    - text: ","
+                    - code [ref=e823]: health
+                    - text: ","
+                    - code [ref=e824]: lint
+                    - text: ","
+                    - code [ref=e825]: graph
+  - alert [ref=e829]

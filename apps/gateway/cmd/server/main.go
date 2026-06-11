@@ -17,6 +17,7 @@ import (
 	"github.com/marsagent/gateway/internal/api"
 	"github.com/marsagent/gateway/internal/config"
 	"github.com/marsagent/gateway/internal/grpcc"
+	"github.com/marsagent/gateway/internal/oj"
 	"github.com/marsagent/gateway/internal/sandbox"
 	"github.com/marsagent/gateway/internal/store"
 	"github.com/marsagent/gateway/internal/stream"
@@ -61,6 +62,9 @@ func main() {
 		sch = nil
 	}
 
+	ojStore := oj.NewOJStore(db)
+	ojEngine := oj.NewJudgeEngine(ojStore, sch)
+
 	deps := api.Deps{
 		Producer:    stream.NewRedisProducer(rdb),
 		Subscriber:  stream.NewRedisSubscriber(rdb),
@@ -69,6 +73,8 @@ func main() {
 		CourseStore: store.NewCourseStore(db),
 		WikiStore:   store.NewWikiStore(db),
 		Sandbox:     sch,
+		OJStore:     ojStore,
+		OJEngine:    ojEngine,
 	}
 
 	srv := &http.Server{

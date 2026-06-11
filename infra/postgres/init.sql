@@ -56,6 +56,64 @@ create table if not exists drafts (
 
 alter table wiki_docs add column if not exists drafts_count int not null default 0;
 
+-- M4: Online Judge
+create table if not exists problems (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid null,
+  title text not null,
+  description_md text not null default '',
+  tags text[] not null default '{}',
+  difficulty text not null default 'medium',
+  time_limit_ms int not null default 2000,
+  memory_limit_mb int not null default 256,
+  visible bool not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists test_cases (
+  id uuid primary key default uuid_generate_v4(),
+  problem_id uuid not null references problems(id) on delete cascade,
+  input text not null default '',
+  expected_output text not null,
+  is_sample bool not null default false,
+  is_hidden bool not null default true,
+  score int not null default 100,
+  ordering int not null default 0,
+  unique (problem_id, ordering)
+);
+
+create table if not exists submissions (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid null,
+  problem_id uuid not null references problems(id),
+  code text not null,
+  lang text not null,
+  status text not null default 'pending',
+  score int not null default 0,
+  duration_ms int not null default 0,
+  memory_kb int not null default 0,
+  error_msg text,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists submission_results (
+  id uuid primary key default uuid_generate_v4(),
+  submission_id uuid not null references submissions(id) on delete cascade,
+  test_case_id uuid not null references test_cases(id),
+  status text not null default 'pending',
+  actual_output text,
+  duration_ms int not null default 0,
+  memory_kb int not null default 0,
+  score int not null default 0
+);
+
+create index if not exists idx_submissions_problem_id on submissions(problem_id);
+create index if not exists idx_submissions_user_id on submissions(user_id);
+create index if not exists idx_submissions_created_at on submissions(created_at desc);
+create index if not exists idx_test_cases_problem_id on test_cases(problem_id);
+create index if not exists idx_submission_results_submission_id on submission_results(submission_id);
+
 -- M3: 课程表
 create table if not exists courses (
   id uuid primary key default uuid_generate_v4(),

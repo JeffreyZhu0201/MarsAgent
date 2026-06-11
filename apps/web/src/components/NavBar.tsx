@@ -3,6 +3,8 @@ import clsx from 'clsx'
 
 const items = [
   { to: '/wiki', label: 'Wiki 浏览器' },
+  { to: '/problems', label: 'OJ 题库' },
+  { to: '/submissions', label: '提交记录' },
   { to: '/builder', label: '建课工作台' },
   { to: '/reader', label: '课程阅读器' },
 ] as const

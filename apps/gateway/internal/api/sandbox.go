@@ -1,29 +1,47 @@
 package api
 
 import (
+	"bytes"
+	"context"
+	"io"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/marsagent/gateway/internal/sandbox"
 )
 
-// POST /api/sandbox/run — 执行一次性代码容器
-func sandboxRunHandler(sch *sandbox.Scheduler) gin.HandlerFunc {
+const agentsSandboxURL = "http://127.0.0.1:8001/sandbox/run"
+
+// POST /api/sandbox/run — 代理到 agents Python service（warm container pool）
+func sandboxRunHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var req sandbox.RunRequest
-		if err := c.ShouldBindJSON(&req); err != nil {
+		body, err := io.ReadAll(c.Request.Body)
+		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		if err := sandbox.ValidateRequest(req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-		result, err := sch.Run(req)
+
+		proxyReq, err := http.NewRequest(http.MethodPost, agentsSandboxURL, bytes.NewReader(body))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, result)
+		proxyReq.Header.Set("Content-Type", "application/json")
+
+		// Use a fresh 60s timeout context — the incoming request's context may be very short
+		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+		defer cancel()
+
+		client := &http.Client{Timeout: 65 * time.Second}
+		resp, err := client.Do(proxyReq.WithContext(ctx))
+		if err != nil {
+			c.JSON(http.StatusBadGateway, gin.H{"error": "sandbox service unavailable: " + err.Error()})
+			return
+		}
+		defer resp.Body.Close()
+
+		body2, _ := io.ReadAll(resp.Body)
+		c.Header("Content-Type", resp.Header.Get("Content-Type"))
+		c.Data(resp.StatusCode, resp.Header.Get("Content-Type"), body2)
 	}
 }

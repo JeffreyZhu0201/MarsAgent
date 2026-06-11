@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"os"
 	"strings"
 	"time"
 
@@ -63,9 +64,27 @@ type Scheduler struct {
 	cli *client.Client
 }
 
+// detectDockerHost returns the Docker host URL, checking for OrbStack on macOS.
+func detectDockerHost() string {
+	if os.Getenv("DOCKER_HOST") != "" {
+		return os.Getenv("DOCKER_HOST")
+	}
+	// OrbStack on macOS
+	orb := "/Users/" + os.Getenv("USER") + "/.orbstack/run/docker.sock"
+	if _, err := os.Stat(orb); err == nil {
+		return "unix://" + orb
+	}
+	return ""
+}
+
 // NewScheduler creates a new Sandbox Scheduler.
 func NewScheduler() (*Scheduler, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	host := detectDockerHost()
+	opts := []client.Opt{client.WithAPIVersionNegotiation()}
+	if host != "" {
+		opts = append(opts, client.WithHost(host))
+	}
+	cli, err := client.NewClientWithOpts(opts...)
 	if err != nil {
 		return nil, fmt.Errorf("docker client: %w", err)
 	}

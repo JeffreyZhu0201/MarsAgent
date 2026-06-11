@@ -11,6 +11,7 @@ from contextlib import asynccontextmanager
 
 import redis.asyncio as aioredis
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 from marsagent.config import get_settings
 from marsagent.grpcs.server import build_grpc_server
@@ -18,9 +19,25 @@ from marsagent.stream.consumer import StreamConsumer
 from marsagent.collector.tasks.collect import handle_collect
 from marsagent.tasks.echo import handle_echo
 from marsagent.builder.tasks.build import handle_build_course
+from marsagent.sandbox.pool import ContainerPool
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger("marsagent")
+
+
+class SandboxRunRequest(BaseModel):
+    lang: str
+    code: str
+    stdin: str = ""
+    timeout: int = 15
+
+
+class SandboxRunResponse(BaseModel):
+    stdout: str
+    stderr: str
+    exit_code: int
+    duration_ms: int
+    truncated: bool
 
 
 @asynccontextmanager
@@ -56,13 +73,19 @@ async def lifespan(app: FastAPI):
         asyncio.create_task(course_consumer.run(), name="course-build-consumer"),
     ]
 
+    # 3) Sandbox container pool
+    pool = ContainerPool()
+    pool.ensure_started()
+
     app.state.rdb = rdb
     app.state.grpc = grpc_server
     app.state.consumer_tasks = consumer_tasks
+    app.state.pool = pool
     try:
         yield
     finally:
         log.info("shutting down...")
+        pool.close()
         for task in consumer_tasks:
             task.cancel()
         for task in consumer_tasks:
@@ -81,3 +104,17 @@ app = FastAPI(lifespan=lifespan, title="MarsAgent Worker")
 @app.get("/healthz")
 async def healthz() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.post("/sandbox/run", response_model=SandboxRunResponse)
+async def sandbox_run(req: SandboxRunRequest) -> SandboxRunResponse:
+    """Execute code in a warm Docker container (Python / Node.js / Go)."""
+    pool: ContainerPool = app.state.pool
+    result = pool.run(code=req.code, lang=req.lang, stdin=req.stdin, timeout_sec=req.timeout)
+    return SandboxRunResponse(
+        stdout=result.stdout,
+        stderr=result.stderr,
+        exit_code=result.exit_code,
+        duration_ms=result.duration_ms,
+        truncated=result.truncated,
+    )

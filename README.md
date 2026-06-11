@@ -42,8 +42,16 @@
 ### Sandbox（代码执行）
 
 - **Docker 隔离执行**：Python / JavaScript / Go 代码在独立 Docker 容器运行
+- **预热容器池**：Python Worker 维持 warm container，交互式执行低延迟
 - **超时与内存限制**：防止恶意/无限循环代码
 - **标准输出/错误捕获**：实时返回执行结果
+
+### 在线判题（OJ）
+
+- **题目管理**：创建题目、样例/隐藏测试点、难度与标签
+- **多语言提交**：Python / Node.js / Go
+- **异步判题**：Gateway 后台 goroutine 逐条运行测试点
+- **结果查询**：Accepted / Wrong Answer / TLE / RE 等状态，含得分与耗时
 
 ---
 
@@ -52,7 +60,7 @@
 ```txt
 ┌─────────────────────────────────────────────────────────────┐
 │                        Frontend (React)                      │
-│   /wiki  ·  /builder  ·  /reader                           │
+│   /wiki  ·  /builder  ·  /reader  ·  /problems  ·  /submissions           │
 └──────────────────┬──────────────────────────────────────────┘
                    │ HTTP / SSE
 
@@ -154,6 +162,8 @@ make web
 - <http://localhost:5173/wiki> — Wiki 知识库浏览器
 - <http://localhost:5173/builder> — 建课工作台（5 Agent 实时推理可视化）
 - <http://localhost:5173/reader> — 课程阅读器
+- <http://localhost:5173/problems> — OJ 题库
+- <http://localhost:5173/submissions> — 提交记录
 
 ---
 
@@ -168,7 +178,8 @@ MarsAgent/
 │   │       ├── api/          # Gin 路由、处理器（SSE、REST、gRPC 代理）
 │   │       ├── config/       # 环境变量配置
 │   │       ├── grpcc/        # gRPC 客户端（WikiRetriever、CourseBuilder）
-│   │       ├── sandbox/      # Docker Sandbox 调度器
+│   │       ├── sandbox/      # Docker Sandbox 调度器（OJ 判题用）
+│   │       ├── oj/           # 在线判题：题目、提交、判题引擎
 │   │       ├── store/        # PostgreSQL CRUD（courses、drafts、wiki_docs）
 │   │       └── stream/       # Redis Streams 生产者/消费者
 │   │
@@ -198,6 +209,8 @@ MarsAgent/
 │   │   │   │   └── server.py       # gRPC server（HybridSearch RPC）
 │   │   │   ├── stream/
 │   │   │   │   └── progress.py     # Redis Progress Sink（emit SSE 事件）
+│   │   │   ├── sandbox/
+│   │   │   │   └── pool.py         # 预热 Docker 容器池（交互式沙箱）
 │   │   │   ├── llm.py              # Anthropic SDK 封装 + thinking 提取
 │   │   │   └── main.py             # FastAPI 入口
 │   │   └── tests/
@@ -207,7 +220,10 @@ MarsAgent/
 │           ├── views/
 │           │   ├── CourseBuilder.tsx  # 建课工作台 + 实时推理面板
 │           │   ├── WikiBrowser.tsx    # Wiki 知识库浏览器
-│           │   └── CourseReader.tsx   # 课程阅读器
+│           │   ├── CourseReader.tsx   # 课程阅读器
+│           │   ├── ProblemList.tsx    # OJ 题库列表
+│           │   ├── ProblemDetail.tsx  # 题目详情 + 代码提交
+│           │   └── SubmissionHistory.tsx  # 提交记录
 │           ├── components/
 │           │   ├── ThinkingPanel.tsx  # LLM 推理过程可视化面板
 │           │   ├── ProgressFeed.tsx   # 实时 SSE 事件流组件
@@ -292,7 +308,14 @@ BUILDER_MAX_CHAPTERS=3    # 最多生成章节数
 | GET | `/api/courses` | 列出所有课程 |
 | GET | `/api/courses/:id` | 获取课程详情 |
 | GET | `/api/courses/:id/chapter/:ch_id` | 获取章节 Markdown |
-| POST | `/api/sandbox/run` | 在 Docker 沙箱中执行代码 |
+| POST | `/api/sandbox/run` | 在 Docker 沙箱中执行代码（代理到 Python Worker） |
+| GET | `/api/oj/problems` | 分页列出 OJ 题目（支持 `difficulty`、`tag` 过滤） |
+| POST | `/api/oj/problems` | 创建 OJ 题目 |
+| GET | `/api/oj/problems/:id` | 获取题目详情及样例测试点 |
+| POST | `/api/oj/problems/:id/test-cases` | 为题目添加测试点 |
+| GET | `/api/oj/submissions` | 分页列出提交记录 |
+| POST | `/api/oj/submissions` | 提交代码（异步判题，返回 `submission_id`） |
+| GET | `/api/oj/submissions/:id` | 查询判题结果及各测试点详情 |
 | GET | `/api/stream/:task_id` | SSE 流，实时推送 `agent.*` 事件 |
 
 ### SSE 事件类型
@@ -381,6 +404,33 @@ WikiDraft 写入 PostgreSQL（待审核）
 
 相关源码：[`collector/`](apps/agents/marsagent/collector/) · [`chunker.py`](apps/agents/marsagent/collector/chunker.py) · [`qdrant.py`](apps/agents/marsagent/rag/qdrant.py)
 
+### OJ 判题流程
+
+```
+POST /api/oj/submissions { problem_id, code, lang }
+  │
+  ▼
+写入 submissions 表（status=pending）→ 返回 submission_id
+  │
+  ▼
+JudgeEngine 后台 goroutine 逐条运行测试点（Go Docker 沙箱）
+  │
+  ▼
+CompareOutput 比对输出（精确匹配 + 浮点容差）
+  │
+  ▼
+更新 submission 最终状态（accepted / wrong_answer / tle / re …）
+```
+
+**沙箱双路径**：
+
+| 路径 | 实现 | 用途 |
+|------|------|------|
+| `POST /api/sandbox/run` | Gateway 代理 → Python `ContainerPool` | 课程代码示例交互执行 |
+| OJ 判题 | Go `sandbox.Scheduler` | 每次提交创建临时容器 |
+
+相关源码：[`internal/oj/`](apps/gateway/internal/oj/) · [`ProblemDetail.tsx`](apps/web/src/views/ProblemDetail.tsx)
+
 ### Wiki RAG 检索
 
 ```
@@ -434,6 +484,7 @@ cd apps/web
 npx playwright test                  # 所有 Playwright 测试
 npx playwright test course.spec.ts   # 只跑建课测试
 npx playwright test wiki-drafts.spec.ts  # 只跑 Wiki 草稿测试
+npx playwright test oj.spec.ts         # 只跑 OJ 页面测试
 ```
 
 ### Python 调试
