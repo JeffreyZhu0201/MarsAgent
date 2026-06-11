@@ -1,0 +1,1102 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e8]:
+        - link "Homepage" [ref=e10] [cursor=pointer]:
+          - /url: /
+          - img [ref=e11]
+        - generic [ref=e13]:
+          - navigation "Global" [ref=e16]:
+            - list [ref=e17]:
+              - listitem [ref=e18]:
+                - button "Platform" [ref=e20] [cursor=pointer]:
+                  - text: Platform
+                  - img [ref=e21]
+              - listitem [ref=e23]:
+                - button "Solutions" [ref=e25] [cursor=pointer]:
+                  - text: Solutions
+                  - img [ref=e26]
+              - listitem [ref=e28]:
+                - button "Resources" [ref=e30] [cursor=pointer]:
+                  - text: Resources
+                  - img [ref=e31]
+              - listitem [ref=e33]:
+                - button "Open Source" [ref=e35] [cursor=pointer]:
+                  - text: Open Source
+                  - img [ref=e36]
+              - listitem [ref=e38]:
+                - button "Enterprise" [ref=e40] [cursor=pointer]:
+                  - text: Enterprise
+                  - img [ref=e41]
+              - listitem [ref=e43]:
+                - link "Pricing" [ref=e44] [cursor=pointer]:
+                  - /url: https://github.com/pricing
+                  - generic [ref=e45]: Pricing
+          - generic [ref=e46]:
+            - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+              - img [ref=e51]
+            - link "Sign in" [ref=e54] [cursor=pointer]:
+              - /url: /login?return_to=https%3A%2F%2Fgithub.com%2FSamurAIGPT%2Fllm-wiki-agent
+            - link "Sign up" [ref=e55] [cursor=pointer]:
+              - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E&source=header-repo&source_repo=SamurAIGPT%2Fllm-wiki-agent
+            - button "Appearance settings" [ref=e58] [cursor=pointer]:
+              - img
+  - main [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e66]:
+          - img [ref=e67]
+          - link "SamurAIGPT" [ref=e70] [cursor=pointer]:
+            - /url: /SamurAIGPT
+          - generic [ref=e71]: /
+          - strong [ref=e72]:
+            - link "llm-wiki-agent" [ref=e73] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent
+          - generic [ref=e74]: Public
+        - generic [ref=e75]:
+          - list:
+            - listitem [ref=e76]:
+              - link "You must be signed in to change notification settings" [ref=e77] [cursor=pointer]:
+                - /url: /login?return_to=%2FSamurAIGPT%2Fllm-wiki-agent
+                - img [ref=e78]
+                - text: Notifications
+            - listitem [ref=e80]:
+              - link "Fork 342" [ref=e81] [cursor=pointer]:
+                - /url: /login?return_to=%2FSamurAIGPT%2Fllm-wiki-agent
+                - img [ref=e82]
+                - text: Fork
+                - generic "342" [ref=e84]
+            - listitem [ref=e85]:
+              - link "You must be signed in to star a repository" [ref=e87] [cursor=pointer]:
+                - /url: /login?return_to=%2FSamurAIGPT%2Fllm-wiki-agent
+                - img [ref=e88]
+                - text: Star
+                - generic "2867 users starred this repository" [ref=e90]: 2.9k
+      - navigation "Repository" [ref=e91]:
+        - list [ref=e92]:
+          - listitem [ref=e93]:
+            - link "Code" [ref=e94] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent
+              - img [ref=e95]
+              - generic [ref=e97]: Code
+          - listitem [ref=e98]:
+            - link "Issues 2" [ref=e99] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/issues
+              - img [ref=e100]
+              - generic [ref=e103]: Issues
+              - generic "2" [ref=e104]
+          - listitem [ref=e105]:
+            - link "Pull requests" [ref=e106] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/pulls
+              - img [ref=e107]
+              - generic [ref=e109]: Pull requests
+          - listitem [ref=e110]:
+            - link "Actions" [ref=e111] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/actions
+              - img [ref=e112]
+              - generic [ref=e114]: Actions
+          - listitem [ref=e115]:
+            - link "Projects" [ref=e116] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/projects
+              - img [ref=e117]
+              - generic [ref=e119]: Projects
+          - listitem [ref=e120]:
+            - link "Security and quality" [ref=e121] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/security
+              - img [ref=e122]
+              - generic [ref=e124]: Security and quality
+          - listitem [ref=e125]:
+            - link "Insights" [ref=e126] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/pulse
+              - img [ref=e127]
+              - generic [ref=e129]: Insights
+    - generic [ref=e142]:
+      - heading "SamurAIGPT/llm-wiki-agent" [level=1] [ref=e144]
+      - generic [ref=e145]:
+        - generic [ref=e148]:
+          - generic [ref=e149]:
+            - generic [ref=e150]:
+              - button "main branch" [ref=e152] [cursor=pointer]:
+                - generic [ref=e153]:
+                  - generic [ref=e155]:
+                    - img [ref=e157]
+                    - generic [ref=e160]: main
+                  - generic:
+                    - img
+              - generic [ref=e161]:
+                - link "1 Branch" [ref=e162] [cursor=pointer]:
+                  - /url: /SamurAIGPT/llm-wiki-agent/branches
+                  - generic [ref=e163]:
+                    - generic:
+                      - img
+                    - generic [ref=e165]:
+                      - strong [ref=e166]: "1"
+                      - text: Branch
+                - link "0 Tags" [ref=e167] [cursor=pointer]:
+                  - /url: /SamurAIGPT/llm-wiki-agent/tags
+                  - generic [ref=e168]:
+                    - generic:
+                      - img
+                    - generic [ref=e170]:
+                      - strong [ref=e171]: "0"
+                      - text: Tags
+            - generic [ref=e172]:
+              - generic [ref=e176]:
+                - img [ref=e178]
+                - combobox "Go to file" [ref=e180]
+              - button "Code" [ref=e181] [cursor=pointer]:
+                - generic [ref=e182]:
+                  - generic:
+                    - img
+                  - generic [ref=e183]: Code
+                  - generic:
+                    - img
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - heading "Folders and files" [level=2] [ref=e186]
+              - table "Folders and files" [ref=e187]:
+                - rowgroup:
+                  - row "Name Last commit message Last commit date":
+                    - columnheader "Name"
+                    - columnheader "Last commit message":
+                      - generic "Last commit message"
+                    - columnheader "Last commit date":
+                      - generic "Last commit date"
+                - rowgroup [ref=e188]:
+                  - 'row "Latest commit Anil-matcha commits by Anil-matcha Merge pull request #50 from watsonctl/fix/health-yaml-title-parsing Open commit details Commit 23491f2 · Jun 3, 2026last week History 85 Commits" [ref=e189]':
+                    - 'cell "Latest commit Anil-matcha commits by Anil-matcha Merge pull request #50 from watsonctl/fix/health-yaml-title-parsing Open commit details Commit 23491f2 · Jun 3, 2026last week History 85 Commits" [ref=e190]':
+                      - generic [ref=e191]:
+                        - heading "Latest commit" [level=2] [ref=e192]
+                        - generic [ref=e193]:
+                          - generic [ref=e195]:
+                            - link "Anil-matcha" [ref=e196] [cursor=pointer]:
+                              - /url: /Anil-matcha
+                              - img "Anil-matcha" [ref=e197]
+                            - link "commits by Anil-matcha" [ref=e198] [cursor=pointer]:
+                              - /url: /SamurAIGPT/llm-wiki-agent/commits?author=Anil-matcha
+                              - text: Anil-matcha
+                          - generic [ref=e199]:
+                            - generic [ref=e201]:
+                              - link "Merge pull request" [ref=e202] [cursor=pointer]:
+                                - /url: /SamurAIGPT/llm-wiki-agent/commit/23491f216a7b01c53eed8bd988c4b3e09b96a234
+                              - link "#50" [ref=e203] [cursor=pointer]:
+                                - /url: https://github.com/SamurAIGPT/llm-wiki-agent/pull/50
+                              - link "from watsonctl/fix/health-yaml-title-parsing" [ref=e204] [cursor=pointer]:
+                                - /url: /SamurAIGPT/llm-wiki-agent/commit/23491f216a7b01c53eed8bd988c4b3e09b96a234
+                            - button "Open commit details" [ref=e205] [cursor=pointer]:
+                              - img [ref=e206]
+                        - generic [ref=e208]:
+                          - generic [ref=e210]:
+                            - link "Commit 23491f2" [ref=e211] [cursor=pointer]:
+                              - /url: /SamurAIGPT/llm-wiki-agent/commit/23491f216a7b01c53eed8bd988c4b3e09b96a234
+                              - text: 23491f2
+                            - text: ·
+                            - generic "Jun 3, 2026, 3:07 AM GMT+8" [ref=e212]: Jun 3, 2026last week
+                          - generic [ref=e213]:
+                            - heading "History" [level=2] [ref=e214]
+                            - link "85 Commits" [ref=e215] [cursor=pointer]:
+                              - /url: /SamurAIGPT/llm-wiki-agent/commits/main/
+                              - generic [ref=e216]:
+                                - generic:
+                                  - img
+                                - generic [ref=e217]: 85 Commits
+                  - row ".claude/commands, (Directory) Make Claude Code the primary interface — no API key needed Apr 7, 20262 months ago" [ref=e218]:
+                    - cell ".claude/commands, (Directory)" [ref=e219]:
+                      - generic [ref=e220]:
+                        - img [ref=e221]
+                        - link ".claude/commands, (Directory)" [ref=e226] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/tree/main/.claude/commands
+                          - text: .claude/commands
+                    - cell "Make Claude Code the primary interface — no API key needed" [ref=e227]:
+                      - link "Make Claude Code the primary interface — no API key needed" [ref=e230] [cursor=pointer]:
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/116ccc4d3c17d6930e1496552f03148fe1323f0e
+                    - cell "Apr 7, 20262 months ago" [ref=e231]:
+                      - generic [ref=e232]: Apr 7, 20262 months ago
+                  - 'row "docs, (Directory) feat(tools): add self-healing graph utility and automated orchestrati… Apr 14, 20262 months ago" [ref=e233]':
+                    - cell "docs, (Directory)" [ref=e234]:
+                      - generic [ref=e235]:
+                        - img [ref=e236]
+                        - link "docs, (Directory)" [ref=e241] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/tree/main/docs
+                          - text: docs
+                    - 'cell "feat(tools): add self-healing graph utility and automated orchestrati…" [ref=e242]':
+                      - 'link "feat(tools): add self-healing graph utility and automated orchestrati…" [ref=e245] [cursor=pointer]':
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/6868034554ad5c59d2d171637df591195a2e6f6a
+                    - cell "Apr 14, 20262 months ago" [ref=e246]:
+                      - generic [ref=e247]: Apr 14, 20262 months ago
+                  - 'row "examples/cjk-showcase, (Directory) docs: add CJK language showcase example Apr 13, 20262 months ago" [ref=e248]':
+                    - cell "examples/cjk-showcase, (Directory)" [ref=e249]:
+                      - generic [ref=e250]:
+                        - img [ref=e251]
+                        - link "examples/cjk-showcase, (Directory)" [ref=e256] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/tree/main/examples/cjk-showcase
+                          - text: examples/cjk-showcase
+                    - 'cell "docs: add CJK language showcase example" [ref=e257]':
+                      - 'link "docs: add CJK language showcase example" [ref=e260] [cursor=pointer]':
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/9ecfadcb7c2903a611d91cdd7d99c174d061bdf3
+                    - cell "Apr 13, 20262 months ago" [ref=e261]:
+                      - generic [ref=e262]: Apr 13, 20262 months ago
+                  - row "graph, (Directory) Add LLM Wiki Agent — persistent LLM-maintained knowledge base Apr 7, 20262 months ago" [ref=e263]:
+                    - cell "graph, (Directory)" [ref=e264]:
+                      - generic [ref=e265]:
+                        - img [ref=e266]
+                        - link "graph, (Directory)" [ref=e271] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/tree/main/graph
+                          - text: graph
+                    - cell "Add LLM Wiki Agent — persistent LLM-maintained knowledge base" [ref=e272]:
+                      - link "Add LLM Wiki Agent — persistent LLM-maintained knowledge base" [ref=e275] [cursor=pointer]:
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/d12089aaafd7d60b6bedd86d9f743e938cf8ed64
+                    - cell "Apr 7, 20262 months ago" [ref=e276]:
+                      - generic [ref=e277]: Apr 7, 20262 months ago
+                  - row "raw, (Directory) Add LLM Wiki Agent — persistent LLM-maintained knowledge base Apr 7, 20262 months ago" [ref=e278]:
+                    - cell "raw, (Directory)" [ref=e279]:
+                      - generic [ref=e280]:
+                        - img [ref=e281]
+                        - link "raw, (Directory)" [ref=e286] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/tree/main/raw
+                          - text: raw
+                    - cell "Add LLM Wiki Agent — persistent LLM-maintained knowledge base" [ref=e287]:
+                      - link "Add LLM Wiki Agent — persistent LLM-maintained knowledge base" [ref=e290] [cursor=pointer]:
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/d12089aaafd7d60b6bedd86d9f743e938cf8ed64
+                    - cell "Apr 7, 20262 months ago" [ref=e291]:
+                      - generic [ref=e292]: Apr 7, 20262 months ago
+                  - 'row "tools, (Directory) fix: YAML-aware title parsing in health.py, add word-boundary clip() … May 31, 2026last week" [ref=e293]':
+                    - cell "tools, (Directory)" [ref=e294]:
+                      - generic [ref=e295]:
+                        - img [ref=e296]
+                        - link "tools, (Directory)" [ref=e301] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/tree/main/tools
+                          - text: tools
+                    - 'cell "fix: YAML-aware title parsing in health.py, add word-boundary clip() …" [ref=e302]':
+                      - 'link "fix: YAML-aware title parsing in health.py, add word-boundary clip() …" [ref=e305] [cursor=pointer]':
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/454931d3bf119eb1106587945eae51096aac4468
+                    - cell "May 31, 2026last week" [ref=e306]:
+                      - generic [ref=e307]: May 31, 2026last week
+                  - row "wiki, (Directory) Add LLM Wiki Agent — persistent LLM-maintained knowledge base Apr 7, 20262 months ago" [ref=e308]:
+                    - cell "wiki, (Directory)" [ref=e309]:
+                      - generic [ref=e310]:
+                        - img [ref=e311]
+                        - link "wiki, (Directory)" [ref=e316] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/tree/main/wiki
+                          - text: wiki
+                    - cell "Add LLM Wiki Agent — persistent LLM-maintained knowledge base" [ref=e317]:
+                      - link "Add LLM Wiki Agent — persistent LLM-maintained knowledge base" [ref=e320] [cursor=pointer]:
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/d12089aaafd7d60b6bedd86d9f743e938cf8ed64
+                    - cell "Apr 7, 20262 months ago" [ref=e321]:
+                      - generic [ref=e322]: Apr 7, 20262 months ago
+                  - 'row "AGENTS.md, (File) feat(ingest): auto-convert 20+ file formats via markitdown (This commit closes issue #43. #43) Apr 26, 20262 months ago" [ref=e323]':
+                    - cell "AGENTS.md, (File)" [ref=e324]:
+                      - generic [ref=e325]:
+                        - img [ref=e326]
+                        - link "AGENTS.md, (File)" [ref=e331] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/blob/main/AGENTS.md
+                          - text: AGENTS.md
+                    - 'cell "feat(ingest): auto-convert 20+ file formats via markitdown (This commit closes issue #43. #43)" [ref=e332]':
+                      - generic [ref=e334]:
+                        - 'link "feat(ingest): auto-convert 20+ file formats via markitdown (" [ref=e335] [cursor=pointer]':
+                          - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                        - 'generic "This commit closes issue #43." [ref=e336]':
+                          - link "closes" [ref=e337] [cursor=pointer]:
+                            - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                        - link "#43" [ref=e338] [cursor=pointer]:
+                          - /url: https://github.com/SamurAIGPT/llm-wiki-agent/issues/43
+                        - link ")" [ref=e339] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                    - cell "Apr 26, 20262 months ago" [ref=e340]:
+                      - generic [ref=e341]: Apr 26, 20262 months ago
+                  - 'row "CLAUDE.md, (File) feat(ingest): auto-convert 20+ file formats via markitdown (This commit closes issue #43. #43) Apr 26, 20262 months ago" [ref=e342]':
+                    - cell "CLAUDE.md, (File)" [ref=e343]:
+                      - generic [ref=e344]:
+                        - img [ref=e345]
+                        - link "CLAUDE.md, (File)" [ref=e350] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/blob/main/CLAUDE.md
+                          - text: CLAUDE.md
+                    - 'cell "feat(ingest): auto-convert 20+ file formats via markitdown (This commit closes issue #43. #43)" [ref=e351]':
+                      - generic [ref=e353]:
+                        - 'link "feat(ingest): auto-convert 20+ file formats via markitdown (" [ref=e354] [cursor=pointer]':
+                          - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                        - 'generic "This commit closes issue #43." [ref=e355]':
+                          - link "closes" [ref=e356] [cursor=pointer]:
+                            - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                        - link "#43" [ref=e357] [cursor=pointer]:
+                          - /url: https://github.com/SamurAIGPT/llm-wiki-agent/issues/43
+                        - link ")" [ref=e358] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                    - cell "Apr 26, 20262 months ago" [ref=e359]:
+                      - generic [ref=e360]: Apr 26, 20262 months ago
+                  - 'row "GEMINI.md, (File) feat(ingest): auto-convert 20+ file formats via markitdown (This commit closes issue #43. #43) Apr 26, 20262 months ago" [ref=e361]':
+                    - cell "GEMINI.md, (File)" [ref=e362]:
+                      - generic [ref=e363]:
+                        - img [ref=e364]
+                        - link "GEMINI.md, (File)" [ref=e369] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/blob/main/GEMINI.md
+                          - text: GEMINI.md
+                    - 'cell "feat(ingest): auto-convert 20+ file formats via markitdown (This commit closes issue #43. #43)" [ref=e370]':
+                      - generic [ref=e372]:
+                        - 'link "feat(ingest): auto-convert 20+ file formats via markitdown (" [ref=e373] [cursor=pointer]':
+                          - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                        - 'generic "This commit closes issue #43." [ref=e374]':
+                          - link "closes" [ref=e375] [cursor=pointer]:
+                            - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                        - link "#43" [ref=e376] [cursor=pointer]:
+                          - /url: https://github.com/SamurAIGPT/llm-wiki-agent/issues/43
+                        - link ")" [ref=e377] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/commit/e00449f05a105c79b5f508564d250a54801c229f
+                    - cell "Apr 26, 20262 months ago" [ref=e378]:
+                      - generic [ref=e379]: Apr 26, 20262 months ago
+                  - row "LICENSE, (File) Initial commit Apr 21, 20233 years ago" [ref=e380]:
+                    - cell "LICENSE, (File)" [ref=e381]:
+                      - generic [ref=e382]:
+                        - img [ref=e383]
+                        - link "LICENSE, (File)" [ref=e388] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/blob/main/LICENSE
+                          - text: LICENSE
+                    - cell "Initial commit" [ref=e389]:
+                      - link "Initial commit" [ref=e392] [cursor=pointer]:
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/7366f8d89320695d3324fc1fa72c67ad4c739621
+                    - cell "Apr 21, 20233 years ago" [ref=e393]:
+                      - generic [ref=e394]: Apr 21, 20233 years ago
+                  - row "README.md, (File) Add cross-links to related projects Jun 3, 2026last week" [ref=e395]:
+                    - cell "README.md, (File)" [ref=e396]:
+                      - generic [ref=e397]:
+                        - img [ref=e398]
+                        - link "README.md, (File)" [ref=e403] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/blob/main/README.md
+                          - text: README.md
+                    - cell "Add cross-links to related projects" [ref=e404]:
+                      - link "Add cross-links to related projects" [ref=e407] [cursor=pointer]:
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/8c88f5f7478ffa82afdf61480b47b10eeee2100e
+                    - cell "Jun 3, 2026last week" [ref=e408]:
+                      - generic [ref=e409]: Jun 3, 2026last week
+                  - row "pyproject.toml, (File) Added python ceiling to 3.14. Apr 16, 20262 months ago" [ref=e410]:
+                    - cell "pyproject.toml, (File)" [ref=e411]:
+                      - generic [ref=e412]:
+                        - img [ref=e413]
+                        - link "pyproject.toml, (File)" [ref=e418] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/blob/main/pyproject.toml
+                          - text: pyproject.toml
+                    - cell "Added python ceiling to 3.14." [ref=e419]:
+                      - link "Added python ceiling to 3.14." [ref=e422] [cursor=pointer]:
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/e8949d416b939e755ebdfade429fe2f895d3a19e
+                    - cell "Apr 16, 20262 months ago" [ref=e423]:
+                      - generic [ref=e424]: Apr 16, 20262 months ago
+                  - 'row "requirements.txt, (File) fix: pin litellm and networkx versions to prevent supply chain attacks Apr 22, 20262 months ago" [ref=e425]':
+                    - cell "requirements.txt, (File)" [ref=e426]:
+                      - generic [ref=e427]:
+                        - img [ref=e428]
+                        - link "requirements.txt, (File)" [ref=e433] [cursor=pointer]:
+                          - /url: /SamurAIGPT/llm-wiki-agent/blob/main/requirements.txt
+                          - text: requirements.txt
+                    - 'cell "fix: pin litellm and networkx versions to prevent supply chain attacks" [ref=e434]':
+                      - 'link "fix: pin litellm and networkx versions to prevent supply chain attacks" [ref=e437] [cursor=pointer]':
+                        - /url: /SamurAIGPT/llm-wiki-agent/commit/0b413061cb31c25f28f0da1ba709224e80789426
+                    - cell "Apr 22, 20262 months ago" [ref=e438]:
+                      - generic [ref=e439]: Apr 22, 20262 months ago
+            - generic [ref=e441]:
+              - generic [ref=e442]:
+                - heading "Repository files navigation" [level=2] [ref=e443]
+                - navigation "Repository files" [ref=e444]:
+                  - list [ref=e445]:
+                    - listitem [ref=e446]:
+                      - link "README" [ref=e447] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e449]
+                        - generic [ref=e451]: README
+                    - listitem [ref=e452]:
+                      - link "MIT license" [ref=e453] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e455]
+                        - generic [ref=e457]: MIT license
+                - button "Outline" [ref=e458] [cursor=pointer]:
+                  - img [ref=e459]
+              - article [ref=e462]:
+                - generic [ref=e463]:
+                  - heading "LLM Wiki Agent" [level=1] [ref=e464]
+                  - 'link "Permalink: LLM Wiki Agent" [ref=e465] [cursor=pointer]':
+                    - /url: "#llm-wiki-agent"
+                    - img [ref=e466]
+                - paragraph [ref=e468]:
+                  - link "License" [ref=e469] [cursor=pointer]:
+                    - /url: /SamurAIGPT/llm-wiki-agent/blob/main/LICENSE
+                    - img "License" [ref=e470]
+                - paragraph [ref=e471]:
+                  - strong [ref=e472]: A coding agent skill.
+                  - text: Drop source documents into
+                  - code [ref=e473]: raw/
+                  - text: and tell the agent to ingest them — it reads them, extracts knowledge, and builds a persistent interlinked wiki. Every new source makes the wiki richer. You never write it.
+                - blockquote [ref=e474]:
+                  - paragraph [ref=e475]: Most knowledge tools make you search your own notes. This one reads everything you've collected and writes a structured wiki that compounds over time — cross-references already built, contradictions already flagged, synthesis already done.
+                - generic [ref=e476]:
+                  - code [ref=e478]: ingest raw/papers/attention-is-all-you-need.md
+                  - button "Copy code to clipboard" [ref=e480] [cursor=pointer]:
+                    - img [ref=e481]
+                - generic [ref=e484]:
+                  - code [ref=e486]: wiki/ ├── index.md catalog of all pages — updated on every ingest ├── log.md append-only record of every operation ├── overview.md living synthesis across all sources ├── sources/ one summary page per source document ├── entities/ people, companies, projects — auto-created ├── concepts/ ideas, frameworks, methods — auto-created └── syntheses/ query answers filed back as wiki pages graph/ ├── graph.json persistent node/edge data (SHA256-cached) └── graph.html interactive vis.js visualization — open in any browser
+                  - button "Copy code to clipboard" [ref=e488] [cursor=pointer]:
+                    - img [ref=e489]
+                - generic [ref=e492]:
+                  - heading "Related Projects" [level=2] [ref=e493]
+                  - 'link "Permalink: Related Projects" [ref=e494] [cursor=pointer]':
+                    - /url: "#related-projects"
+                    - img [ref=e495]
+                - list [ref=e497]:
+                  - listitem [ref=e498]:
+                    - link "Open-Generative-AI" [ref=e499] [cursor=pointer]:
+                      - /url: https://github.com/Anil-matcha/Open-Generative-AI
+                    - text: — Add AI image & video generation to your knowledge base pipeline
+                  - listitem [ref=e500]:
+                    - link "Open-AI-Design-Agent" [ref=e501] [cursor=pointer]:
+                      - /url: https://github.com/Anil-matcha/Open-AI-Design-Agent
+                    - text: — Autonomous AI design agent — pair with wiki agent for research + visual output
+                - generic [ref=e502]:
+                  - heading "Install" [level=2] [ref=e503]
+                  - 'link "Permalink: Install" [ref=e504] [cursor=pointer]':
+                    - /url: "#install"
+                    - img [ref=e505]
+                - paragraph [ref=e507]:
+                  - strong [ref=e508]: "Requires:"
+                  - link "Claude Code" [ref=e509] [cursor=pointer]:
+                    - /url: https://claude.ai/code
+                  - text: ","
+                  - link "Codex" [ref=e510] [cursor=pointer]:
+                    - /url: https://openai.com/codex
+                  - text: ","
+                  - link "Gemini CLI" [ref=e511] [cursor=pointer]:
+                    - /url: https://github.com/google-gemini/gemini-cli
+                  - text: ", or any agent that reads a config file."
+                - generic [ref=e512]:
+                  - generic [ref=e513]: git clone https://github.com/SamurAIGPT/llm-wiki-agent.git cd llm-wiki-agent
+                  - button "Copy code to clipboard" [ref=e515] [cursor=pointer]:
+                    - img [ref=e516]
+                - paragraph [ref=e519]: "Open in your agent — no API key or Python setup needed:"
+                - generic [ref=e520]:
+                  - generic [ref=e521]:
+                    - text: claude
+                    - generic [ref=e522]: "# reads CLAUDE.md + .claude/commands/ (slash commands available)"
+                    - text: codex
+                    - generic [ref=e523]: "# reads AGENTS.md"
+                    - text: opencode
+                    - generic [ref=e524]: "# reads AGENTS.md"
+                    - text: gemini
+                    - generic [ref=e525]: "# reads GEMINI.md"
+                  - button "Copy code to clipboard" [ref=e527] [cursor=pointer]:
+                    - img [ref=e528]
+                - generic [ref=e531]:
+                  - heading "Usage" [level=2] [ref=e532]
+                  - 'link "Permalink: Usage" [ref=e533] [cursor=pointer]':
+                    - /url: "#usage"
+                    - img [ref=e534]
+                - paragraph [ref=e536]: "All agents understand natural language and shorthand triggers:"
+                - generic [ref=e537]:
+                  - code [ref=e539]: "ingest raw/papers/my-paper.md # ingest a markdown source ingest report.pdf # auto-converts to .md, then ingests ingest slides.pptx notes.docx # batch, mixed formats query: what are the main themes? # synthesize answer from wiki pages lint # find orphans, contradictions, gaps build graph # build graph.html from all wikilinks"
+                  - button "Copy code to clipboard" [ref=e541] [cursor=pointer]:
+                    - img [ref=e542]
+                - paragraph [ref=e545]: "Plain English works too:"
+                - generic [ref=e546]:
+                  - code [ref=e548]: "\"Ingest this paper: raw/papers/llama2.md\" \"What does the wiki say about attention mechanisms?\" \"Check for contradictions across sources\" \"Build the knowledge graph and tell me the most connected nodes\""
+                  - button "Copy code to clipboard" [ref=e550] [cursor=pointer]:
+                    - img [ref=e551]
+                - paragraph [ref=e554]:
+                  - strong [ref=e555]: Claude Code
+                  - text: also provides
+                  - code [ref=e556]: /wiki-ingest
+                  - text: ","
+                  - code [ref=e557]: /wiki-query
+                  - text: ","
+                  - code [ref=e558]: /wiki-lint
+                  - text: ","
+                  - code [ref=e559]: /wiki-graph
+                  - text: as slash commands (via
+                  - code [ref=e560]: .claude/commands/
+                  - text: ). These are Claude Code-specific — other agents use the natural language triggers above, which work identically.
+                - paragraph [ref=e561]:
+                  - text: Works with markdown, PDF, DOCX, PPTX, XLSX, HTML, TXT, CSV, JSON, XML, RST, EPUB, and more. Non-markdown files are auto-converted via
+                  - link "markitdown" [ref=e562] [cursor=pointer]:
+                    - /url: https://github.com/microsoft/markitdown
+                  - text: at ingest time — no separate step needed.
+                - generic [ref=e563]:
+                  - heading "What You Get" [level=2] [ref=e564]
+                  - 'link "Permalink: What You Get" [ref=e565] [cursor=pointer]':
+                    - /url: "#what-you-get"
+                    - img [ref=e566]
+                - paragraph [ref=e568]:
+                  - strong [ref=e569]: Persistent wiki
+                  - text: — structured markdown pages that accumulate across sessions. Unlike chat, nothing is lost.
+                - paragraph [ref=e570]:
+                  - strong [ref=e571]: Entity pages
+                  - text: — auto-created for every person, company, or project mentioned across sources. Updated each time a new source references them.
+                - paragraph [ref=e572]:
+                  - strong [ref=e573]: Concept pages
+                  - text: — auto-created for every key idea or framework. Cross-referenced to every source that discusses them.
+                - paragraph [ref=e574]:
+                  - strong [ref=e575]: Living overview
+                  - text: —
+                  - code [ref=e576]: wiki/overview.md
+                  - text: is revised on every ingest to reflect the current synthesis across everything you've read.
+                - paragraph [ref=e577]:
+                  - strong [ref=e578]: Contradiction flags
+                  - text: — when a new source contradicts an existing claim, it's flagged at ingest time, not buried until query time.
+                - paragraph [ref=e579]:
+                  - strong [ref=e580]: Knowledge graph
+                  - text: —
+                  - code [ref=e581]: graph.html
+                  - text: shows every wiki page as a node, every
+                  - code [ref=e582]: "[[wikilink]]"
+                  - text: as an edge, and Claude-inferred implicit relationships as dotted edges. Community detection clusters related topics.
+                - paragraph [ref=e583]:
+                  - strong [ref=e584]: Lint reports
+                  - text: — orphan pages, broken links, missing entity pages, data gaps with suggested sources to fill them.
+                - generic [ref=e585]:
+                  - heading "Use Cases" [level=2] [ref=e586]
+                  - 'link "Permalink: Use Cases" [ref=e587] [cursor=pointer]':
+                    - /url: "#use-cases"
+                    - img [ref=e588]
+                - generic [ref=e590]:
+                  - heading "Research" [level=3] [ref=e591]
+                  - 'link "Permalink: Research" [ref=e592] [cursor=pointer]':
+                    - /url: "#research"
+                    - img [ref=e593]
+                - paragraph [ref=e595]: Going deep on a topic over weeks — reading papers, articles, reports.
+                - generic [ref=e596]:
+                  - code [ref=e598]: "/wiki-ingest raw/papers/attention-is-all-you-need.md /wiki-ingest raw/papers/llama2.md /wiki-ingest raw/papers/rag-survey.md # Wiki builds entity pages (Meta AI, Google Brain) and # concept pages (Attention, RLHF, Context Window) automatically. /wiki-query \"What are the main approaches to reducing hallucination?\" /wiki-query \"How has context window size evolved across models?\" /wiki-lint # → \"No sources on mixture-of-experts — consider the Mixtral paper\""
+                  - button "Copy code to clipboard" [ref=e600] [cursor=pointer]:
+                    - img [ref=e601]
+                - paragraph [ref=e604]: By the end you have a structured, interlinked reference — not a folder of PDFs you'll never reopen.
+                - separator [ref=e605]
+                - generic [ref=e606]:
+                  - heading "Reading a Book" [level=3] [ref=e607]
+                  - 'link "Permalink: Reading a Book" [ref=e608] [cursor=pointer]':
+                    - /url: "#reading-a-book"
+                    - img [ref=e609]
+                - paragraph [ref=e611]: File each chapter as you go. Build out pages for characters, themes, arguments.
+                - generic [ref=e612]:
+                  - code [ref=e614]: "/wiki-ingest raw/book/chapter-01.md /wiki-ingest raw/book/chapter-02.md # Wiki creates entity and theme pages automatically. /wiki-query \"How has the protagonist's motivation evolved?\" /wiki-query \"What contradictions exist in the author's argument so far?\" /wiki-graph # → graph.html shows every character/theme and how they connect"
+                  - button "Copy code to clipboard" [ref=e616] [cursor=pointer]:
+                    - img [ref=e617]
+                - paragraph [ref=e620]: Think fan wikis like Tolkien Gateway — built as you read, with the agent doing all the cross-referencing.
+                - separator [ref=e621]
+                - generic [ref=e622]:
+                  - heading "Personal Knowledge Base" [level=3] [ref=e623]
+                  - 'link "Permalink: Personal Knowledge Base" [ref=e624] [cursor=pointer]':
+                    - /url: "#personal-knowledge-base"
+                    - img [ref=e625]
+                - paragraph [ref=e627]: Track goals, health, habits, self-improvement — file journal entries, articles, podcast notes.
+                - generic [ref=e628]:
+                  - code [ref=e630]: /wiki-ingest raw/journal/2026-01-week1.md /wiki-ingest raw/articles/huberman-sleep-protocol.md /wiki-ingest raw/articles/atomic-habits-summary.md /wiki-query "What patterns show up in my journal entries about energy?" /wiki-query "What habits have I tried and what was the outcome?"
+                  - button "Copy code to clipboard" [ref=e632] [cursor=pointer]:
+                    - img [ref=e633]
+                - paragraph [ref=e636]: The wiki builds a structured picture over time. Concepts like "Sleep", "Exercise", "Deep Work" accumulate evidence from every source filed.
+                - separator [ref=e637]
+                - generic [ref=e638]:
+                  - heading "Business / Team Intelligence" [level=3] [ref=e639]
+                  - 'link "Permalink: Business / Team Intelligence" [ref=e640] [cursor=pointer]':
+                    - /url: "#business--team-intelligence"
+                    - img [ref=e641]
+                - paragraph [ref=e643]: Feed in meeting transcripts, project docs, customer calls.
+                - generic [ref=e644]:
+                  - code [ref=e646]: "/wiki-ingest raw/meetings/q1-planning-transcript.md /wiki-ingest raw/docs/product-roadmap-2026.md /wiki-ingest raw/calls/customer-interview-acme.md /wiki-query \"What feature requests have come up most across customer calls?\" /wiki-query \"What decisions were made in Q1 and what was the rationale?\" /wiki-lint # → \"Project X mentioned in 5 pages but no dedicated page\" # → \"Roadmap contradicts customer interview on priority of feature Y\""
+                  - button "Copy code to clipboard" [ref=e648] [cursor=pointer]:
+                    - img [ref=e649]
+                - paragraph [ref=e652]: The wiki stays current because the agent does the maintenance no one wants to do.
+                - separator [ref=e653]
+                - generic [ref=e654]:
+                  - heading "Competitive Analysis" [level=3] [ref=e655]
+                  - 'link "Permalink: Competitive Analysis" [ref=e656] [cursor=pointer]':
+                    - /url: "#competitive-analysis"
+                    - img [ref=e657]
+                - paragraph [ref=e659]: Track a company, market, or technology over time.
+                - generic [ref=e660]:
+                  - code [ref=e662]: "/wiki-ingest raw/competitors/openai-announcements.md /wiki-ingest raw/market/ai-funding-report-q1.md /wiki-query \"How do OpenAI and Anthropic differ on safety approach?\" /wiki-query \"Which companies announced multimodal models in the last 6 months?\" /wiki-query \"Competitive landscape summary as of today\" # → agent shows the answer, then asks if you want to save it as a synthesis page"
+                  - button "Copy code to clipboard" [ref=e664] [cursor=pointer]:
+                    - img [ref=e665]
+                - generic [ref=e668]:
+                  - heading "The Graph" [level=2] [ref=e669]
+                  - 'link "Permalink: The Graph" [ref=e670] [cursor=pointer]':
+                    - /url: "#the-graph"
+                    - img [ref=e671]
+                - paragraph [ref=e673]: "Two-pass build:"
+                - list [ref=e674]:
+                  - listitem [ref=e675]:
+                    - strong [ref=e676]: Deterministic
+                    - text: — parses all
+                    - code [ref=e677]: "[[wikilinks]]"
+                    - text: across wiki pages → edges tagged
+                    - code [ref=e678]: EXTRACTED
+                  - listitem [ref=e679]:
+                    - strong [ref=e680]: Semantic
+                    - text: — agent infers implicit relationships not captured by wikilinks → edges tagged
+                    - code [ref=e681]: INFERRED
+                    - text: (with confidence score) or
+                    - code [ref=e682]: AMBIGUOUS
+                - paragraph [ref=e683]:
+                  - text: Louvain community detection clusters nodes by topic. SHA256 cache means only changed pages are reprocessed. Output is a self-contained
+                  - code [ref=e684]: graph.html
+                  - text: — no server, opens in any browser.
+                - generic [ref=e685]:
+                  - heading "CLAUDE.md / AGENTS.md" [level=2] [ref=e686]
+                  - 'link "Permalink: CLAUDE.md / AGENTS.md" [ref=e687] [cursor=pointer]':
+                    - /url: "#claudemd--agentsmd"
+                    - img [ref=e688]
+                - paragraph [ref=e690]: The schema file tells the agent how to maintain the wiki — page formats, ingest/query/lint/graph workflows, naming conventions. This is the key config file. Edit it to customize behavior for your domain.
+                - table [ref=e692]:
+                  - rowgroup [ref=e693]:
+                    - row "Agent Schema file" [ref=e694]:
+                      - columnheader "Agent" [ref=e695]
+                      - columnheader "Schema file" [ref=e696]
+                  - rowgroup [ref=e697]:
+                    - row "Claude Code CLAUDE.md" [ref=e698]:
+                      - cell "Claude Code" [ref=e699]
+                      - cell "CLAUDE.md" [ref=e700]:
+                        - code [ref=e701]: CLAUDE.md
+                    - row "Codex / OpenCode AGENTS.md" [ref=e702]:
+                      - cell "Codex / OpenCode" [ref=e703]
+                      - cell "AGENTS.md" [ref=e704]:
+                        - code [ref=e705]: AGENTS.md
+                    - row "Gemini CLI GEMINI.md" [ref=e706]:
+                      - cell "Gemini CLI" [ref=e707]
+                      - cell "GEMINI.md" [ref=e708]:
+                        - code [ref=e709]: GEMINI.md
+                - generic [ref=e710]:
+                  - heading "What Makes This Different from RAG" [level=2] [ref=e711]
+                  - 'link "Permalink: What Makes This Different from RAG" [ref=e712] [cursor=pointer]':
+                    - /url: "#what-makes-this-different-from-rag"
+                    - img [ref=e713]
+                - table [ref=e716]:
+                  - rowgroup [ref=e717]:
+                    - row "RAG LLM Wiki Agent" [ref=e718]:
+                      - columnheader "RAG" [ref=e719]
+                      - columnheader "LLM Wiki Agent" [ref=e720]
+                  - rowgroup [ref=e721]:
+                    - row "Re-derives knowledge every query Compiles once, keeps current" [ref=e722]:
+                      - cell "Re-derives knowledge every query" [ref=e723]
+                      - cell "Compiles once, keeps current" [ref=e724]
+                    - row "Raw chunks as retrieval unit Structured wiki pages" [ref=e725]:
+                      - cell "Raw chunks as retrieval unit" [ref=e726]
+                      - cell "Structured wiki pages" [ref=e727]
+                    - row "No cross-references Cross-references pre-built" [ref=e728]:
+                      - cell "No cross-references" [ref=e729]
+                      - cell "Cross-references pre-built" [ref=e730]
+                    - row "Contradictions surface at query time (maybe) Flagged at ingest time" [ref=e731]:
+                      - cell "Contradictions surface at query time (maybe)" [ref=e732]
+                      - cell "Flagged at ingest time" [ref=e733]
+                    - row "No accumulation Every source makes the wiki richer" [ref=e734]:
+                      - cell "No accumulation" [ref=e735]
+                      - cell "Every source makes the wiki richer" [ref=e736]
+                - generic [ref=e737]:
+                  - heading "Obsidian Integration" [level=2] [ref=e738]
+                  - 'link "Permalink: Obsidian Integration" [ref=e739] [cursor=pointer]':
+                    - /url: "#obsidian-integration"
+                    - img [ref=e740]
+                - paragraph [ref=e742]:
+                  - text: The wiki is designed to be browsed seamlessly in
+                  - link "Obsidian" [ref=e743] [cursor=pointer]:
+                    - /url: https://obsidian.md
+                  - text: . Since the agent maintains consistent
+                  - code [ref=e744]: "[[wikilinks]]"
+                  - text: ", you get a naturally growing knowledge graph in your vault."
+                - generic [ref=e745]:
+                  - heading "Vault Symlink Pattern" [level=3] [ref=e746]
+                  - 'link "Permalink: Vault Symlink Pattern" [ref=e747] [cursor=pointer]':
+                    - /url: "#vault-symlink-pattern"
+                    - img [ref=e748]
+                - paragraph [ref=e750]: "If you want to keep the LLM Wiki Agent repository separate from your main personal vault, use symlinks:"
+                - list [ref=e751]:
+                  - listitem [ref=e752]:
+                    - text: Keep your working agent repository at e.g.,
+                    - code [ref=e753]: ~/llm-wiki-agent
+                  - listitem [ref=e754]:
+                    - text: "Create a symlink from your main Obsidian vault:"
+                    - generic [ref=e755]:
+                      - generic [ref=e756]: ln -sfn ~/llm-wiki-agent/wiki ~/your-obsidian-vault/wiki
+                      - button "Copy code to clipboard" [ref=e758] [cursor=pointer]:
+                        - img [ref=e759]
+                  - listitem [ref=e762]:
+                    - text: Use the
+                    - link "Obsidian Web Clipper" [ref=e763] [cursor=pointer]:
+                      - /url: https://obsidian.md/clipper
+                    - text: or write directly to
+                    - code [ref=e764]: raw/
+                    - text: in the agent repo to queue items for ingestion.
+                - blockquote [ref=e765]:
+                  - paragraph [ref=e766]:
+                    - strong [ref=e767]: "Note:"
+                    - text: If you ever move your local repo directory, remember to update the symlink, otherwise the
+                    - code [ref=e768]: wiki/
+                    - text: directory will appear missing in Obsidian.
+                - generic [ref=e769]:
+                  - heading "Recommended .obsidian Config" [level=3] [ref=e770]
+                  - 'link "Permalink: Recommended .obsidian Config" [ref=e771] [cursor=pointer]':
+                    - /url: "#recommended-obsidian-config"
+                    - img [ref=e772]
+                - list [ref=e774]:
+                  - listitem [ref=e775]:
+                    - strong [ref=e776]: "Graph View:"
+                    - text: Filter out
+                    - code [ref=e777]: index.md
+                    - text: and
+                    - code [ref=e778]: log.md
+                    - text: (e.g.
+                    - code [ref=e779]: "-file:index.md -file:log.md"
+                    - text: ) to avoid them becoming gravity wells in your Obsidian graph.
+                  - listitem [ref=e780]:
+                    - strong [ref=e781]: "Dataview:"
+                    - text: Use the community plugin
+                    - link "Dataview" [ref=e782] [cursor=pointer]:
+                      - /url: https://blacksmithgu.github.io/obsidian-dataview/
+                    - text: to query the YAML frontmatter the agent automatically injects (e.g.,
+                    - code [ref=e783]: "type: source"
+                    - text: ","
+                    - code [ref=e784]: "tags: [diary]"
+                    - text: ).
+                - generic [ref=e785]:
+                  - heading "Multi-Format Ingest" [level=2] [ref=e786]
+                  - 'link "Permalink: Multi-Format Ingest" [ref=e787] [cursor=pointer]':
+                    - /url: "#multi-format-ingest"
+                    - img [ref=e788]
+                - paragraph [ref=e790]:
+                  - text: Drop any supported file directly into
+                  - code [ref=e791]: ingest
+                  - text: "— no separate conversion step needed:"
+                - generic [ref=e792]:
+                  - generic [ref=e793]:
+                    - generic [ref=e794]: "# These all work — auto-converted at ingest time"
+                    - text: ingest report.pdf ingest meeting-notes.docx ingest slides.pptx ingest data.xlsx ingest page.html ingest raw/mixed-folder/
+                    - generic [ref=e795]: "# recursively finds all supported files"
+                  - button "Copy code to clipboard" [ref=e797] [cursor=pointer]:
+                    - img [ref=e798]
+                - paragraph [ref=e801]:
+                  - strong [ref=e802]: "Supported formats:"
+                  - code [ref=e803]: .md
+                  - code [ref=e804]: .pdf
+                  - code [ref=e805]: .docx
+                  - code [ref=e806]: .pptx
+                  - code [ref=e807]: .xlsx
+                  - code [ref=e808]: .xls
+                  - code [ref=e809]: .html
+                  - code [ref=e810]: .htm
+                  - code [ref=e811]: .txt
+                  - code [ref=e812]: .csv
+                  - code [ref=e813]: .json
+                  - code [ref=e814]: .xml
+                  - code [ref=e815]: .rst
+                  - code [ref=e816]: .rtf
+                  - code [ref=e817]: .epub
+                  - code [ref=e818]: .ipynb
+                  - code [ref=e819]: .yaml
+                  - code [ref=e820]: .yml
+                  - code [ref=e821]: .tsv
+                  - code [ref=e822]: .wav
+                  - code [ref=e823]: .mp3
+                - paragraph [ref=e824]:
+                  - text: Non-markdown files are auto-converted via
+                  - link "markitdown" [ref=e825] [cursor=pointer]:
+                    - /url: https://github.com/microsoft/markitdown
+                  - text: . Use
+                  - code [ref=e826]: "--no-convert"
+                  - text: to skip auto-conversion and process only
+                  - code [ref=e827]: .md
+                  - text: files.
+                - generic [ref=e828]:
+                  - heading "arXiv Papers (Advanced)" [level=3] [ref=e829]
+                  - 'link "Permalink: arXiv Papers (Advanced)" [ref=e830] [cursor=pointer]':
+                    - /url: "#arxiv-papers-advanced"
+                    - img [ref=e831]
+                - paragraph [ref=e833]:
+                  - text: For arXiv papers, use
+                  - code [ref=e834]: tools/pdf2md.py
+                  - text: "for higher-fidelity conversion:"
+                - generic [ref=e835]:
+                  - generic [ref=e836]:
+                    - text: python tools/pdf2md.py 2401.12345
+                    - generic [ref=e837]: "# by arXiv ID"
+                    - text: python tools/pdf2md.py https://arxiv.org/abs/2401.12345
+                    - generic [ref=e838]: "# by URL"
+                    - text: python tools/pdf2md.py paper.pdf --backend marker
+                    - generic [ref=e839]: "# complex multi-column PDFs"
+                  - button "Copy code to clipboard" [ref=e841] [cursor=pointer]:
+                    - img [ref=e842]
+                - paragraph [ref=e845]:
+                  - text: Then ingest the resulting
+                  - code [ref=e846]: .md
+                  - text: ":"
+                - generic [ref=e847]:
+                  - code [ref=e849]: ingest raw/papers/my-paper.md
+                  - button "Copy code to clipboard" [ref=e851] [cursor=pointer]:
+                    - img [ref=e852]
+                - generic [ref=e855]:
+                  - heading "Batch Directory Conversion (Advanced)" [level=3] [ref=e856]
+                  - 'link "Permalink: Batch Directory Conversion (Advanced)" [ref=e857] [cursor=pointer]':
+                    - /url: "#batch-directory-conversion-advanced"
+                    - img [ref=e858]
+                - paragraph [ref=e860]: "To pre-convert an entire directory (useful for bulk imports):"
+                - generic [ref=e861]:
+                  - generic [ref=e862]:
+                    - text: python tools/file_to_md.py --input_dir raw/imports/ python tools/file_to_md.py --input_dir raw/imports/ --delete_source
+                    - generic [ref=e863]: "# remove originals"
+                  - button "Copy code to clipboard" [ref=e865] [cursor=pointer]:
+                    - img [ref=e866]
+                - generic [ref=e869]:
+                  - heading "Optional Dependencies" [level=3] [ref=e870]
+                  - 'link "Permalink: Optional Dependencies" [ref=e871] [cursor=pointer]':
+                    - /url: "#optional-dependencies"
+                    - img [ref=e872]
+                - table [ref=e875]:
+                  - rowgroup [ref=e876]:
+                    - row "Package Install Used for" [ref=e877]:
+                      - columnheader "Package" [ref=e878]
+                      - columnheader "Install" [ref=e879]
+                      - columnheader "Used for" [ref=e880]
+                  - rowgroup [ref=e881]:
+                    - row "markitdown pip install markitdown Auto-conversion of non-.md files (required for multi-format ingest)" [ref=e882]:
+                      - cell "markitdown" [ref=e883]:
+                        - link "markitdown" [ref=e884] [cursor=pointer]:
+                          - /url: https://github.com/microsoft/markitdown
+                      - cell "pip install markitdown" [ref=e885]:
+                        - code [ref=e886]: pip install markitdown
+                      - cell "Auto-conversion of non-.md files (required for multi-format ingest)" [ref=e887]
+                    - row "arxiv2md pip install arxiv2markdown arXiv papers via structured source" [ref=e888]:
+                      - cell "arxiv2md" [ref=e889]:
+                        - link "arxiv2md" [ref=e890] [cursor=pointer]:
+                          - /url: https://github.com/ryansingman/arxiv2md
+                      - cell "pip install arxiv2markdown" [ref=e891]:
+                        - code [ref=e892]: pip install arxiv2markdown
+                      - cell "arXiv papers via structured source" [ref=e893]
+                    - row "Marker pip install marker-pdf Complex academic PDFs with multi-column layouts" [ref=e894]:
+                      - cell "Marker" [ref=e895]:
+                        - link "Marker" [ref=e896] [cursor=pointer]:
+                          - /url: https://github.com/VikParuchuri/marker
+                      - cell "pip install marker-pdf" [ref=e897]:
+                        - code [ref=e898]: pip install marker-pdf
+                      - cell "Complex academic PDFs with multi-column layouts" [ref=e899]
+                    - row "PyMuPDF4LLM pip install pymupdf4llm Fast PDF extraction (no GPU needed)" [ref=e900]:
+                      - cell "PyMuPDF4LLM" [ref=e901]:
+                        - link "PyMuPDF4LLM" [ref=e902] [cursor=pointer]:
+                          - /url: https://github.com/pymupdf/RAG
+                      - cell "pip install pymupdf4llm" [ref=e903]:
+                        - code [ref=e904]: pip install pymupdf4llm
+                      - cell "Fast PDF extraction (no GPU needed)" [ref=e905]
+                    - row "tqdm pip install tqdm Progress bar for batch directory conversion" [ref=e906]:
+                      - cell "tqdm" [ref=e907]:
+                        - link "tqdm" [ref=e908] [cursor=pointer]:
+                          - /url: https://github.com/tqdm/tqdm
+                      - cell "pip install tqdm" [ref=e909]:
+                        - code [ref=e910]: pip install tqdm
+                      - cell "Progress bar for batch directory conversion" [ref=e911]
+                - generic [ref=e912]:
+                  - heading "Tips" [level=2] [ref=e913]
+                  - 'link "Permalink: Tips" [ref=e914] [cursor=pointer]':
+                    - /url: "#tips"
+                    - img [ref=e915]
+                - list [ref=e917]:
+                  - listitem [ref=e918]:
+                    - text: Just drop files (PDF, DOCX, etc.) into
+                    - code [ref=e919]: raw/
+                    - text: and
+                    - code [ref=e920]: ingest
+                    - text: them — conversion is automatic
+                  - listitem [ref=e921]:
+                    - text: For arXiv papers,
+                    - code [ref=e922]: tools/pdf2md.py
+                    - text: gives higher-fidelity output than generic markitdown conversion
+                  - listitem [ref=e923]: Query answers are shown first — the agent then asks if you want to file them as synthesis pages. Your explorations compound just like ingested sources
+                  - listitem [ref=e924]: The wiki is a git repo — version history for free
+                  - listitem [ref=e925]:
+                    - text: Standalone Python scripts in
+                    - code [ref=e926]: tools/
+                    - text: work without a coding agent (require
+                    - code [ref=e927]: ANTHROPIC_API_KEY
+                    - text: )
+                - generic [ref=e928]:
+                  - heading "Tech Stack" [level=2] [ref=e929]
+                  - 'link "Permalink: Tech Stack" [ref=e930] [cursor=pointer]':
+                    - /url: "#tech-stack"
+                    - img [ref=e931]
+                - paragraph [ref=e933]: NetworkX + Louvain + Claude + vis.js. No server, no database, runs entirely locally. Everything is plain markdown files.
+                - generic [ref=e934]:
+                  - heading "Related" [level=2] [ref=e935]
+                  - 'link "Permalink: Related" [ref=e936] [cursor=pointer]':
+                    - /url: "#related"
+                    - img [ref=e937]
+                - list [ref=e939]:
+                  - listitem [ref=e940]:
+                    - link "graphify" [ref=e941] [cursor=pointer]:
+                      - /url: https://github.com/safishamsi/graphify
+                    - text: — graph-based knowledge extraction skill (inspiration for the graph layer)
+                  - listitem [ref=e942]:
+                    - link "Vannevar Bush's Memex (1945)" [ref=e943] [cursor=pointer]:
+                      - /url: https://en.wikipedia.org/wiki/Memex
+                    - text: — the original vision this resembles
+                - generic [ref=e944]:
+                  - heading "Star History" [level=2] [ref=e945]
+                  - 'link "Permalink: Star History" [ref=e946] [cursor=pointer]':
+                    - /url: "#star-history"
+                    - img [ref=e947]
+                - paragraph [ref=e949]:
+                  - link "Star History Chart" [ref=e950] [cursor=pointer]:
+                    - /url: https://star-history.com/#SamurAIGPT/llm-wiki-agent&Date
+                    - img "Star History Chart" [ref=e951]
+                - generic [ref=e952]:
+                  - heading "License" [level=2] [ref=e953]
+                  - 'link "Permalink: License" [ref=e954] [cursor=pointer]':
+                    - /url: "#license"
+                    - img [ref=e955]
+                - paragraph [ref=e957]:
+                  - text: MIT License — see
+                  - link "LICENSE" [ref=e958] [cursor=pointer]:
+                    - /url: /SamurAIGPT/llm-wiki-agent/blob/main/LICENSE
+                  - text: for details.
+        - generic [ref=e962]:
+          - generic [ref=e965]:
+            - heading "About" [level=2] [ref=e966]
+            - paragraph [ref=e967]: A personal knowledge base that builds and maintains itself. Drop in sources — Claude (or Codex/Gemini) reads them, extracts knowledge, and maintains a persistent interlinked wiki. Works with Claude Code, Codex, OpenCode, Gemini CLI. No API key needed.
+            - heading "Topics" [level=3] [ref=e968]
+            - generic [ref=e970]:
+              - link "markdown" [ref=e971] [cursor=pointer]:
+                - /url: /topics/markdown
+              - link "wiki" [ref=e972] [cursor=pointer]:
+                - /url: /topics/wiki
+              - link "gemini" [ref=e973] [cursor=pointer]:
+                - /url: /topics/gemini
+              - link "knowledge-graph" [ref=e974] [cursor=pointer]:
+                - /url: /topics/knowledge-graph
+              - link "knowledge-base" [ref=e975] [cursor=pointer]:
+                - /url: /topics/knowledge-base
+              - link "obsidian" [ref=e976] [cursor=pointer]:
+                - /url: /topics/obsidian
+              - link "codex" [ref=e977] [cursor=pointer]:
+                - /url: /topics/codex
+              - link "rag" [ref=e978] [cursor=pointer]:
+                - /url: /topics/rag
+              - link "personal-knowledge-management" [ref=e979] [cursor=pointer]:
+                - /url: /topics/personal-knowledge-management
+              - link "llm" [ref=e980] [cursor=pointer]:
+                - /url: /topics/llm
+              - link "claude-code" [ref=e981] [cursor=pointer]:
+                - /url: /topics/claude-code
+            - heading "Resources" [level=3] [ref=e982]
+            - link "Readme" [ref=e984] [cursor=pointer]:
+              - /url: "#readme-ov-file"
+              - img [ref=e985]
+              - text: Readme
+            - heading "License" [level=3] [ref=e987]
+            - link "MIT license" [ref=e989] [cursor=pointer]:
+              - /url: "#MIT-1-ov-file"
+              - img [ref=e990]
+              - text: MIT license
+            - link "Activity" [ref=e993] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/activity
+              - img [ref=e994]
+              - text: Activity
+            - link "Custom properties" [ref=e997] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/custom-properties
+              - img [ref=e998]
+              - text: Custom properties
+            - heading "Stars" [level=3] [ref=e1000]
+            - link "2.9k stars" [ref=e1002] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/stargazers
+              - img [ref=e1003]
+              - strong [ref=e1005]: 2.9k
+              - text: stars
+            - heading "Watchers" [level=3] [ref=e1006]
+            - link "32 watching" [ref=e1008] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/watchers
+              - img [ref=e1009]
+              - strong [ref=e1011]: "32"
+              - text: watching
+            - heading "Forks" [level=3] [ref=e1012]
+            - link "342 forks" [ref=e1014] [cursor=pointer]:
+              - /url: /SamurAIGPT/llm-wiki-agent/forks
+              - img [ref=e1015]
+              - strong [ref=e1017]: "342"
+              - text: forks
+            - link "Report repository" [ref=e1019] [cursor=pointer]:
+              - /url: /contact/report-content?content_url=https%3A%2F%2Fgithub.com%2FSamurAIGPT%2Fllm-wiki-agent&report=SamurAIGPT+%28user%29
+          - generic [ref=e1021]:
+            - heading "Releases" [level=2] [ref=e1022]:
+              - link "Releases" [ref=e1023] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/releases
+            - generic [ref=e1024]: No releases published
+          - generic [ref=e1026]:
+            - heading "Packages" [level=2] [ref=e1027]:
+              - link "Packages" [ref=e1028] [cursor=pointer]:
+                - /url: /orgs/SamurAIGPT/packages?repo_name=llm-wiki-agent
+            - generic [ref=e1029]: No packages published
+          - generic [ref=e1031]:
+            - heading "Contributors 6" [level=2] [ref=e1032]:
+              - link "Contributors 6" [ref=e1033] [cursor=pointer]:
+                - /url: /SamurAIGPT/llm-wiki-agent/graphs/contributors
+                - text: Contributors
+                - generic "6" [ref=e1034]
+            - list [ref=e1035]:
+              - listitem [ref=e1036]:
+                - link "@Anil-matcha" [ref=e1037] [cursor=pointer]:
+                  - /url: https://github.com/Anil-matcha
+                  - img "@Anil-matcha" [ref=e1038]
+              - listitem [ref=e1039]:
+                - link "@watsonctl" [ref=e1040] [cursor=pointer]:
+                  - /url: https://github.com/watsonctl
+                  - img "@watsonctl" [ref=e1041]
+              - listitem [ref=e1042]:
+                - link "@tlint101" [ref=e1043] [cursor=pointer]:
+                  - /url: https://github.com/tlint101
+                  - img "@tlint101" [ref=e1044]
+              - listitem [ref=e1045]:
+                - link "@claude" [ref=e1046] [cursor=pointer]:
+                  - /url: https://github.com/claude
+                  - img "@claude" [ref=e1047]
+              - listitem [ref=e1048]:
+                - link "@eacape" [ref=e1049] [cursor=pointer]:
+                  - /url: https://github.com/eacape
+                  - img "@eacape" [ref=e1050]
+              - listitem [ref=e1051]:
+                - link "@vadootvpeer" [ref=e1052] [cursor=pointer]:
+                  - /url: https://github.com/vadootvpeer
+                  - img "@vadootvpeer" [ref=e1053]
+          - generic [ref=e1055]:
+            - heading "Languages" [level=2] [ref=e1056]
+            - list [ref=e1060]:
+              - listitem [ref=e1061]:
+                - link "Python 100.0%" [ref=e1062] [cursor=pointer]:
+                  - /url: /SamurAIGPT/llm-wiki-agent/search?l=python
+                  - img [ref=e1063]
+                  - generic [ref=e1065]: Python
+                  - generic [ref=e1066]: 100.0%
+  - contentinfo [ref=e1068]:
+    - heading "Footer" [level=2] [ref=e1069]
+    - generic [ref=e1070]:
+      - generic [ref=e1071]:
+        - link "GitHub Homepage" [ref=e1072] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e1073]
+        - generic [ref=e1075]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e1076]:
+        - heading "Footer navigation" [level=3] [ref=e1077]
+        - list "Footer navigation" [ref=e1078]:
+          - listitem [ref=e1079]:
+            - link "Terms" [ref=e1080] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e1081]:
+            - link "Privacy" [ref=e1082] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e1083]:
+            - link "Security" [ref=e1084] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e1085]:
+            - link "Status" [ref=e1086] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e1087]:
+            - link "Community" [ref=e1088] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e1089]:
+            - link "Docs" [ref=e1090] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e1091]:
+            - link "Contact" [ref=e1092] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e1093]:
+            - button "Manage cookies" [ref=e1095] [cursor=pointer]
+          - listitem [ref=e1096]:
+            - button "Do not share my personal information" [ref=e1098] [cursor=pointer]

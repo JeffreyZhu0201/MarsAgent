@@ -84,7 +84,7 @@ async def write_wiki_doc(
 
     engine = _get_engine()
     with Session(engine) as sess:
-        sess.execute(
+       sess.execute( 
             text("""
                 INSERT INTO wiki_docs
                   (id, slug, category, title, url, url_hash, content_hash,

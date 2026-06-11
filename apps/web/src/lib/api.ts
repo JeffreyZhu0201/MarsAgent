@@ -232,3 +232,97 @@ export async function approveDraft(id: string): Promise<{ slug: string }> {
 export async function rejectDraft(id: string): Promise<{ ok: boolean }> {
   return json(`/api/wiki/drafts/${encodeURIComponent(id)}/reject`, { method: 'POST' })
 }
+
+// --- OJ (Online Judge) ---
+
+export type OJStatus = 'pending' | 'judging' | 'accepted' | 'wrong_answer' | 'tle' | 'mle' | 're' | 'ce'
+
+export interface OJProblem {
+  id: string
+  title: string
+  description_md: string
+  tags: string[]
+  difficulty: 'easy' | 'medium' | 'hard'
+  time_limit_ms: number
+  memory_limit_mb: number
+  visible: boolean
+  created_at: string
+}
+
+export interface OJTestCase {
+  id: string
+  problem_id: string
+  input: string
+  expected_output: string
+  is_sample: boolean
+  is_hidden: boolean
+  score: number
+  ordering: number
+}
+
+export interface OJSubmission {
+  id: string
+  problem_id: string
+  code: string
+  lang: string
+  status: OJStatus
+  score: number
+  duration_ms: number
+  memory_kb: number
+  error_msg?: string
+  created_at: string
+}
+
+export interface OJSubmissionResult {
+  id: string
+  submission_id: string
+  test_case_id: string
+  status: OJStatus
+  actual_output?: string
+  duration_ms: number
+  memory_kb: number
+  score: number
+}
+
+export async function listOJProblems(params: {
+  limit?: number; offset?: number; difficulty?: string; tag?: string
+} = {}): Promise<{ problems: OJProblem[]; total: number }> {
+  const qs = new URLSearchParams()
+  if (params.limit) qs.set('limit', String(params.limit))
+  if (params.offset) qs.set('offset', String(params.offset))
+  if (params.difficulty) qs.set('difficulty', params.difficulty)
+  if (params.tag) qs.set('tag', params.tag)
+  return json(`/api/oj/problems?${qs}`)
+}
+
+export async function getOJProblem(id: string): Promise<{ problem: OJProblem; sample_test_cases: OJTestCase[] }> {
+  return json(`/api/oj/problems/${encodeURIComponent(id)}`)
+}
+
+export async function createOJSubmission(input: {
+  problem_id: string; code: string; lang: string
+}): Promise<{ submission_id: string }> {
+  return json('/api/oj/submissions', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+}
+
+export async function getOJSubmission(id: string): Promise<{
+  submission: OJSubmission
+  results: OJSubmissionResult[]
+}> {
+  return json(`/api/oj/submissions/${encodeURIComponent(id)}`)
+}
+
+export async function listOJSubmissions(params: {
+  problem_id?: string; user_id?: string; limit?: number; offset?: number
+} = {}): Promise<{ submissions: OJSubmission[]; total: number }> {
+  const qs = new URLSearchParams()
+  if (params.problem_id) qs.set('problem_id', params.problem_id)
+  if (params.user_id) qs.set('user_id', params.user_id)
+  if (params.limit) qs.set('limit', String(params.limit))
+  if (params.offset) qs.set('offset', String(params.offset))
+  return json(`/api/oj/submissions?${qs}`)
+}
